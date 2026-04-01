@@ -1,0 +1,134 @@
+🎨 MASTER PROMPT FIGMA : CULTURA PALOPS
+À l'attention du UI Designer / Générateur Figma
+1. ARCHITECTURE DU FICHIER FIGMA
+Crée un nouveau fichier Figma structuré avec ces 4 pages exactes dans la barre latérale gauche :
+🎨 Tokens & Variables
+🧩 Components
+💻 Desktop Pages (1440px)
+📱 Mobile Pages (390px)
+2. TOKENS & VARIABLES (Page 1)
+Crée une collection de variables locales (Local Variables) nommée "Brand Theme".
+Couleurs (Color Variables)
+color/primary : #E8620A (Orange Feu)
+color/accent : #F5B800 (Or Soleil)
+color/deep : #5C2D82 (Violet Plume)
+color/nature : #2D7A5E (Vert Tropical)
+color/cv : #1A5CB5 (Bleu Cap-Vert)
+color/bg : #FDF0DC (Crème Chaud)
+color/text : #1A1A2A (Quasi-Noir)
+color/white : #FFFFFF
+Typographie (Text Styles)
+Display / H1 : Bebas Neue, 72px (Desktop) / 48px (Mobile), Line-height 100%, Uppercase.
+Display / H2 : Bebas Neue, 48px (Desktop) / 36px (Mobile), Line-height 110%, Uppercase.
+Display / H3 : Poppins SemiBold (600), 24px, Line-height 130%.
+Body / Base : Poppins Regular (400), 16px, Line-height 170%.
+Body / Caption : Poppins Regular (400), 14px, Line-height 150%.
+Spacing & Auto Layout (Number Variables)
+spacing/sm : 8px
+spacing/md : 16px
+spacing/lg : 32px
+spacing/xl : 64px
+spacing/section : 120px (Padding vertical des grandes sections)
+3. MASTER COMPONENTS (Page 2)
+Tous ces composants doivent utiliser Auto Layout (Shift+A) pour être 100% compatibles Next.js/Flexbox.
+🚩 Composant : Global/FlagStrip
+Structure : Frame (Auto Layout horizontal), Width: Fill Container.
+Enfants : 5 rectangles (Width: Fill Container, Height: 6px).
+Couleurs : color/cv, color/primary, color/accent, color/nature, color/deep.
+🎛 Composant : Global/Navbar
+Propriétés : Height 80px, Background color/primary, Auto Layout (Space Between), Padding X spacing/xl.
+Gauche : Logo texte "BATUKU & CULTURA" (H2, color/accent).
+Centre : Liens de navigation (Poppins 600, 16px, color/white).
+Droite : Sélecteur de langue "[TEXT_FR]" (Badge avec stroke color/accent, texte color/accent).
+Effet : Ajouter le Global/FlagStrip en Absolute Position collé en bas de la Navbar.
+🔘 Composant : Button/Primary
+Auto Layout : Padding 12px 24px, Gap 8px, Corner Radius 8px.
+Fond : color/primary.
+Texte : Poppins 600, 16px, color/white.
+Variant Hover : Assombrir le fond de 10%.
+🔘 Composant : Button/Secondary
+Auto Layout : Identique au Primaire.
+Fond : Transparent, Stroke 2px color/accent.
+Texte : Poppins 600, 16px, color/accent.
+🎟 Composant : Card/Event
+Structure : Auto Layout vertical, Bg color/white, Corner Radius 12px, Clip Content, Drop Shadow (Y: 4, Blur: 12, 10% opacity).
+Enfant 1 (Image) : Frame hauteur 200px, image de l'affiche Cultura Palops en Fill.
+Enfant 2 (Contenu) : Auto Layout vertical, Padding 24px, Gap 16px.
+Date Bandeau : Ligne verticale gauche (Stroke 4px color/primary) avec date "[TEXT_FR]".
+Titre : H3, color/text.
+Lieu : Poppins 14px, color/text.
+Badges : Petits pills (Bg color/bg, Texte color/primary).
+🌸 Éléments Décoratifs (Absolute Position)
+Créer des SVG de Feuilles tropicales (color/nature à 10% d'opacité) et Plumes (color/deep ou color/accent).
+Ces éléments seront placés en arrière-plan (z-index -1) dans les sections pour casser le côté "corporate".
+4. MAQUETTES DES PAGES DESKTOP (Page 3)
+Toutes les Frames de page (W: 1440px) doivent avoir un fond color/bg (#FDF0DC).
+📄 PAGE 1 : ACCUEIL (Page/Home)
+Navbar : Insérer l'instance Global/Navbar.
+Hero Section :
+Bg : color/primary.
+Layout : 2 colonnes (Left: Texte, Right: Image/Danseuse détourée).
+Texte H1 : "CULTURA PALOPS" (color/accent).
+Slogan : Italique, color/white.
+Boutons : Button/Primary et Button/Secondary.
+Countdown Section :
+Bg : color/deep. Padding spacing/xl. Texte blanc, chiffres en color/accent.
+About Teaser :
+Bg : color/bg. Auto layout vertical. Intégrer des formes organiques (cercles/ovales) contenant des stats.
+Batuku Spotlight :
+Bg : color/primary. Image/Vidéo du groupe à gauche avec border-radius irrégulier. Texte à droite en blanc.
+PALOP Cards :
+Grille horizontale (Auto layout horizontal, Gap spacing/md).
+5 cartes de même taille, chacune reprenant la couleur d'un pays (CV=Bleu, Angola=Orange, etc.).
+Footer :
+Bg : color/deep. Intégrer le Global/FlagStrip tout en bas.
+📄 PAGE 2 : QUI SOMMES-NOUS (Page/About)
+Hero Page : Hauteur 300px, Bg color/primary, Titre au centre H1 color/accent.
+Mission & Valeurs :
+Grille 2x2 pour la mission.
+Wrap Auto Layout pour les 5 "pills" de valeurs (Respect, Solidarité...).
+L'Équipe :
+Bg : color/bg.
+Grille (Grid Layout, 3 colonnes). 9 profils (7 officiels, 2 externes).
+Composant Profil : Avatar rond (120px) + Nom (H3) + Rôle (ex: "Présidente", "Resp. Santé").
+Vision :
+Large bloc citation sur fond color/primary, guillemets géants en color/accent, texte blanc.
+📄 PAGE 3 : GROUPE BATUKU (Page/Batuku)
+Hero Immersif :
+Image d'arrière-plan très sombre avec overlay color/primary à 40%. Titre en blanc massif.
+Histoire & Timeline :
+Bg : color/bg. Ligne verticale au centre (Stroke color/deep).
+Points sur la ligne avec dates/ères (Esclavage, Résistance, Aujourd'hui).
+Galerie Danse :
+CSS Grid 2x2. Photos avec coins arrondis (24px).
+📄 PAGE 4 : CULTURE & TRADITIONS (Page/Culture)
+Sticky Nav :
+Frame horizontale collée en haut au scroll. 5 onglets avec les 5 couleurs des pays.
+Sections Pays (x5) :
+Chaque section a un fond color/bg.
+Gros titre H2 de la couleur du pays concerné (ex: Section Cap-Vert → H2 #1A5CB5).
+Contenu divisé en : Musique/Danse à gauche, Gastronomie à droite.
+Déco : Ajouter des plumes vectorielles en filigrane (Opacity 5%) dans le fond.
+📄 PAGE 5 : ÉVÉNEMENTS (Page/Events)
+Filtres :
+Auto layout wrap. Boutons "Pill" contour color/primary, texte color/text.
+Événement Phare (Cultura Palops Suiça) :
+Grande card full-width. Bg color/primary.
+Affiche officielle visible à gauche, détails (Sédeilles, 49fr) à droite avec gros Button/Secondary (Or).
+Liste & Archives :
+Grille 3 colonnes de Card/Event.
+📄 PAGE 6 : GALERIE (Page/Gallery)
+Grille Masonry :
+Dans Figma, simuler avec 3 colonnes verticales indépendantes (Auto Layout vertical) ayant des images de hauteurs variables (ex: 300px, 450px, 200px) collées côte à côte. Gap spacing/md.
+📄 PAGE 7 : CONTACT & ADHÉSION (Page/Contact)
+Grille de Contact :
+2 colonnes. Gauche : 4 petites cartes (Adresse, Email, Tél, Instagram). Droite : Formulaire.
+Formulaire :
+Inputs : Hauteur 48px, fond transparent, stroke 1px color/primary, texte [TEXT_FR].
+Adhésion Banner :
+Large bloc color/primary, texte centré, avec motif géométrique africain en arrière-plan. Bouton "Rejoindre la famille".
+5. DIRECTIVES POUR LE DÉVELOPPEUR NEXT.JS (Handoff)
+i18n : Tout texte marqué [TEXT_FR] dans la maquette sera remplacé par les clés next-i18next (ex: t('home.hero.title')).
+Polices : Utiliser next/font/google pour importer Bebas Neue et Poppins.
+Tailwind Configuration : Mettre en place les couleurs exactes dans tailwind.config.js (primary: '#E8620A', etc.) pour refléter les variables Figma.
+Décorations : Exporter les plumes et feuilles tropicales en SVG depuis Figma et les utiliser en composants React avec position: absolute et z-index: -10.

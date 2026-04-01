@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #E8620A;
+  --color-deep: #5C2D82;
+  --color-accent: #F5B800;
+  --color-nature: #2D7A5E;
+  --color-cv: #003893;
+  --color-brand-bg: #FDF0DC;
+  --color-text: #1A1A1A;
+}
+
+@layer base {
+  body {
+    background-color: theme('colors.brand-bg');
+    color: theme('colors.brand-text');
+    font-family: theme('fontFamily.body');
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: theme('fontFamily.display');
+    letter-spacing: 0.05em;
+  }
+}
+
+/* Animations globales et text-shadows */
+.text-shadow-lg {
+  text-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}

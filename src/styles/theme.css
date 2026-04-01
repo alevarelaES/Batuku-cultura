@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #003893;
+  --color-orange: #E8751A;
+  --color-yellow: #F7D116;
+  --color-deep: #0B1B3D;
+  --color-red: #CE1126;
+  --color-green: #1A6B3C;
+  --color-brand-bg: #F5EDE3;
+  --color-brand-text: #101015;
+
+  --font-display: "Clash Display", sans-serif;
+  --font-body: "Cabinet Grotesk", sans-serif;
+}
+
+/* Subtle paper grain texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  pointer-events: none;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIi8+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPgo8L3N2Zz4=');
+  z-index: 9999;
+  mix-blend-mode: multiply;
+  opacity: 0.8;
+}
+
+body {
+  font-family: var(--font-body), sans-serif;
+  background-color: var(--color-brand-bg);
+  color: var(--color-brand-text);
+  overflow-x: hidden;
+}
+
+/* Animation helpers */
+@keyframes flagScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-flagScroll {
+  animation: flagScroll 10s linear infinite;
+}

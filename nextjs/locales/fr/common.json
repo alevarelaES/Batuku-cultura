@@ -1,0 +1,23 @@
+{
+  "Navbar": {
+    "home": "Accueil",
+    "about": "Qui sommes-nous",
+    "batuku": "Groupe Batuku",
+    "culture": "Culture & Traditions",
+    "events": "Événements",
+    "gallery": "Galerie",
+    "contact": "Contact"
+  },
+  "Home": {
+    "heroTitle": "CULTURA PALOPS",
+    "heroSubtitle": "La voix de l'Afrique lusophone au cœur de la Suisse.",
+    "joinBtn": "Rejoindre la Fête",
+    "discoverBtn": "Découvrir"
+  },
+  "Footer": {
+    "description": "Célébrer et promouvoir les cultures des Pays Africains de Langue Officielle Portugaise (PALOPs).",
+    "quickLinks": "Liens Rapides",
+    "contact": "Contact",
+    "rights": "© 2026 Cultura PALOPs. Tous droits réservés."
+  }
+}
