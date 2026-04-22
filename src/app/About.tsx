@@ -12,15 +12,15 @@ import { useLanguage } from './contexts/LanguageContext';
 import { MapPin, Calendar, Heart, Flame, Sparkles } from 'lucide-react';
 
 const teamData = [
-  { name: 'Ercelina Correia Garcia',        roleKey: 'rolePresidente',             img: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=256&h=256&fit=facearea&facepad=2&q=80', color: 'bg-primary' },
-  { name: 'Emilita Mendes Stevens',         roleKey: 'roleVicePresidente',         img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=256&h=256&fit=facearea&facepad=2&q=80', color: 'bg-orange' },
-  { name: 'Carla Sofia Lopes De Oliveira',  roleKey: 'roleTresoriereSecretaire',   img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=256&h=256&fit=facearea&facepad=2&q=80', color: 'bg-yellow' },
-  { name: 'Maria dos Anjos Freitas Cruz',   roleKey: 'roleRespCulinaire',          img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=256&h=256&fit=facearea&facepad=2&q=80', color: 'bg-green' },
-  { name: 'Helder Correia Garcia',          roleKey: 'roleRespOrganisation',       img: 'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=256&h=256&fit=facearea&facepad=2&q=80', color: 'bg-deep' },
-  { name: 'Maria Paula Lopes Monteiro Vaz', roleKey: 'roleRespSante',              img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=256&h=256&fit=facearea&facepad=2&q=80', color: 'bg-primary' },
-  { name: 'Maria José Furtado',             roleKey: 'roleRespEvenements',         img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=256&h=256&fit=facearea&facepad=2&q=80', color: 'bg-orange' },
-  { name: 'Monica Josefa (Nelcy)',          roleKey: 'roleCommunicationDigitale',  img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=256&h=256&fit=facearea&facepad=2&q=80', color: 'bg-green', extern: true },
-  { name: 'Kelton Lamine Correia Garcia',   roleKey: 'roleIntervenantMusical',     img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=256&h=256&fit=facearea&facepad=2&q=80', color: 'bg-yellow', extern: true },
+  { name: 'Ercelina Correia Garcia',        roleKey: 'rolePresidente',             img: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#003893' },
+  { name: 'Emilita Mendes Stevens',         roleKey: 'roleVicePresidente',         img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#E8751A' },
+  { name: 'Carla Sofia Lopes De Oliveira',  roleKey: 'roleTresoriereSecretaire',   img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#F7D116' },
+  { name: 'Maria dos Anjos Freitas Cruz',   roleKey: 'roleRespCulinaire',          img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#1A6B3C' },
+  { name: 'Helder Correia Garcia',          roleKey: 'roleRespOrganisation',       img: 'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#003893' },
+  { name: 'Maria Paula Lopes Monteiro Vaz', roleKey: 'roleRespSante',              img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#CE1126' },
+  { name: 'Maria José Furtado',             roleKey: 'roleRespEvenements',         img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#E8751A' },
+  { name: 'Monica Josefa (Nelcy)',          roleKey: 'roleCommunicationDigitale',  img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#1A6B3C', extern: true },
+  { name: 'Kelton Lamine Correia Garcia',   roleKey: 'roleIntervenantMusical',     img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#F7D116', extern: true },
 ];
 
 export const About = () => {
@@ -236,30 +236,58 @@ export const About = () => {
             </h2>
             <div className="w-16 h-1 bg-orange mx-auto mt-4 rounded-full" />
           </div>
-          <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+          <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
             {teamData.map((member, idx) => (
               <div
                 key={idx}
-                className="flex flex-col items-center bg-white rounded-[24px] p-6 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-xl transition-all border border-black/5"
+                className="group relative rounded-2xl overflow-hidden cursor-default"
+                style={{ background: '#0D1B2E' }}
               >
-                <div className={`w-24 h-24 md:w-28 md:h-28 rounded-full p-1.5 mb-4 ${member.color} bg-opacity-20`}>
+                {/* Photo portrait */}
+                <div className="relative aspect-[3/4] overflow-hidden">
                   <img
                     src={member.img}
                     alt={member.name}
-                    className="w-full h-full object-cover rounded-full border-2 border-white"
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                   />
+                  {/* Gradient bas → fond dark */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      background: 'linear-gradient(to top, #0D1B2E 0%, #0D1B2E 5%, rgba(13,27,46,0.5) 45%, transparent 75%)',
+                    }}
+                  />
+                  {/* Badge extern */}
+                  {member.extern && (
+                    <span
+                      className="absolute top-3 right-3 font-body font-bold text-[9px] uppercase tracking-widest px-2 py-1 rounded-full"
+                      style={{ background: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(8px)' }}
+                    >
+                      {t('About', 'extern')}
+                    </span>
+                  )}
                 </div>
-                <h3 className="text-brand-text mb-1 text-lg md:text-xl font-medium text-center font-display leading-snug">
-                  {member.name}
-                </h3>
-                <p className="font-body text-orange font-semibold text-sm md:text-base text-center uppercase tracking-wider mb-2">
-                  {t('About', member.roleKey)}
-                </p>
-                {member.extern && (
-                  <span className="bg-brand-bg text-brand-text/60 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border border-black/5">
-                    {t('About', 'extern')}
-                  </span>
-                )}
+
+                {/* Infos — flottent sur le gradient */}
+                <div className="absolute bottom-0 left-0 right-0 px-4 pb-4">
+                  {/* Trait de couleur */}
+                  <div className="w-8 h-[3px] rounded-full mb-2" style={{ background: member.accent }} />
+                  <h3 className="text-white font-display text-sm md:text-base leading-snug mb-0.5">
+                    {member.name}
+                  </h3>
+                  <p
+                    className="font-body font-semibold text-[10px] md:text-xs uppercase tracking-widest"
+                    style={{ color: member.accent }}
+                  >
+                    {t('About', member.roleKey)}
+                  </p>
+                </div>
+
+                {/* Glow coloré au survol */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{ boxShadow: `inset 0 0 0 1.5px ${member.accent}55` }}
+                />
               </div>
             ))}
           </div>
