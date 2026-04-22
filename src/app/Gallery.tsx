@@ -77,24 +77,32 @@ export const Gallery = () => {
       : galleryItems.filter((img) => img.category === activeFilter);
 
   return (
-    <div className="w-full bg-brand-bg min-h-screen py-section px-4 md:px-xl relative overflow-hidden">
-      <PatternBg className="text-primary opacity-5 fixed inset-0 z-0" />
-      <CarnivalMask className="absolute top-20 right-[-100px] text-accent opacity-20 w-[400px] h-[400px] rotate-[15deg] pointer-events-none z-0" />
-      <Confetti className="absolute inset-0 text-deep opacity-10 pointer-events-none z-0" />
+    <div className="w-full min-h-screen pb-section px-4 md:px-xl relative">
+      {/* ── DYNAMIC BACKGROUND ── */}
+      <div className="fixed inset-0 z-0 bg-brand-bg pointer-events-none">
+        {/* Orbs */}
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/3" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] translate-y-1/3 -translate-x-1/4" />
+        {/* Texture */}
+        <PatternBg className="text-primary opacity-5 absolute inset-0 mix-blend-multiply" />
+      </div>
 
-      <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[150px] md:text-[250px] font-display text-primary opacity-[0.03] pointer-events-none select-none z-0 leading-none tracking-widest">
+      <CarnivalMask className="fixed top-20 right-[-100px] text-accent opacity-20 w-[400px] h-[400px] rotate-[15deg] pointer-events-none z-0" />
+      <Confetti className="fixed inset-0 text-deep opacity-[0.03] pointer-events-none z-0" />
+
+      <div className="fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[150px] md:text-[250px] font-display text-primary opacity-[0.02] pointer-events-none select-none z-0 leading-none tracking-widest whitespace-nowrap">
         MEMORIES
       </div>
 
-      <CapeVerdeStars className="absolute -top-[100px] -left-[100px] text-accent opacity-[0.05] w-[700px] h-[700px] pointer-events-none z-0 animate-[spin_80s_linear_infinite]" />
-      <CapeVerdeIslands className="absolute top-1/3 right-10 text-primary opacity-[0.03] w-[400px] h-[250px] pointer-events-none z-0 rotate-12" />
+      <CapeVerdeStars className="fixed -top-[100px] -left-[100px] text-accent opacity-[0.05] w-[700px] h-[700px] pointer-events-none z-0 animate-[spin_80s_linear_infinite]" />
+      <CapeVerdeIslands className="fixed top-1/3 right-10 text-primary opacity-[0.03] w-[400px] h-[250px] pointer-events-none z-0 rotate-12" />
 
-      <div className="relative z-10">
+      <div className="relative z-10 pt-10 md:pt-14">
         <FadeIn>
-          <h1 className="text-deep text-center mb-6 text-6xl drop-shadow-sm">
+          <h1 className="text-brand-text text-center mb-6 text-5xl md:text-6xl drop-shadow-sm font-display tracking-tight">
             {t('Gallery', 'pageTitle')}
           </h1>
-          <p className="text-center font-body text-xl font-medium opacity-90 mb-12 max-w-3xl mx-auto bg-white/50 backdrop-blur-sm p-6 rounded-3xl shadow-lg text-text">
+          <p className="text-center font-body text-lg md:text-xl font-medium opacity-80 mb-12 max-w-3xl mx-auto bg-white/60 backdrop-blur-md px-8 py-5 rounded-[2rem] shadow-sm border border-white/80 text-brand-text">
             {t('Gallery', 'pageSubtitle')}
           </p>
         </FadeIn>
@@ -106,15 +114,15 @@ export const Gallery = () => {
               <button
                 key={f.key}
                 onClick={() => setActiveFilter(f.key)}
-                className={`px-7 py-3 rounded-full font-body font-bold text-base border-2 transition-all duration-300 ${
+                className={`px-6 md:px-8 py-3 rounded-full font-body font-bold text-sm md:text-base border transition-all duration-300 flex items-center justify-center ${
                   activeFilter === f.key
-                    ? 'bg-primary border-primary text-white shadow-[0_8px_20px_rgba(232,98,10,0.35)] scale-105'
-                    : 'border-primary/40 text-primary hover:bg-primary/10 bg-white/70 backdrop-blur-sm'
+                    ? 'bg-primary border-primary text-white shadow-[0_8px_20px_rgba(0,56,147,0.35)] scale-105'
+                    : 'border-black/5 text-primary hover:bg-white hover:border-black/10 hover:shadow-md bg-white/60 backdrop-blur-sm'
                 }`}
               >
                 {f.label}
                 {activeFilter === f.key && (
-                  <span className="ml-2 bg-white/20 rounded-full px-2 py-0.5 text-xs">
+                  <span className="ml-2 bg-white/20 rounded-full px-2.5 py-0.5 text-[10px] md:text-xs">
                     {filtered.length}
                   </span>
                 )}
@@ -135,9 +143,9 @@ export const Gallery = () => {
                   {filtered.map((item, i) => (
                     <div
                       key={`${item.category}-${i}`}
-                      className="overflow-hidden rounded-[30px] group relative cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 border-4 border-white/50"
+                      className="overflow-hidden rounded-[2rem] group relative cursor-pointer shadow-[0_8px_30px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgba(0,56,147,0.15)] hover:-translate-y-2 transition-all duration-500 border-[6px] border-white bg-white"
                     >
-                      <div className="absolute inset-0 bg-gradient-to-t from-deep/80 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-deep/90 via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
                       <img
                         src={item.src}
                         alt={item.labelKey}

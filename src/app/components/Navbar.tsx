@@ -62,23 +62,28 @@ export const Navbar = () => {
 
       <div className="px-6 md:px-12 2xl:px-20 flex items-center justify-between relative z-10" style={{ height: '4.5rem' }}>
         {/* Logo */}
-        <NavLink to="/" className="flex flex-col leading-none shrink-0 group">
-          <span
-            className="font-display text-accent uppercase tracking-widest drop-shadow group-hover:opacity-90 transition-opacity"
-            style={{ fontSize: '2rem' }}
-          >
-            BATUKU & CULTURA
-          </span>
-          <span className="flex items-center gap-1.5 mt-0.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-white/60 inline-block shrink-0" />
-            <span className="font-body font-bold text-white/80 text-[9px] tracking-[0.3em] uppercase">
-              {t('Navbar', 'capvertSuisse')}
+        <NavLink to="/" className="flex items-center gap-3 shrink-0 group">
+          {/* Logo image — fond noir se blend avec bg primary */}
+          <img
+            src="/logo/logo6.jpg"
+            alt="Batuku & Cultura logo"
+            className="h-10 w-10 sm:h-11 sm:w-11 rounded-full object-cover object-center ring-2 ring-yellow/60 shadow-[0_0_12px_rgba(245,184,0,0.4)] group-hover:ring-yellow transition-all duration-300"
+          />
+          {/* Nom + tagline */}
+          <div className="flex flex-col leading-none">
+            <span className="font-display text-yellow uppercase tracking-widest drop-shadow group-hover:opacity-90 transition-opacity text-[1.1rem] sm:text-[1.4rem]">
+              BATUKU &amp; CULTURA
             </span>
-            <span className="text-white/40 text-[9px]">·</span>
-            <span className="font-body text-white/50 text-[9px] tracking-[0.2em] uppercase">
-              {t('Navbar', 'culturesPalop')}
+            <span className="flex items-center gap-1.5 mt-0.5">
+              <span className="font-body font-bold text-white/70 text-[7px] sm:text-[9px] tracking-[0.2em] uppercase whitespace-nowrap">
+                {t('Navbar', 'capvertSuisse')}
+              </span>
+              <span className="text-white/40 text-[9px] hidden sm:inline">·</span>
+              <span className="font-body text-white/45 text-[7px] sm:text-[9px] tracking-[0.1em] uppercase whitespace-nowrap hidden sm:inline">
+                {t('Navbar', 'culturesPalop')}
+              </span>
             </span>
-          </span>
+          </div>
         </NavLink>
 
         {/* Desktop nav links */}

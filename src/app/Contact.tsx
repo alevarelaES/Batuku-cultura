@@ -26,9 +26,10 @@ export const Contact = () => {
       title: t('Contact', 'addressLabel'),
       color: 'text-primary',
       bg: 'bg-primary/10',
-      borderColor: 'border-primary',
+      href: `https://maps.google.com/?q=${encodeURIComponent(ASSOCIATION_CONTACT.address.line1 + ' ' + ASSOCIATION_CONTACT.address.line2)}`,
+      target: '_blank',
       content: (
-        <div className="font-body text-text/80 font-medium text-center leading-relaxed">
+        <div className="font-body text-brand-text/80 font-medium text-center leading-relaxed group-hover:text-primary transition-colors">
           <p>{ASSOCIATION_CONTACT.address.line1}</p>
           <p>{ASSOCIATION_CONTACT.address.line2}</p>
         </div>
@@ -39,14 +40,12 @@ export const Contact = () => {
       title: t('Contact', 'emailLabel'),
       color: 'text-accent',
       bg: 'bg-accent/10',
-      borderColor: 'border-accent',
+      href: `mailto:${ASSOCIATION_CONTACT.email}`,
+      target: '_self',
       content: (
-        <a
-          href={`mailto:${ASSOCIATION_CONTACT.email}`}
-          className="font-body text-accent/80 font-medium text-center hover:text-accent transition-colors break-all text-sm leading-relaxed"
-        >
+        <span className="font-body text-brand-text/80 font-medium text-center break-all text-sm leading-relaxed group-hover:text-accent transition-colors">
           {ASSOCIATION_CONTACT.email}
-        </a>
+        </span>
       ),
     },
     {
@@ -54,21 +53,12 @@ export const Contact = () => {
       title: t('Contact', 'phoneLabel'),
       color: 'text-nature',
       bg: 'bg-nature/10',
-      borderColor: 'border-nature',
+      href: `tel:${ASSOCIATION_CONTACT.phone1Href}`,
+      target: '_self',
       content: (
-        <div className="flex flex-col items-center gap-1">
-          <a
-            href={`tel:${ASSOCIATION_CONTACT.phone1Href}`}
-            className="font-body text-nature/80 font-medium text-center hover:text-nature transition-colors tracking-widest"
-          >
-            {ASSOCIATION_CONTACT.phone1}
-          </a>
-          <a
-            href={`tel:${ASSOCIATION_CONTACT.phone2Href}`}
-            className="font-body text-nature/80 font-medium text-center hover:text-nature transition-colors tracking-widest"
-          >
-            {ASSOCIATION_CONTACT.phone2}
-          </a>
+        <div className="flex flex-col items-center gap-1 font-body text-brand-text/80 font-medium tracking-widest group-hover:text-nature transition-colors">
+          <span>{ASSOCIATION_CONTACT.phone1}</span>
+          <span>{ASSOCIATION_CONTACT.phone2}</span>
         </div>
       ),
     },
@@ -77,28 +67,31 @@ export const Contact = () => {
       title: t('Contact', 'instagramLabel'),
       color: 'text-deep',
       bg: 'bg-deep/10',
-      borderColor: 'border-deep',
+      href: ASSOCIATION_CONTACT.instagramUrl,
+      target: '_blank',
       content: (
-        <a
-          href={ASSOCIATION_CONTACT.instagramUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="font-body text-deep/70 font-medium text-center hover:text-deep transition-colors flex items-center gap-1.5"
-        >
+        <span className="font-body text-brand-text/80 font-medium text-center flex items-center gap-1.5 group-hover:text-deep transition-colors">
           {ASSOCIATION_CONTACT.instagram}
           <ExternalLink size={12} className="shrink-0 opacity-60" />
-        </a>
+        </span>
       ),
     },
   ];
 
   return (
     <div className="w-full bg-brand-bg min-h-screen relative overflow-hidden">
-      <PatternBg className="text-primary opacity-5 fixed inset-0 z-0" />
+      {/* ── DYNAMIC BACKGROUND ── */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-primary/25 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/3" />
+        <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-accent/25 rounded-full blur-[150px] translate-y-1/3 -translate-x-1/4" />
+        <div className="absolute top-1/2 left-1/3 w-[600px] h-[600px] bg-cv/15 rounded-full blur-[150px] -translate-y-1/2" />
+        <PatternBg className="text-primary opacity-5 absolute inset-0 mix-blend-multiply" />
+      </div>
+
       <CapeVerdeStars className="absolute -top-[200px] -right-[200px] text-accent opacity-10 w-[800px] h-[800px] pointer-events-none z-0 animate-[spin_100s_linear_infinite]" />
       <CapeVerdeIslands className="absolute top-20 right-10 text-primary opacity-[0.03] w-[500px] h-[300px] pointer-events-none z-0 rotate-[-15deg]" />
 
-      <section className="py-section px-4 md:px-xl max-w-7xl mx-auto relative z-10">
+      <section className="py-section pb-32 md:pb-40 px-4 md:px-xl max-w-7xl mx-auto relative z-10">
         <FadeIn>
           <h1 className="text-primary text-center mb-16 text-6xl drop-shadow-sm">
             {t('Contact', 'pageTitle')}
@@ -110,98 +103,84 @@ export const Contact = () => {
             {/* Contact Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {contactItems.map((item, idx) => (
-                <div
+                <a
                   key={idx}
-                  className={`bg-white/80 backdrop-blur-md p-8 rounded-[30px] shadow-xl border-t-4 ${item.borderColor} flex flex-col items-center text-center hover:shadow-2xl hover:-translate-y-2 transition-all`}
+                  href={item.href}
+                  target={item.target}
+                  rel={item.target === '_blank' ? 'noreferrer' : undefined}
+                  className="group bg-white/70 backdrop-blur-md px-6 py-8 rounded-[2rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-white flex flex-col items-center text-center hover:shadow-[0_20px_40px_rgba(0,56,147,0.12)] hover:-translate-y-2 transition-all duration-500 cursor-pointer"
                 >
                   <div
-                    className={`w-16 h-16 rounded-full ${item.bg} ${item.color} flex items-center justify-center mb-5 shadow-inner shrink-0`}
+                    className={`w-16 h-16 rounded-full ${item.bg} ${item.color} flex items-center justify-center mb-5 shadow-sm shrink-0 border border-white/50 group-hover:scale-110 transition-transform duration-500`}
                   >
                     {item.icon}
                   </div>
-                  <h3 className={`${item.color} mb-3 text-xl`}>{item.title}</h3>
+                  <h3 className={`${item.color} mb-3 text-xl opacity-90`}>{item.title}</h3>
                   {item.content}
-                </div>
+                </a>
               ))}
-            </div>
-
-            {/* Join card */}
-            <div className="mt-12 bg-deep rounded-[40px] p-12 text-white relative overflow-hidden shadow-2xl border-4 border-deep">
-              <PatternBg className="text-white opacity-10" />
-              <CarnivalMask className="absolute -top-10 -right-10 text-accent opacity-20 w-64 h-64 rotate-[20deg] pointer-events-none" />
-              <Confetti className="absolute inset-0 text-white opacity-20 pointer-events-none" />
-
-              <div className="relative z-10 text-center">
-                <h2 className="text-accent mb-6 text-5xl leading-tight drop-shadow-md">
-                  {t('Contact', 'joinTitle')}
-                </h2>
-                <p className="font-body opacity-90 mb-10 text-xl font-medium">
-                  {t('Contact', 'joinText')}
-                </p>
-                <Button className="bg-accent text-deep hover:bg-white w-full py-5 text-xl shadow-[0_10px_20px_rgba(245,184,0,0.3)]">
-                  {t('Contact', 'joinBtn')}
-                </Button>
-              </div>
             </div>
           </FadeIn>
 
           <FadeIn delay={0.4}>
-            <form className="bg-white/90 backdrop-blur-md p-10 md:p-14 rounded-[40px] shadow-2xl flex flex-col gap-8 border-t-8 border-primary relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full pointer-events-none" />
+            <form className="bg-white/70 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col gap-8 border border-white relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[100px] pointer-events-none" />
 
-              <h2 className="text-deep mb-2 text-4xl">{t('Contact', 'formTitle')}</h2>
-              <p className="font-body text-text opacity-70 mb-4 font-medium">
-                {t('Contact', 'formSubtitle')}
-              </p>
+              <div>
+                <h2 className="text-brand-text mb-2 text-3xl md:text-4xl font-display">{t('Contact', 'formTitle')}</h2>
+                <p className="font-body text-brand-text/60 font-medium">
+                  {t('Contact', 'formSubtitle')}
+                </p>
+              </div>
 
               <div className="flex flex-col gap-3">
-                <label className="font-body font-bold text-deep uppercase tracking-wide text-sm">
+                <label className="font-body font-bold text-brand-text/70 uppercase tracking-[0.15em] text-xs">
                   {t('Contact', 'formName')}
                 </label>
                 <input
                   type="text"
                   placeholder={t('Contact', 'formNamePlaceholder')}
-                  className="h-14 bg-brand-bg border-2 border-transparent rounded-2xl px-6 font-body font-medium focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all text-lg"
+                  className="h-14 bg-white/50 backdrop-blur-sm border border-black/5 rounded-[1rem] px-6 font-body font-medium focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/30 transition-all text-base text-brand-text placeholder:text-brand-text/30 shadow-sm"
                 />
               </div>
 
               <div className="flex flex-col gap-3">
-                <label className="font-body font-bold text-deep uppercase tracking-wide text-sm">
+                <label className="font-body font-bold text-brand-text/70 uppercase tracking-[0.15em] text-xs">
                   {t('Contact', 'formEmail')}
                 </label>
                 <input
                   type="email"
                   placeholder={t('Contact', 'formEmailPlaceholder')}
-                  className="h-14 bg-brand-bg border-2 border-transparent rounded-2xl px-6 font-body font-medium focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all text-lg"
+                  className="h-14 bg-white/50 backdrop-blur-sm border border-black/5 rounded-[1rem] px-6 font-body font-medium focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/30 transition-all text-base text-brand-text placeholder:text-brand-text/30 shadow-sm"
                 />
               </div>
 
               <div className="flex flex-col gap-3">
-                <label className="font-body font-bold text-deep uppercase tracking-wide text-sm">
+                <label className="font-body font-bold text-brand-text/70 uppercase tracking-[0.15em] text-xs">
                   {t('Contact', 'formSubject')}
                 </label>
                 <input
                   type="text"
                   placeholder={t('Contact', 'formSubjectPlaceholder')}
-                  className="h-14 bg-brand-bg border-2 border-transparent rounded-2xl px-6 font-body font-medium focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all text-lg"
+                  className="h-14 bg-white/50 backdrop-blur-sm border border-black/5 rounded-[1rem] px-6 font-body font-medium focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/30 transition-all text-base text-brand-text placeholder:text-brand-text/30 shadow-sm"
                 />
               </div>
 
               <div className="flex flex-col gap-3">
-                <label className="font-body font-bold text-deep uppercase tracking-wide text-sm">
+                <label className="font-body font-bold text-brand-text/70 uppercase tracking-[0.15em] text-xs">
                   {t('Contact', 'formMessage')}
                 </label>
                 <textarea
                   rows={6}
                   placeholder={t('Contact', 'formMessagePlaceholder')}
-                  className="bg-brand-bg border-2 border-transparent rounded-2xl p-6 font-body font-medium focus:outline-none focus:ring-4 focus:ring-primary/20 focus:border-primary transition-all resize-none text-lg"
+                  className="bg-white/50 backdrop-blur-sm border border-black/5 rounded-[1rem] p-6 font-body font-medium focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/30 transition-all resize-none text-base text-brand-text placeholder:text-brand-text/30 shadow-sm"
                 />
               </div>
 
               <Button
                 type="submit"
                 variant="primary"
-                className="mt-4 py-5 text-xl bg-primary text-white hover:bg-deep shadow-[0_10px_20px_rgba(232,98,10,0.3)]"
+                className="mt-4 py-5 text-lg font-bold bg-primary text-white hover:bg-deep shadow-[0_10px_20px_rgba(0,56,147,0.2)] rounded-2xl transition-transform hover:scale-[1.02]"
               >
                 {t('Contact', 'formSend')}
               </Button>

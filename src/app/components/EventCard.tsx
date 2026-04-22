@@ -11,36 +11,42 @@ interface EventCardProps {
 
 export const EventCard = ({ image, date, title, location, badges }: EventCardProps) => {
   return (
-    <div className="bg-white/90 backdrop-blur-sm rounded-[30px] overflow-hidden shadow-xl hover:-translate-y-3 hover:shadow-[0_20px_40px_rgba(232,98,10,0.2)] transition-all duration-300 flex flex-col cursor-pointer group border-2 border-white/50 relative">
-      <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity z-0"></div>
+    <div className="bg-white rounded-[2rem] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,56,147,0.12)] transition-all duration-500 flex flex-col cursor-pointer group border border-black/5 relative h-full">
+      <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
       
-      <div className="h-[250px] w-full overflow-hidden relative z-10 m-2 rounded-[22px]">
-        <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors z-10"></div>
+      {/* Image Block: Edge-to-edge layout */}
+      <div className="h-[260px] md:h-[280px] w-full overflow-hidden relative z-10">
+        <div className="absolute inset-0 bg-brand-text/5 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
         <img 
           src={image} 
           alt={title} 
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
         />
+        {/* Badges on top right of image */}
         <div className="absolute top-4 right-4 z-20 flex flex-col gap-2">
           {badges.map((badge, idx) => (
-            <span key={idx} className="bg-white/90 backdrop-blur-md text-primary px-4 py-1.5 rounded-full text-xs font-bold font-body uppercase tracking-widest shadow-md">
+            <span key={idx} className="bg-white/95 backdrop-blur-md text-primary px-4 py-1.5 rounded-full text-[11px] font-bold font-body uppercase tracking-[0.15em] shadow-sm">
               {badge}
             </span>
           ))}
         </div>
       </div>
       
-      <div className="p-8 flex flex-col gap-4 flex-grow relative z-10">
-        <div className="flex items-center gap-3">
-          <div className="w-2 h-8 bg-primary rounded-full"></div>
-          <p className="font-body font-bold text-primary tracking-wide">{date}</p>
+      {/* Content Block */}
+      <div className="p-6 md:p-8 flex flex-col flex-grow relative z-10 bg-white">
+        {/* Date */}
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-1 h-5 bg-primary rounded-full"></div>
+          <p className="font-body font-bold text-primary/80 text-xs md:text-sm tracking-widest uppercase">{date}</p>
         </div>
         
-        <h3 className="text-text text-3xl line-clamp-2 leading-tight group-hover:text-primary transition-colors">{title}</h3>
+        {/* Title */}
+        <h3 className="text-brand-text font-display text-2xl md:text-[1.75rem] line-clamp-3 leading-[1.2] group-hover:text-primary transition-colors mb-2">{title}</h3>
         
-        <div className="flex items-center gap-2 text-text opacity-70 text-base font-body font-medium mt-auto pt-4">
-          <MapPin size={20} className="text-accent" />
-          <span>{location}</span>
+        {/* Location Footer (pushed to bottom) */}
+        <div className="flex items-center gap-3 text-brand-text/60 text-sm md:text-base font-body font-medium mt-auto pt-6 border-t border-black/5">
+          <MapPin size={18} className="text-primary/70 shrink-0" />
+          <span className="truncate">{location}</span>
         </div>
       </div>
     </div>

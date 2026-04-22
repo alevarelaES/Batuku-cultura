@@ -46,17 +46,17 @@ export const Home = () => {
         />
         <div className="relative z-10 max-w-7xl mx-auto">
           <FadeIn>
-            <div className="flex flex-col lg:flex-row gap-16 items-center">
+            <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
               {/* Left Text */}
               <div className="flex-1">
                 <span className="inline-flex items-center gap-3 font-body font-medium uppercase tracking-[0.3em] text-primary/80 text-sm mb-6">
                   <span className="w-8 h-px bg-primary/40 shrink-0"></span>
                   Notre Mission
                 </span>
-                <h2 className="text-brand-text text-5xl md:text-6xl font-display leading-[1.1] mb-6 font-light">
+                <h2 className="text-brand-text text-4xl sm:text-5xl md:text-6xl font-display leading-[1.1] mb-6 font-light">
                   {t('Home', 'capVertSection')}
                 </h2>
-                <p className="font-body text-brand-text/70 text-lg leading-relaxed mb-8">
+                <p className="font-body text-brand-text/90 text-xl lg:text-2xl font-medium leading-relaxed mb-8">
                   {t('Home', 'capVertText')}
                 </p>
                 <div className="relative p-7 rounded-[2rem] bg-white/60 backdrop-blur-sm border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
@@ -100,8 +100,8 @@ export const Home = () => {
       </section>
 
       {/* 3. BATUKU SPOTLIGHT */}
-      <section className="bg-gradient-to-br from-[#E2EBE5] to-[#F1EDE4] py-20 px-6 relative overflow-hidden">
-        <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-green/5 rounded-full blur-[100px] pointer-events-none"></div>
+      <section className="bg-brand-bg py-20 px-6 relative overflow-hidden">
+        <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-orange/5 rounded-full blur-[100px] pointer-events-none"></div>
         <div className="absolute bottom-0 left-1/4 w-[800px] h-[800px] bg-yellow/10 rounded-full blur-[120px] pointer-events-none"></div>
 
         {/* Cape Verde flag — fades from left (low opacity) to fully invisible on the right */}
@@ -111,9 +111,9 @@ export const Home = () => {
             alt=""
             className="absolute inset-0 w-full h-full object-cover object-left"
             style={{
-              opacity: 0.22,
-              maskImage: 'linear-gradient(to right, black 0%, black 20%, transparent 80%)',
-              WebkitMaskImage: 'linear-gradient(to right, black 0%, black 20%, transparent 80%)',
+              opacity: 0.30,
+              maskImage: 'linear-gradient(to right, black 0%, black 40%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to right, black 0%, black 40%, transparent 100%)',
             }}
           />
         </div>
@@ -123,7 +123,7 @@ export const Home = () => {
           <div className="w-full md:w-[42%] order-2 md:order-1 relative flex justify-center">
             <FadeIn>
               <div className="relative group w-full max-w-[380px] aspect-[3/4]">
-                <div className="absolute -inset-6 bg-green/20 rounded-[4rem] blur-[30px] opacity-40 group-hover:opacity-60 transition-opacity duration-700"></div>
+                <div className="absolute -inset-6 bg-orange/10 rounded-[4rem] blur-[30px] opacity-40 group-hover:opacity-60 transition-opacity duration-700"></div>
                 <div className="relative w-full h-full rounded-t-[10rem] rounded-b-[2rem] overflow-hidden bg-white shadow-2xl p-2 pb-[4.5rem]">
                   <img src={BATUKU_IMG} alt="Groupe Batuku" className="w-full h-full object-cover rounded-t-[9rem] rounded-b-[1.5rem] brightness-105" />
                   <NavLink to="/batuku" className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-3 bg-white/80 backdrop-blur-md rounded-full pl-3 pr-5 py-2.5 shadow-xl hover:scale-105 transition-transform border border-white">
@@ -142,7 +142,7 @@ export const Home = () => {
                 <span className="w-2.5 h-2.5 rounded-full bg-green shrink-0"></span>
                 {t('Home', 'batukuSubtitle')} — Santiago
               </span>
-              <h2 className="mb-6 text-4xl md:text-6xl font-display leading-[1.1] font-light text-brand-text">
+              <h2 className="mb-6 text-4xl sm:text-5xl md:text-6xl font-display leading-[1.1] font-light text-brand-text">
                 {t('Home', 'batukuTitle')}
               </h2>
               <p className="mb-8 text-base font-body leading-relaxed text-brand-text/70">
@@ -176,16 +176,16 @@ export const Home = () => {
             {/* Section header */}
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
               <div>
-                <span className="inline-flex items-center gap-3 font-body font-medium uppercase tracking-[0.3em] text-brand-text/40 text-sm mb-3">
-                  <span className="w-8 h-px bg-brand-text/20 shrink-0"></span>
+                <span className="inline-flex items-center gap-3 font-body font-medium uppercase tracking-[0.3em] text-brand-text/70 text-sm mb-3">
+                  <span className="w-8 h-px bg-brand-text/40 shrink-0"></span>
                   Nos Origines
                 </span>
-                <h2 className="text-brand-text text-4xl md:text-6xl font-display font-light leading-none">
+                <h2 className="text-brand-text text-4xl sm:text-5xl md:text-6xl font-display font-medium leading-none">
                   5 Nations,<br />
                   <span className="text-primary">1 Langue.</span>
                 </h2>
               </div>
-              <p className="font-body text-brand-text/50 text-base max-w-xs leading-relaxed md:text-right">
+              <p className="font-body text-brand-text/80 text-base max-w-xs leading-relaxed md:text-right">
                 Les pays lusophones d'Afrique, unis par une langue et mille rythmes.
               </p>
             </div>
@@ -212,13 +212,13 @@ export const Home = () => {
                   <span className="inline-block bg-yellow/20 backdrop-blur border border-yellow/30 text-yellow text-[10px] font-bold uppercase tracking-[0.25em] px-3 py-1.5 rounded-full mb-6">
                     Notre Berceau
                   </span>
-                  <h3 className="font-display font-light text-white text-5xl md:text-6xl leading-none mb-3">
+                  <h3 className="font-display font-light text-white text-4xl sm:text-5xl md:text-6xl leading-none mb-3">
                     Cap-Vert
                   </h3>
-                  <p className="font-body text-white/60 text-sm leading-relaxed max-w-xs">
+                  <p className="font-body text-white/90 text-sm leading-relaxed max-w-xs">
                     Archipel de l'Atlantique. Berceau de la Morna, du Batuku, de la Coladeira.
                   </p>
-                  <div className="mt-8 flex items-center gap-3 text-white/50 font-body font-medium text-xs uppercase tracking-widest group-hover:text-white/80 transition-colors">
+                  <div className="mt-8 flex items-center gap-3 text-white/80 font-body font-medium text-xs uppercase tracking-widest group-hover:text-white transition-colors">
                     Explorer la culture
                     <span className="w-5 h-px bg-current transition-all group-hover:w-10"></span>
                   </div>
@@ -236,7 +236,7 @@ export const Home = () => {
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-10 text-7xl font-display text-[#CC092F]">A</div>
                   <div className="relative z-10">
                     <h3 className="font-display font-light text-white text-3xl leading-none mb-1">Angola</h3>
-                    <p className="font-body text-white/40 text-xs uppercase tracking-widest">Kizomba · Semba</p>
+                    <p className="font-body text-white/70 text-xs uppercase tracking-widest">Kizomba · Semba</p>
                   </div>
                 </NavLink>
 
@@ -247,7 +247,7 @@ export const Home = () => {
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-10 text-7xl font-display text-[#009A44]">G</div>
                   <div className="relative z-10">
                     <h3 className="font-display font-light text-white text-2xl leading-none mb-1">Guinée-Bissau</h3>
-                    <p className="font-body text-white/40 text-xs uppercase tracking-widest">Gumbe · Tina</p>
+                    <p className="font-body text-white/70 text-xs uppercase tracking-widest">Gumbe · Tina</p>
                   </div>
                 </NavLink>
 
@@ -258,7 +258,7 @@ export const Home = () => {
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-10 text-7xl font-display text-[#009A44]">M</div>
                   <div className="relative z-10">
                     <h3 className="font-display font-light text-white text-3xl leading-none mb-1">Mozambique</h3>
-                    <p className="font-body text-white/40 text-xs uppercase tracking-widest">Marrabenta</p>
+                    <p className="font-body text-white/70 text-xs uppercase tracking-widest">Marrabenta</p>
                   </div>
                 </NavLink>
 
@@ -269,7 +269,7 @@ export const Home = () => {
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-10 text-6xl font-display text-[#FFCD00]">ST</div>
                   <div className="relative z-10">
                     <h3 className="font-display font-light text-white text-2xl leading-none mb-1">São Tomé & Príncipe</h3>
-                    <p className="font-body text-white/40 text-xs uppercase tracking-widest">Puíta · Ússua</p>
+                    <p className="font-body text-white/70 text-xs uppercase tracking-widest">Puíta · Ússua</p>
                   </div>
                 </NavLink>
 

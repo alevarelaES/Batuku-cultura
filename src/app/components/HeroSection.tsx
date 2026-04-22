@@ -7,7 +7,7 @@ export const HeroSection = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="relative w-full min-h-screen bg-brand-bg overflow-hidden flex flex-col justify-center pt-24 pb-16">
+    <section className="relative w-full min-h-screen bg-[#dcebf8] overflow-hidden flex flex-col justify-center pt-24 pb-16">
       
       {/* --- BACKGROUND: SUNSET GLOW --- */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-orange/10 rounded-full blur-[120px] opacity-80 pointer-events-none translate-x-1/4 -translate-y-1/4"></div>
@@ -22,7 +22,7 @@ export const HeroSection = () => {
       />
 
       {/* --- MAIN CONTENT: 2-column layout --- */}
-      <div className="relative z-10 max-w-[1400px] mx-auto w-full px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between gap-16">
+      <div className="relative z-10 max-w-[1400px] mx-auto w-full px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 mt-8 md:mt-0">
         
         {/* LEFT COLUMN: text — NO items-start so text takes full available width */}
         <div className="w-full lg:w-[55%] flex flex-col text-left">
@@ -34,10 +34,10 @@ export const HeroSection = () => {
           
           {/* Title block — items-start OK here because h1 are block-level and naturally full width */}
           <div className="flex flex-col animate-[fade-in-up_1s_ease-out_0.2s_both]">
-            <h1 className="font-display text-[4rem] md:text-[5.5rem] lg:text-[7.5rem] leading-[0.85] text-brand-text tracking-tight mb-2">
+            <h1 className="font-display text-6xl sm:text-[4rem] md:text-[5.5rem] lg:text-[7.5rem] leading-[0.85] text-brand-text tracking-tight mb-2">
               BATUKU
             </h1>
-            <h1 className="font-display text-[2.5rem] md:text-[3.5rem] lg:text-[4.5rem] leading-[1] text-orange">
+            <h1 className="font-display text-4xl sm:text-[2.5rem] md:text-[3.5rem] lg:text-[4.5rem] leading-[1] text-orange">
               <span className="font-light italic">&</span> CULTURA
             </h1>
           </div>
@@ -55,20 +55,19 @@ export const HeroSection = () => {
             </p>
           </div>
 
-          {/* CTAs — items-start HERE so buttons don't stretch full width */}
-          <div className="mt-10 flex flex-wrap gap-4 animate-[fade-in-up_1.4s_ease-out_0.6s_both]">
-            <NavLink to="/events">
-              <button className="bg-orange text-white font-body font-medium text-base md:text-lg px-8 py-4 rounded-[2rem] transition-all hover:bg-orange/90 hover:shadow-[0_10px_30px_rgba(232,117,26,0.3)] hover:-translate-y-1 flex items-center gap-2">
+          {/* CTAs — flex-col on mobile, row on tablet */}
+          <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-4 animate-[fade-in-up_1.4s_ease-out_0.6s_both] w-full sm:w-auto">
+            <NavLink to="/events" className="w-full sm:w-auto">
+              <button className="w-full sm:w-auto justify-center bg-orange text-white font-body font-medium text-base md:text-lg px-8 py-4 rounded-[2rem] transition-all hover:bg-orange/90 hover:shadow-[0_10px_30px_rgba(232,117,26,0.3)] hover:-translate-y-1 flex items-center gap-2">
                 Rejoindre la communauté <span className="opacity-70">→</span>
               </button>
             </NavLink>
-            <NavLink to="/about">
-              <button className="bg-white/50 backdrop-blur-sm text-brand-text border border-brand-text/10 font-body font-medium text-base md:text-lg px-8 py-4 rounded-[2rem] transition-all hover:bg-white hover:shadow-xl">
+            <NavLink to="/about" className="w-full sm:w-auto">
+              <button className="w-full sm:w-auto justify-center bg-white/50 backdrop-blur-sm text-brand-text border border-brand-text/10 font-body font-medium text-base md:text-lg px-8 py-4 rounded-[2rem] transition-all hover:bg-white hover:shadow-xl flex items-center">
                 Découvrir
               </button>
             </NavLink>
           </div>
-
         </div>
 
         {/* RIGHT COLUMN: Photo */}

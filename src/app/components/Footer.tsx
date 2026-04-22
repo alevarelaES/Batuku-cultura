@@ -59,21 +59,27 @@ export const Footer = () => {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
 
             {/* Logo block */}
-            <NavLink to="/" className="group flex flex-col max-w-xs">
-              <span
-                className="font-display text-4xl md:text-5xl text-white leading-none tracking-tight mb-3 group-hover:text-orange transition-colors duration-300"
-              >
-                BATUKU<br />
-                <span className="text-orange font-light italic text-3xl md:text-4xl">& Cultura</span>
-              </span>
-              {/* Tagline pills */}
-              <div className="flex flex-wrap gap-2 mt-1">
-                <span className="font-body text-[9px] font-bold uppercase tracking-[0.3em] text-white/50 border border-white/20 px-3 py-1 rounded-full">
-                  Cap-Vert · Suisse
+            <NavLink to="/" className="group flex items-start gap-5 max-w-sm">
+              {/* Logo circulaire coloré */}
+              <img
+                src="/logo/logo3.jpg"
+                alt="Batuku & Cultura"
+                className="w-20 h-20 rounded-full object-cover object-center shrink-0 shadow-[0_0_30px_rgba(245,184,0,0.25)] ring-2 ring-yellow/30 group-hover:ring-yellow/60 transition-all duration-500"
+              />
+              {/* Texte brand */}
+              <div className="flex flex-col justify-center">
+                <span className="font-display text-3xl md:text-4xl text-white leading-none tracking-tight mb-2 group-hover:text-yellow transition-colors duration-300">
+                  BATUKU<br />
+                  <span className="text-yellow font-light italic text-2xl md:text-3xl">&amp; Cultura</span>
                 </span>
-                <span className="font-body text-[9px] font-bold uppercase tracking-[0.3em] text-white/30 border border-white/10 px-3 py-1 rounded-full">
-                  Cultures PALOP
-                </span>
+                <div className="flex flex-wrap gap-2 mt-1">
+                  <span className="font-body text-[9px] font-bold uppercase tracking-[0.3em] text-white/50 border border-white/20 px-3 py-1 rounded-full">
+                    Cap-Vert · Suisse
+                  </span>
+                  <span className="font-body text-[9px] font-bold uppercase tracking-[0.3em] text-white/30 border border-white/10 px-3 py-1 rounded-full">
+                    Cultures PALOP
+                  </span>
+                </div>
               </div>
             </NavLink>
 
