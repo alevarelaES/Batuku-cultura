@@ -9,12 +9,9 @@ import {
 import { HeroSection } from './components/HeroSection';
 import { useLanguage } from './contexts/LanguageContext';
 import { NavLink } from 'react-router';
+import { events, formatEventDate } from '../data/events';
 
-// High-quality vibrant imagery
 const BATUKU_IMG = "https://images.unsplash.com/photo-1581536678606-3a35fecc8fc5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080&q=80";
-const MUSIC_IMG = "https://images.unsplash.com/photo-1672856181212-b5b5a0065a08?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80";
-const DANCE_IMG = "https://images.unsplash.com/photo-1772268337010-03e52e5b9a11?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80";
-const GALA_IMG = "https://images.unsplash.com/photo-1696236930810-5bd7ea978369?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80";
 
 const MUSIC_GENRES: { key: string; descKey: string; Icon: React.FC<{ className?: string }>; bgClass: string; iconClass: string; badgeKey: string }[] = [
   { key: 'mornaTitle', descKey: 'mornaDesc', Icon: MusicNotes, bgClass: 'bg-primary', iconClass: 'text-primary', badgeKey: 'UNESCO 2019' },
@@ -24,13 +21,9 @@ const MUSIC_GENRES: { key: string; descKey: string; Icon: React.FC<{ className?:
 ];
 
 export const Home = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
-  const upcomingEvents = [
-    { image: MUSIC_IMG, dateKey: 'event1Date', titleKey: 'event1Title', location: 'Lausanne, CH' },
-    { image: DANCE_IMG, dateKey: 'event2Date', titleKey: 'event2Title', location: 'Genève, CH' },
-    { image: GALA_IMG, dateKey: 'event3Date', titleKey: 'event3Title', location: 'Payerne, CH' },
-  ];
+  const upcomingEvents = events.filter((e) => !e.featured);
 
   return (
     <div className="w-full relative">
@@ -312,11 +305,11 @@ export const Home = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
               {upcomingEvents.map((event, idx) => (
-                <FadeIn key={idx} delay={idx * 0.1}>
+                <FadeIn key={event.id} delay={idx * 0.1}>
                   <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-[2rem] overflow-hidden group hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500 hover:-translate-y-1.5 flex flex-col">
                     <div className="relative h-56 overflow-hidden p-2.5 pb-0">
                       <div className="w-full h-full rounded-[1.5rem] overflow-hidden relative">
-                        <img src={event.image} alt={t('Home', event.titleKey)} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 brightness-90 saturate-50 group-hover:saturate-100" />
+                        <img src={event.image} alt={event.title[lang]} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 brightness-90 saturate-50 group-hover:saturate-100" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0B1B3D]/80 via-transparent to-transparent opacity-60"></div>
                       </div>
                       <div className="absolute top-7 right-7 bg-white/20 backdrop-blur-md border border-white/30 text-white font-body font-medium px-3 py-1 rounded-full text-xs uppercase tracking-widest">
@@ -324,11 +317,11 @@ export const Home = () => {
                       </div>
                     </div>
                     <div className="p-6 flex flex-col flex-1">
-                      <h3 className="font-display font-light text-white text-2xl leading-snug mb-5">{t('Home', event.titleKey)}</h3>
+                      <h3 className="font-display font-light text-white text-2xl leading-snug mb-5">{event.title[lang]}</h3>
                       <div className="mt-auto space-y-2.5 font-body text-white/50 text-sm">
                         <div className="flex items-center gap-3 pb-2.5 border-b border-white/10">
                           <span className="bg-white/10 p-1.5 rounded-full shrink-0"><Calendar size={13} className="text-orange" /></span>
-                          {t('Home', event.dateKey)}
+                          {formatEventDate(event.date, lang)}
                         </div>
                         <div className="flex items-center gap-3">
                           <span className="bg-white/10 p-1.5 rounded-full shrink-0"><MapPin size={13} className="text-primary" /></span>

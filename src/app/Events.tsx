@@ -8,11 +8,9 @@ import {
 } from './components/Decorations';
 import { MotifGuitar, MotifIcons, CapeVerdeStars } from './components/CulturalMotifs';
 import { useLanguage } from './contexts/LanguageContext';
-const imgFestival = 'https://images.unsplash.com/photo-1581536678606-3a35fecc8fc5?w=1080&q=80';
+import { events, formatEventDate } from '../data/events';
 
-const MUSIC_IMG = 'https://images.unsplash.com/photo-1672856181212-b5b5a0065a08?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXBlJTIwdmVyZGUlMjBtdXNpY3xlbnwxfHx8fDE3NzQyNzExMzV8MA&ixlib=rb-4.1.0&q=80&w=1080';
-const DANCE_IMG = 'https://images.unsplash.com/photo-1772268337010-03e52e5b9a11?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwdHJhZGl0aW9uYWwlMjBkYW5jZXxlbnwxfHx8fDE3NzQyNzExMzV8MA&ixlib=rb-4.1.0&q=80&w=1080';
-const GALA_IMG = 'https://images.unsplash.com/photo-1696236930810-5bd7ea978369?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwbXVzaWMlMjBmZXN0aXZhbCUyMGNyb3dkJTIwY29sb3JmdWx8ZW58MXx8fHwxNzc0MjcxMTM1fDA&ixlib=rb-4.1.0&q=80&w=1080';
+const imgFestival = events.find((e) => e.featured)?.image ?? '';
 
 // Filter dot colors (internal keys stay in FR as category IDs)
 const FILTER_DOT: Record<string, string> = {
@@ -25,7 +23,7 @@ const FILTER_DOT: Record<string, string> = {
 type FilterKey = 'Tous' | 'Festival' | 'Danse' | 'Atelier' | 'Gastronomie';
 
 export const Events = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [filter, setFilter] = useState<FilterKey>('Tous');
 
   // PALOP colors with translated labels
@@ -45,40 +43,30 @@ export const Events = () => {
     { key: 'Gastronomie',label: t('Events', 'filterGastronomy') },
   ];
 
-  const events = [
-    {
-      image: MUSIC_IMG,
-      date: t('Events', 'event1Date'),
-      title: t('Events', 'event1Title'),
-      location: t('Events', 'event1Location'),
-      badges: ['Danse'],
-      type: 'Danse',
-      countries: [PALOP_COLORS.angola, PALOP_COLORS.capvert],
-    },
-    {
-      image: DANCE_IMG,
-      date: t('Events', 'event2Date'),
-      title: t('Events', 'event2Title'),
-      location: t('Events', 'event2Location'),
-      badges: ['Atelier', 'Danse'],
-      type: 'Atelier',
-      countries: [PALOP_COLORS.capvert],
-    },
-    {
-      image: GALA_IMG,
-      date: t('Events', 'event3Date'),
-      title: t('Events', 'event3Title'),
-      location: t('Events', 'event3Location'),
-      badges: ['Gastronomie'],
-      type: 'Gastronomie',
-      countries: [PALOP_COLORS.angola, PALOP_COLORS.capvert, PALOP_COLORS.bissau, PALOP_COLORS.mozambique, PALOP_COLORS.santome],
-    },
-  ];
+  const tagToFilter: Record<string, FilterKey> = {
+    festival: 'Festival',
+    danse: 'Danse',
+    atelier: 'Atelier',
+    gastronomie: 'Gastronomie',
+  };
+
+  const listEvents = events
+    .filter((e) => !e.featured)
+    .map((e) => ({
+      id: e.id,
+      image: e.image ?? '',
+      date: formatEventDate(e.date, lang),
+      title: e.title[lang],
+      location: e.location,
+      badges: [tagToFilter[e.tag]],
+      type: tagToFilter[e.tag],
+      countries: (e.countries ?? []).map((c) => PALOP_COLORS[c]).filter(Boolean),
+    }));
 
   const filteredEvents =
     filter === 'Tous'
-      ? events
-      : events.filter((e) => e.type === filter || e.badges.includes(filter));
+      ? listEvents
+      : listEvents.filter((e) => e.type === filter || e.badges.includes(filter));
 
   const currentFilterLabel = filter === 'Tous'
     ? t('Events', 'allEventsTitle')
@@ -217,7 +205,7 @@ export const Events = () => {
           {/* Grille événements */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {filteredEvents.map((event, idx) => (
-              <FadeIn key={idx} delay={idx * 0.1}>
+              <FadeIn key={event.id} delay={idx * 0.1}>
                 <div className="relative">
                   {/* PALOP country dots on card */}
                   <div className="absolute -top-3 right-4 z-20 flex gap-1.5">

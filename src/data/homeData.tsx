@@ -1,21 +1,11 @@
 import React from 'react';
 import { Djembe, Guitar, MusicNotes, Trumpet } from '../app/components/Decorations';
 
-const MUSIC_IMG = "https://images.unsplash.com/photo-1672856181212-b5b5a0065a08?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80";
-const DANCE_IMG = "https://images.unsplash.com/photo-1772268337010-03e52e5b9a11?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80";
-const GALA_IMG = "https://images.unsplash.com/photo-1696236930810-5bd7ea978369?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80";
-
 export const getMusicGenres = () => [
   { key: 'mornaTitle', descKey: 'mornaDesc', Icon: MusicNotes, color: 'bg-cv', textColor: 'text-white', badgeKey: 'UNESCO 2019' },
   { key: 'batukuTitle2', descKey: 'batukuDesc2', Icon: Djembe, color: 'bg-primary', textColor: 'text-white', badgeKey: 'Santiago' },
   { key: 'funaTitle', descKey: 'funaDesc', Icon: Guitar, color: 'bg-nature', textColor: 'text-white', badgeKey: 'badgeFreedom' },
   { key: 'coladTitle', descKey: 'coladDesc', Icon: Trumpet, color: 'bg-accent', textColor: 'text-brand-text', badgeKey: 'badgeParty' },
-];
-
-export const getUpcomingEvents = () => [
-  { image: MUSIC_IMG, dateKey: 'event1Date', titleKey: 'event1Title', location: 'Lausanne, CH', color: 'bg-cv text-white' },
-  { image: DANCE_IMG, dateKey: 'event2Date', titleKey: 'event2Title', location: 'Genève, CH', color: 'bg-nature text-white' },
-  { image: GALA_IMG, dateKey: 'event3Date', titleKey: 'event3Title', location: 'Payerne, CH', color: 'bg-red text-white' },
 ];
 
 export const getPalopsData = (lang: string) => [
