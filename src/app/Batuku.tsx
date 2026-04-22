@@ -94,7 +94,7 @@ export const Batuku = () => {
       </section>
 
       {/* ─── ACTE 3 : HÉRITAGE & TIMELINE DYNAMIQUE ─── */}
-      <section className="py-10 md:py-16 px-6 relative max-w-6xl mx-auto z-10">
+      <section className="py-10 md:py-16 px-6 relative max-w-6xl mx-auto z-10 overflow-hidden">
         <Djembe className="absolute top-0 right-0 text-orange opacity-[0.03] w-[500px] h-[500px] pointer-events-none -translate-y-1/4 translate-x-1/4" />
         
         <FadeIn>
@@ -135,11 +135,11 @@ export const Batuku = () => {
                 className={`w-full relative z-10 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-[2.5rem] overflow-hidden border border-black/5 hover:-translate-y-2 transition-transform duration-500 group`}
               >
                 <div className={`absolute inset-0 bg-gradient-to-b ${item.color} opacity-20 group-hover:opacity-40 transition-opacity`} />
-                <div className="p-8 md:p-10 relative z-10">
+                <div className="p-5 md:p-10 relative z-10">
                   <span className={`${item.badgeClass} font-body font-bold px-4 py-1.5 rounded-full text-xs md:text-sm tracking-widest uppercase mb-6 inline-block shadow-sm`}>
                     {item.period}
                   </span>
-                  <h3 className="text-brand-text text-3xl md:text-4xl font-display leading-tight mb-4">
+                  <h3 className="text-brand-text text-2xl md:text-4xl font-display leading-tight mb-4">
                     {item.title}
                   </h3>
                   <p className="font-body text-brand-text/70 leading-relaxed text-base md:text-lg">

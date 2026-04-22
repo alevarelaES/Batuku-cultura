@@ -54,7 +54,7 @@ export const HeroSection = () => {
           <h1
             className="font-display font-bold leading-[0.82] tracking-tight select-none"
             style={{
-              fontSize: 'clamp(5rem, 16vw, 22rem)',
+              fontSize: 'clamp(2.8rem, 14vw, 22rem)',
               background: 'linear-gradient(120deg, #F7D116 0%, #E8751A 38%, #CE1126 72%, #E8751A 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -68,13 +68,13 @@ export const HeroSection = () => {
           <div className="flex items-baseline gap-3 mt-1 ml-1 animate-[fade-in-up_1.1s_ease-out_0.3s_both]">
             <span
               className="font-display font-extralight italic leading-none"
-              style={{ fontSize: 'clamp(1.2rem, 3.5vw, 5rem)', color: 'rgba(255,255,255,0.18)' }}
+              style={{ fontSize: 'clamp(0.9rem, 3vw, 5rem)', color: 'rgba(255,255,255,0.18)' }}
             >
               &amp;
             </span>
             <span
               className="font-display font-light leading-none tracking-wide"
-              style={{ fontSize: 'clamp(1.8rem, 5.5vw, 7.5rem)', color: 'rgba(255,255,255,0.16)' }}
+              style={{ fontSize: 'clamp(1.3rem, 5vw, 7.5rem)', color: 'rgba(255,255,255,0.16)' }}
             >
               CULTURA
             </span>

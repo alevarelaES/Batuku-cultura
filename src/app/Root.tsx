@@ -5,7 +5,7 @@ import { Footer } from './components/Footer';
 
 export const Root = () => {
   return (
-    <div className="flex flex-col min-h-screen relative bg-brand-bg text-brand-text w-full" style={{ fontFamily: 'var(--font-body)' }}>
+    <div className="flex flex-col min-h-screen relative bg-brand-bg text-brand-text w-full overflow-x-hidden" style={{ fontFamily: 'var(--font-body)' }}>
       <ScrollRestoration />
       <Navbar />
       {/* pt compensates for fixed navbar height (4.5rem) + flag strip (~4px) */}
