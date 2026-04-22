@@ -103,7 +103,7 @@ body {
   50%       { transform: translateY(8px); opacity: 0.9; }
 }
 
-/* Disable heavy animations for users who prefer reduced motion or on low-end devices */
+/* Disable heavy animations for users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -112,14 +112,40 @@ body {
   }
 }
 
-/* Reduce GPU-intensive effects on mobile */
-@media (max-width: 768px) {
-  .blur-\[100px\], .blur-\[120px\], .blur-\[150px\] {
-    filter: blur(40px) !important;
+/* Drop-shadow on hero title — desktop only */
+@media (min-width: 769px) {
+  .hero-title {
+    filter: drop-shadow(0 0 50px rgba(232,117,26,0.28));
   }
-  [class*="backdrop-blur"] {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    background-color: rgba(255,255,255,0.9) !important;
+}
+
+/* ── MOBILE PERFORMANCE ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Hide all large decorative blur orbs — biggest GPU drain on mobile */
+  .blur-\[80px\],
+  .blur-\[100px\],
+  .blur-\[120px\],
+  .blur-\[150px\] {
+    display: none !important;
+  }
+
+  /* Shorten hero CSS animations on mobile */
+  .animate-\[fade-in-up_0\.9s_ease-out_0\.1s_both\],
+  .animate-\[fade-in-up_1\.1s_ease-out_0\.3s_both\],
+  .animate-\[fade-in-up_1\.3s_ease-out_0\.5s_both\],
+  .animate-\[fade-in-up_1\.6s_ease-out_0\.8s_both\] {
+    animation-duration: 0.35s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* ── GLASSMORPHISM FALLBACK ─────────────────────────────────────────────── */
+/* When backdrop-filter is not supported, give cards a readable solid bg */
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-light {
+    background-color: rgba(255, 255, 255, 0.92) !important;
+  }
+  .glass-dark {
+    background-color: rgba(11, 27, 61, 0.92) !important;
   }
 }

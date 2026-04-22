@@ -52,7 +52,7 @@ export const Batuku = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-brand-bg via-transparent to-transparent opacity-100" />
         </div>
         
-        <CapeVerdeStars className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-[0.10] w-[900px] h-[900px] z-10 pointer-events-none animate-[spin_100s_linear_infinite]" />
+        <CapeVerdeStars className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-[0.10] w-[900px] h-[900px] z-10 pointer-events-none animate-[spin_100s_linear_infinite]" />
 
         <FadeIn className="relative z-20 text-center px-6 max-w-5xl mt-20">
           <span className="inline-block bg-white/20 backdrop-blur-md border border-white/30 text-white font-body font-bold px-6 py-2 rounded-full text-sm md:text-base tracking-[0.3em] uppercase mb-6 shadow-xl">

@@ -52,14 +52,13 @@ export const HeroSection = () => {
           </p>
 
           <h1
-            className="font-display font-bold leading-[0.82] tracking-tight select-none"
+            className="font-display font-bold leading-[0.82] tracking-tight select-none hero-title"
             style={{
               fontSize: 'clamp(2.8rem, 14vw, 22rem)',
               background: 'linear-gradient(120deg, #F7D116 0%, #E8751A 38%, #CE1126 72%, #E8751A 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
-              filter: 'drop-shadow(0 0 50px rgba(232,117,26,0.28))',
             }}
           >
             BATUKU

@@ -94,7 +94,7 @@ export const Gallery = () => {
         MEMORIES
       </div>
 
-      <CapeVerdeStars className="fixed -top-[100px] -left-[100px] text-accent opacity-[0.05] w-[700px] h-[700px] pointer-events-none z-0 animate-[spin_80s_linear_infinite]" />
+      <CapeVerdeStars className="hidden md:block fixed -top-[100px] -left-[100px] text-accent opacity-[0.05] w-[700px] h-[700px] pointer-events-none z-0 animate-[spin_80s_linear_infinite]" />
       <CapeVerdeIslands className="fixed top-1/3 right-10 text-primary opacity-[0.03] w-[400px] h-[250px] pointer-events-none z-0 rotate-12" />
 
       <div className="relative z-10 pt-10 md:pt-14">
