@@ -1,105 +1,130 @@
-import React from 'react';
-import { NavLink } from 'react-router';
-import { Globe, ArrowRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 export const HeroSection = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="relative w-full min-h-screen bg-[#dcebf8] overflow-hidden flex flex-col justify-center pt-24 pb-16">
-      
-      {/* --- BACKGROUND: SUNSET GLOW --- */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-orange/10 rounded-full blur-[120px] opacity-80 pointer-events-none translate-x-1/4 -translate-y-1/4"></div>
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[100px] opacity-60 pointer-events-none -translate-x-1/4 translate-y-1/4"></div>
-      
-      {/* Background texture: Gemini-generated instrument pattern */}
+    <section
+      className="relative w-full overflow-hidden flex flex-col"
+      style={{ background: '#08111F', marginTop: '-5rem', minHeight: 'calc(100vh + 5rem)' }}
+    >
+      {/* ── BACKGROUND ── */}
+
+      {/* Drapeau Cap-Vert — demi-droite, plus visible */}
       <img
-        src="/Sections_fonds/hero_fond.png"
+        src="/flags/flag-cape-verde.jpg"
         alt=""
-        className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none z-0"
-        style={{ opacity: 0.7 }}
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover object-right pointer-events-none"
+        style={{
+          opacity: 0.2,
+          zIndex: 2,
+          maskImage: 'linear-gradient(to left, black 0%, black 45%, transparent 80%)',
+          WebkitMaskImage: 'linear-gradient(to left, black 0%, black 45%, transparent 80%)',
+        }}
       />
 
-      {/* --- MAIN CONTENT: 2-column layout --- */}
-      <div className="relative z-10 max-w-[1400px] mx-auto w-full px-6 lg:px-12 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 mt-8 md:mt-0">
-        
-        {/* LEFT COLUMN: text — NO items-start so text takes full available width */}
-        <div className="w-full lg:w-[55%] flex flex-col text-left">
-          
-          <span className="font-body text-sm uppercase tracking-[0.4em] font-medium text-orange/80 mb-6 animate-[fade-in-up_0.8s_ease-out_both] flex items-center gap-3">
-            <span className="w-8 h-px bg-orange/40 shrink-0"></span>
-            PALOP Suisse Romande
-          </span>
-          
-          {/* Title block — items-start OK here because h1 are block-level and naturally full width */}
-          <div className="flex flex-col animate-[fade-in-up_1s_ease-out_0.2s_both]">
-            <h1 className="font-display text-6xl sm:text-[4rem] md:text-[5.5rem] lg:text-[7.5rem] leading-[0.85] text-brand-text tracking-tight mb-2">
-              BATUKU
-            </h1>
-            <h1 className="font-display text-4xl sm:text-[2.5rem] md:text-[3.5rem] lg:text-[4.5rem] leading-[1] text-orange">
-              <span className="font-light italic">&</span> CULTURA
-            </h1>
+      {/* Gradient overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          zIndex: 3,
+          background: `
+            radial-gradient(ellipse 70% 60% at 75% 55%, rgba(232,117,26,0.15) 0%, transparent 65%),
+            radial-gradient(ellipse 55% 70% at 8% 85%, rgba(0,56,147,0.3) 0%, transparent 55%),
+            linear-gradient(115deg, rgba(8,17,31,0.92) 0%, rgba(8,17,31,0.45) 55%, rgba(8,17,31,0.65) 100%)
+          `,
+        }}
+      />
+
+      {/* ── MAIN CONTENT ── */}
+      <div
+        className="relative flex flex-col px-8 md:px-14 lg:px-20"
+        style={{ zIndex: 10, minHeight: '100vh', paddingTop: '5rem', paddingBottom: '3rem' }}
+      >
+        {/* BATUKU — flex-1 + items-center = centré verticalement */}
+        <div className="flex-1 flex flex-col justify-center animate-[fade-in-up_0.9s_ease-out_0.1s_both]">
+          <p
+            className="font-body font-semibold uppercase mb-3 ml-1"
+            style={{ fontSize: 'clamp(0.6rem, 1.1vw, 0.85rem)', color: 'rgba(255,255,255,0.38)', letterSpacing: '0.22em' }}
+          >
+            Association Batuku &amp; Cultura — PALOP · Suisse Romande
+          </p>
+
+          <h1
+            className="font-display font-bold leading-[0.82] tracking-tight select-none"
+            style={{
+              fontSize: 'clamp(5rem, 16vw, 22rem)',
+              background: 'linear-gradient(120deg, #F7D116 0%, #E8751A 38%, #CE1126 72%, #E8751A 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              filter: 'drop-shadow(0 0 50px rgba(232,117,26,0.28))',
+            }}
+          >
+            BATUKU
+          </h1>
+
+          <div className="flex items-baseline gap-3 mt-1 ml-1 animate-[fade-in-up_1.1s_ease-out_0.3s_both]">
+            <span
+              className="font-display font-extralight italic leading-none"
+              style={{ fontSize: 'clamp(1.2rem, 3.5vw, 5rem)', color: 'rgba(255,255,255,0.18)' }}
+            >
+              &amp;
+            </span>
+            <span
+              className="font-display font-light leading-none tracking-wide"
+              style={{ fontSize: 'clamp(1.8rem, 5.5vw, 7.5rem)', color: 'rgba(255,255,255,0.16)' }}
+            >
+              CULTURA
+            </span>
           </div>
-          
-          {/* Text block — critical: NO items-start, paragraphs need to stretch */}
-          <div className="mt-8 flex flex-col animate-[fade-in-up_1.2s_ease-out_0.4s_both]">
-            <h2 className="font-body text-xl md:text-2xl font-semibold text-brand-text/80 mb-4">
+        </div>
+
+        {/* BAS — description + citation, sans boutons */}
+        <div className="flex items-end justify-between gap-8 animate-[fade-in-up_1.3s_ease-out_0.5s_both]">
+
+          <div className="flex flex-col gap-1 max-w-sm">
+            <p className="font-body font-semibold text-base" style={{ color: 'rgba(255,255,255,0.72)' }}>
               Association Culturelle Cap-Verdienne
-            </h2>
-            <p className="font-body text-brand-text/70 text-lg md:text-xl font-normal max-w-lg mb-6 leading-relaxed">
+            </p>
+            <p className="font-body text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.36)' }}>
               {t('Home', 'heroSubtitle')}
             </p>
-            <p className="font-body text-lg md:text-xl font-light text-primary italic border-l-2 border-primary/20 pl-4 py-1 max-w-md">
-              "A cultura não se explica. Vive-se."
-            </p>
           </div>
 
-          {/* CTAs — flex-col on mobile, row on tablet */}
-          <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-4 animate-[fade-in-up_1.4s_ease-out_0.6s_both] w-full sm:w-auto">
-            <NavLink to="/events" className="w-full sm:w-auto">
-              <button className="w-full sm:w-auto justify-center bg-orange text-white font-body font-medium text-base md:text-lg px-8 py-4 rounded-[2rem] transition-all hover:bg-orange/90 hover:shadow-[0_10px_30px_rgba(232,117,26,0.3)] hover:-translate-y-1 flex items-center gap-2">
-                Rejoindre la communauté <span className="opacity-70">→</span>
-              </button>
-            </NavLink>
-            <NavLink to="/about" className="w-full sm:w-auto">
-              <button className="w-full sm:w-auto justify-center bg-white/50 backdrop-blur-sm text-brand-text border border-brand-text/10 font-body font-medium text-base md:text-lg px-8 py-4 rounded-[2rem] transition-all hover:bg-white hover:shadow-xl flex items-center">
-                Découvrir
-              </button>
-            </NavLink>
-          </div>
+          <p className="hidden md:block font-body text-sm italic" style={{ color: '#F7D116', opacity: 0.58 }}>
+            "A cultura não se explica. Vive-se."
+          </p>
         </div>
 
-        {/* RIGHT COLUMN: Photo */}
-        <div className="w-full lg:w-[45%] flex justify-center animate-[fade-in-up_1.3s_ease-out_0.5s_both]">
-          <div className="relative w-full max-w-[500px] aspect-[4/5] group">
-            <div className="absolute -inset-4 bg-orange/20 rounded-[3rem] blur-2xl opacity-50 group-hover:opacity-70 transition-opacity duration-700"></div>
-            <div className="relative w-full h-full rounded-[2.5rem] overflow-hidden bg-white shadow-2xl">
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-orange/20 z-10 mix-blend-overlay pointer-events-none"></div>
-              <img 
-                src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=1200&auto=format&fit=crop" 
-                alt="Communauté Batuku & Cultura" 
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-              />
-              <div className="absolute bottom-6 left-6 right-6 z-20 bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl p-5 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 text-white shadow-lg">
-                <span className="font-display text-2xl mb-1 block drop-shadow-md">La Communauté</span>
-                <span className="font-body text-sm font-medium opacity-90 block">Un espace de partage au quotidien.</span>
-              </div>
-            </div>
+        {/* SCROLL INDICATOR — centré, subtil */}
+        <div className="flex justify-center mt-6 animate-[fade-in-up_1.6s_ease-out_0.8s_both]">
+          <div
+            className="flex justify-center items-start pt-1.5 rounded-full"
+            style={{ width: 22, height: 36, border: '1.5px solid rgba(255,255,255,0.22)' }}
+          >
+            <div
+              className="rounded-full"
+              style={{
+                width: 3,
+                height: 6,
+                background: 'rgba(255,255,255,0.45)',
+                animation: 'scroll-bounce 1.8s ease-in-out infinite',
+              }}
+            />
           </div>
         </div>
-
       </div>
 
-      {/* Soft PALOP color strip at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-1.5 flex z-30 opacity-80">
-        <div className="h-full flex-1 bg-green"></div>
-        <div className="h-full flex-1 bg-red"></div>
-        <div className="h-full flex-1 bg-yellow"></div>
-        <div className="h-full flex-1 bg-primary"></div>
-        <div className="h-full flex-1 bg-orange"></div>
+      {/* BOTTOM — bande PALOP */}
+      <div className="absolute bottom-0 left-0 right-0 flex" style={{ height: 4, zIndex: 20 }}>
+        <div className="flex-1" style={{ background: '#1A6B3C' }} />
+        <div className="flex-1" style={{ background: '#CE1126' }} />
+        <div className="flex-1" style={{ background: '#F7D116' }} />
+        <div className="flex-1" style={{ background: '#003893' }} />
+        <div className="flex-1" style={{ background: '#E8751A' }} />
       </div>
-
     </section>
   );
 };

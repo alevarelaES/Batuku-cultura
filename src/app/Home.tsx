@@ -138,14 +138,14 @@ export const Home = () => {
           {/* Right: Text */}
           <div className="w-full md:w-[58%] order-1 md:order-2">
             <FadeIn delay={0.15}>
-              <span className="inline-flex items-center gap-3 font-body font-medium uppercase tracking-[0.3em] text-green/80 text-sm mb-5">
+              <span className="inline-flex items-center gap-3 font-body font-medium uppercase tracking-[0.2em] text-green/80 text-base mb-5">
                 <span className="w-2.5 h-2.5 rounded-full bg-green shrink-0"></span>
                 {t('Home', 'batukuSubtitle')} — Santiago
               </span>
               <h2 className="mb-6 text-4xl sm:text-5xl md:text-6xl font-display leading-[1.1] font-light text-brand-text">
                 {t('Home', 'batukuTitle')}
               </h2>
-              <p className="mb-8 text-base font-body leading-relaxed text-brand-text/70">
+              <p className="mb-8 text-lg md:text-xl font-body font-medium leading-relaxed text-brand-text/90">
                 {t('Home', 'batukuText')}
               </p>
               <NavLink to="/batuku">

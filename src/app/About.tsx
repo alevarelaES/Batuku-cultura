@@ -42,16 +42,27 @@ export const About = () => {
 
       {/* ─── SECTION 1 : HERO IDENTITÉ OFFICIELLE ─── */}
       <section className="bg-primary relative overflow-hidden pt-16 pb-0">
-        <CapeVerdeIslands className="absolute right-0 top-1/2 -translate-y-1/2 text-white opacity-[0.06] w-[700px] h-[440px] pointer-events-none" />
-        <Guitar className="absolute bottom-10 left-1/4 text-white opacity-[0.05] w-16 h-32 pointer-events-none rotate-[10deg]" />
+        {/* Illustration de fond — subtile, bords seulement */}
+        <img
+          src="/Sections_fonds/fond qui sommes nous .png"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
+          style={{
+            opacity: 0.15,
+            mixBlendMode: 'screen',
+          }}
+        />
 
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center mb-10">
           <FadeIn>
-            <div className="inline-flex items-center gap-3 bg-white/10 border border-white/20 px-5 py-2.5 rounded-full mb-6 backdrop-blur-sm">
-              <span className="w-2.5 h-2.5 rounded-full bg-orange inline-block shrink-0" />
-              <span className="font-body font-bold text-white text-xs tracking-[0.3em] uppercase">
-                {t('About', 'legalType')}
-              </span>
+            <div className="mb-6 flex justify-center">
+              <img
+                src="/logo/logo4.jpg"
+                alt="Logo Batuku & Cultura"
+                className="h-24 w-24 rounded-full object-cover ring-2 ring-white/40 shadow-[0_0_24px_rgba(247,209,22,0.35)]"
+                loading="lazy"
+              />
             </div>
 
             <h1 className="text-white text-5xl md:text-7xl font-display mb-4 leading-tight drop-shadow-sm">

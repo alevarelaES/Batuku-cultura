@@ -125,6 +125,12 @@ export const Contact = () => {
           <FadeIn delay={0.4}>
             <form className="bg-white/70 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col gap-8 border border-white relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[100px] pointer-events-none" />
+              <img
+                src="/logo/logo8.jpg"
+                alt="Sceau Batuku & Cultura"
+                className="absolute top-6 right-6 h-12 w-12 rounded-full object-cover ring-2 ring-white/70 shadow-md opacity-95"
+                loading="lazy"
+              />
 
               <div>
                 <h2 className="text-brand-text mb-2 text-3xl md:text-4xl font-display">{t('Contact', 'formTitle')}</h2>

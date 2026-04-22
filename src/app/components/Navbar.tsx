@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router';
+import React, { useState, useEffect } from 'react';
+import { NavLink, useLocation } from 'react-router';
 import { FlagStrip } from './FlagStrip';
 import { Menu, X } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -9,7 +9,17 @@ const LANGS: Lang[] = ['fr', 'pt', 'en'];
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { lang, setLang, t } = useLanguage();
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+  const isTransparent = isHome && !scrolled;
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const links = [
     { path: '/', label: t('Navbar', 'home') },
@@ -23,10 +33,11 @@ export const Navbar = () => {
 
   return (
     <nav
-      className="fixed top-0 left-0 right-0 z-50 shadow-lg overflow-visible bg-primary"
+      className="fixed top-0 left-0 right-0 z-50 overflow-visible transition-all duration-300"
+      style={isTransparent ? { background: 'transparent' } : { background: '#003893', boxShadow: '0 4px 24px rgba(0,0,0,0.3)' }}
     >
-      {/* Subtle instrument pattern overlay */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.07]">
+      {/* Instrument pattern — only visible when solid */}
+      <div className={`absolute inset-0 pointer-events-none overflow-hidden transition-opacity duration-300 ${isTransparent ? 'opacity-0' : 'opacity-[0.07]'}`}>
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="nav-instruments" x="0" y="0" width="120" height="96" patternUnits="userSpaceOnUse">
@@ -137,13 +148,14 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* 5-color separator strip */}
-      <FlagStrip />
+      {/* 5-color separator strip — only when solid */}
+      {!isTransparent && <FlagStrip />}
 
       {/* Mobile Menu */}
       {isOpen && (
         <div
-          className="lg:hidden absolute top-full left-0 w-full border-t border-white/20 flex flex-col py-3 px-4 shadow-2xl z-40 bg-primary"
+          className="lg:hidden absolute top-full left-0 w-full border-t border-white/20 flex flex-col py-3 px-4 shadow-2xl z-40"
+          style={{ background: '#003893' }}
         >
           {links.map((link) => (
             <NavLink
