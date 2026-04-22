@@ -41,6 +41,7 @@ export const Home = () => {
         <img
           src="/Sections_fonds/notre_mission_section_fond.png"
           alt=""
+          loading="lazy"
           className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none z-0"
           style={{ opacity: 0.55 }}
         />
@@ -109,6 +110,7 @@ export const Home = () => {
           <img
             src="/flags/flag-cape-verde.jpg"
             alt=""
+            loading="lazy"
             className="absolute inset-0 w-full h-full object-cover object-left"
             style={{
               opacity: 0.30,
@@ -125,7 +127,7 @@ export const Home = () => {
               <div className="relative group w-full max-w-[380px] aspect-[3/4]">
                 <div className="absolute -inset-6 bg-orange/10 rounded-[4rem] blur-[30px] opacity-40 group-hover:opacity-60 transition-opacity duration-700"></div>
                 <div className="relative w-full h-full rounded-t-[10rem] rounded-b-[2rem] overflow-hidden bg-white shadow-2xl p-2 pb-[4.5rem]">
-                  <img src={BATUKU_IMG} alt="Groupe Batuku" className="w-full h-full object-cover rounded-t-[9rem] rounded-b-[1.5rem] brightness-105" />
+                  <img src={BATUKU_IMG} alt="Groupe Batuku" loading="lazy" className="w-full h-full object-cover rounded-t-[9rem] rounded-b-[1.5rem] brightness-105" />
                   <NavLink to="/batuku" className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-3 bg-white/80 backdrop-blur-md rounded-full pl-3 pr-5 py-2.5 shadow-xl hover:scale-105 transition-transform border border-white">
                     <PlayCircle size={28} className="text-green shrink-0" />
                     <span className="font-body font-bold text-sm text-brand-text whitespace-nowrap">Découvrir le Batuku</span>
@@ -167,6 +169,7 @@ export const Home = () => {
         <img
           src="/Sections_fonds/Nos Origines.png"
           alt=""
+          loading="lazy"
           className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none z-0"
           style={{ opacity: 0.45 }}
         />
@@ -309,7 +312,7 @@ export const Home = () => {
                   <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-[2rem] overflow-hidden group hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500 hover:-translate-y-1.5 flex flex-col">
                     <div className="relative h-56 overflow-hidden p-2.5 pb-0">
                       <div className="w-full h-full rounded-[1.5rem] overflow-hidden relative">
-                        <img src={event.image} alt={event.title[lang]} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 brightness-90 saturate-50 group-hover:saturate-100" />
+                        <img src={event.image} alt={event.title[lang]} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 brightness-90 saturate-50 group-hover:saturate-100" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0B1B3D]/80 via-transparent to-transparent opacity-60"></div>
                       </div>
                       <div className="absolute top-7 right-7 bg-white/20 backdrop-blur-md border border-white/30 text-white font-body font-medium px-3 py-1 rounded-full text-xs uppercase tracking-widest">

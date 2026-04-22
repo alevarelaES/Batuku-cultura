@@ -149,6 +149,7 @@ export const Gallery = () => {
                       <img
                         src={item.src}
                         alt={item.labelKey}
+                        loading="lazy"
                         className="w-full block transform group-hover:scale-110 transition-transform duration-700 object-cover"
                         style={{ minHeight: '250px' }}
                       />

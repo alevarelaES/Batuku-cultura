@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Outlet, ScrollRestoration } from 'react-router';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
+
+const PageFallback = () => (
+  <div className="flex-grow flex items-center justify-center min-h-[60vh]">
+    <div className="w-8 h-8 rounded-full border-2 border-primary border-t-transparent animate-spin" />
+  </div>
+);
 
 export const Root = () => {
   return (
@@ -10,7 +16,9 @@ export const Root = () => {
       <Navbar />
       {/* pt compensates for fixed navbar height (4.5rem) + flag strip (~4px) */}
       <main className="flex-grow flex flex-col w-full pt-[5rem]">
-        <Outlet />
+        <Suspense fallback={<PageFallback />}>
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
     </div>

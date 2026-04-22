@@ -1,12 +1,14 @@
 import { createBrowserRouter } from "react-router";
+import { lazy, Suspense } from "react";
 import { Root } from "./Root";
-import { Home } from "./Home";
-import { About } from "./About";
-import { Batuku } from "./Batuku";
-import { Culture } from "./Culture";
-import { Events } from "./Events";
-import { Gallery } from "./Gallery";
-import { Contact } from "./Contact";
+
+const Home    = lazy(() => import("./Home").then(m => ({ default: m.Home })));
+const About   = lazy(() => import("./About").then(m => ({ default: m.About })));
+const Batuku  = lazy(() => import("./Batuku").then(m => ({ default: m.Batuku })));
+const Culture = lazy(() => import("./Culture").then(m => ({ default: m.Culture })));
+const Events  = lazy(() => import("./Events").then(m => ({ default: m.Events })));
+const Gallery = lazy(() => import("./Gallery").then(m => ({ default: m.Gallery })));
+const Contact = lazy(() => import("./Contact").then(m => ({ default: m.Contact })));
 
 export const router = createBrowserRouter([
   {

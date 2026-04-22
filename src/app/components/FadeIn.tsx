@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 
 interface FadeInProps {
   children: React.ReactNode;
@@ -8,15 +8,19 @@ interface FadeInProps {
 }
 
 export const FadeIn = ({ children, delay = 0, className = '' }: FadeInProps) => {
+  const prefersReduced = useReducedMotion();
+
+  if (prefersReduced) {
+    return <div className={`w-full ${className}`}>{children}</div>;
+  }
+
   return (
     <motion.div
-      // Default to w-full so text inside flex containers doesn't collapse.
-      // The `className` prop can override this if a specific width is needed.
       className={`w-full ${className}`}
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.6, delay, ease: 'easeOut' }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.45, delay, ease: 'easeOut' }}
     >
       {children}
     </motion.div>

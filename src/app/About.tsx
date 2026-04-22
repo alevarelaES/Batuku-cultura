@@ -47,6 +47,7 @@ export const About = () => {
           src="/Sections_fonds/fond qui sommes nous .png"
           alt=""
           aria-hidden="true"
+          loading="lazy"
           className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
           style={{
             opacity: 0.15,
@@ -248,6 +249,7 @@ export const About = () => {
                   <img
                     src={member.img}
                     alt={member.name}
+                    loading="lazy"
                     className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                   />
                   {/* Gradient bas → fond dark */}

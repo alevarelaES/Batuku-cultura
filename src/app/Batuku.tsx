@@ -44,6 +44,7 @@ export const Batuku = () => {
           <img
             src="https://images.unsplash.com/photo-1581536678606-3a35fecc8fc5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXBlJTIwdmVyZGVhbiUyMHdvbWVuJTIwdHJhZGl0aW9uYWwlMjBkcnVtc3xlbnwxfHx8fDE3NzQyNzExMzV8MA&ixlib=rb-4.1.0&q=80&w=1080"
             alt="Femmes Cap-verdiennes"
+            fetchPriority="high"
             className="w-full h-full object-cover opacity-60"
           />
           {/* Vibrant gradient overlay instead of dull grey */}
@@ -80,8 +81,9 @@ export const Batuku = () => {
             {/* Soft background if image delays loading */}
             <div className="absolute inset-0 bg-gradient-to-tr from-orange/20 to-primary/20 mix-blend-overlay z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             <img 
-              src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=2000&auto=format&fit=crop" 
+              src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?q=80&w=2000&auto=format&fit=crop"
               alt="Photo complète du groupe Batuku"
+              loading="lazy"
               className="w-full aspect-video md:aspect-[21/9] object-cover group-hover:scale-105 transition-transform duration-1000"
             />
             {/* Caption on hover */}
@@ -179,6 +181,7 @@ export const Batuku = () => {
               <img
                 src="https://images.unsplash.com/photo-1772268337010-03e52e5b9a11?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080&q=80"
                 alt="Danse Batuku"
+                loading="lazy"
                 className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
               />
             </div>
@@ -189,6 +192,7 @@ export const Batuku = () => {
               <img
                 src="https://images.unsplash.com/photo-1767293940906-6aa1c13b514b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080&q=80"
                 alt="Tambours africains"
+                loading="lazy"
                 className="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-700"
               />
             </div>
@@ -199,6 +203,7 @@ export const Batuku = () => {
               <img
                 src="https://images.unsplash.com/photo-1696236930810-5bd7ea978369?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080&q=80"
                 alt="Fête musicale"
+                loading="lazy"
                 className="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-700"
               />
             </div>
