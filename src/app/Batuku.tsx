@@ -38,29 +38,30 @@ export const Batuku = () => {
     <div className="w-full bg-brand-bg min-h-screen relative overflow-hidden">
       <PatternBg className="text-primary opacity-[0.03] fixed inset-0 z-0 pointer-events-none" />
 
-      {/* ─── ACTE 1 : HERO VIBRANT ─── */}
-      <section className="relative h-[55vh] md:h-[65vh] flex items-center justify-center overflow-hidden bg-deep">
+      {/* ─── ACTE 1 : HERO VIBRANT (ABOVE THE FOLD) ─── */}
+      <section className="relative min-h-[62vh] flex items-center justify-center overflow-hidden bg-deep">
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1581536678606-3a35fecc8fc5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXBlJTIwdmVyZGVhbiUyMHdvbWVuJTIwdHJhZGl0aW9uYWwlMjBkcnVtc3xlbnwxfHx8fDE3NzQyNzExMzV8MA&ixlib=rb-4.1.0&q=80&w=1080"
             alt="Femmes Cap-verdiennes"
             fetchPriority="high"
-            className="w-full h-full object-cover opacity-60"
+            className="w-full h-full object-cover opacity-70"
           />
-          {/* Vibrant gradient overlay instead of dull grey */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#003893]/80 via-[#0B1B3D]/80 to-[#E8751A]/60 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-bg via-transparent to-transparent opacity-100" />
+          {/* Vibrant gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#003893]/70 via-[#0B1B3D]/80 to-[#E8751A]/60 mix-blend-multiply" />
+          {/* Bottom fade blending into the next section */}
+          <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-brand-bg to-transparent opacity-100" />
         </div>
         
-        <CapeVerdeStars className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-[0.10] w-[900px] h-[900px] z-10 pointer-events-none animate-[spin_100s_linear_infinite]" />
+        <CapeVerdeStars className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-[0.10] w-[1200px] h-[1200px] z-10 pointer-events-none animate-[spin_120s_linear_infinite]" />
 
-        <FadeIn className="relative z-20 text-center px-6 max-w-5xl mt-20">
-          <span className="inline-block bg-white/20 backdrop-blur-md border border-white/30 text-white font-body font-bold px-6 py-2 rounded-full text-sm md:text-base tracking-[0.3em] uppercase mb-6 shadow-xl">
-            {t('Batuku', 'pageSubtitle')}
-          </span>
-          <h1 className="text-white text-6xl md:text-[120px] font-display tracking-tight drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)] mb-4 leading-none">
+        <FadeIn className="relative z-20 text-center px-6 max-w-6xl w-full mx-auto flex flex-col items-center justify-center mt-12 md:mt-0">
+          <h1 className="text-white text-7xl md:text-[140px] lg:text-[170px] font-display tracking-tight drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)] mb-6 leading-none animate-[fade-in-up_1s_ease-out_0.4s_both]">
             {t('Batuku', 'pageTitle')}
           </h1>
+          <p className="text-white/90 text-lg md:text-2xl font-body max-w-2xl mx-auto drop-shadow-md leading-relaxed animate-[fade-in-up_1.2s_ease-out_0.6s_both]">
+            {t('Batuku', 'pageSubtitle')}
+          </p>
         </FadeIn>
       </section>
 

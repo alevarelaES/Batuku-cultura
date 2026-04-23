@@ -76,7 +76,7 @@ export const Events = () => {
     <div className="w-full bg-brand-bg min-h-screen pb-section">
 
       {/* ── HERO EVENT PHARE ── */}
-      <section className="relative overflow-hidden bg-deep">
+      <section className="relative overflow-hidden bg-deep lg:h-[calc(100vh-5rem)]">
         {/* Motifs décoratifs */}
         <CapeVerdeStars className="absolute -top-20 -left-20 text-white opacity-10 w-[600px] h-[600px] pointer-events-none z-0 animate-[spin_60s_linear_infinite]" />
         <CapeVerdeIslands className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-[0.05] w-[800px] h-[500px] pointer-events-none z-0" />
@@ -86,72 +86,73 @@ export const Events = () => {
         <Trumpet className="absolute top-1/2 left-5 text-accent opacity-[0.12] w-32 h-32 pointer-events-none z-0 -translate-y-1/2 rotate-[-30deg]" />
         <Confetti className="absolute inset-0 text-accent opacity-15 pointer-events-none z-0" />
 
-        {/* Glow blobs */}
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full bg-primary/20 blur-[150px] pointer-events-none z-0" />
-        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] rounded-full bg-accent/10 blur-[120px] pointer-events-none z-0 -translate-y-1/2 -ml-32" />
+        {/* Glow blobs — vivid */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-orange/30 blur-[120px] pointer-events-none z-0" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-yellow/20 blur-[100px] pointer-events-none z-0" />
+        <div className="absolute bottom-0 right-1/3 w-[400px] h-[400px] rounded-full bg-green/20 blur-[120px] pointer-events-none z-0" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-xl pb-12 md:pb-16">
-          {/* Titre de page — design premium */}
-          <div className="text-center pt-3 pb-6 relative">
-            <p className="font-body text-white/50 uppercase tracking-[0.3em] text-xs font-bold mb-2">
-              {t('Events', 'featuredBadge')}
-            </p>
-            <h1 className="font-display text-5xl md:text-6xl text-white drop-shadow-lg tracking-wide bg-gradient-to-r from-yellow via-white to-yellow bg-clip-text text-transparent">
-              {t('Events', 'pageTitle')}
-            </h1>
-            <div className="flex items-center justify-center gap-3 mt-3">
-              <span className="h-px w-12 bg-gradient-to-r from-transparent to-yellow/70 block" />
-              <span className="w-2 h-2 rounded-full bg-yellow shadow-[0_0_8px_rgba(245,184,0,0.8)]" />
-              <span className="h-px w-12 bg-gradient-to-l from-transparent to-yellow/70 block" />
-            </div>
-          </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 pt-4 pb-4 flex flex-col lg:h-full">
           {/* Card principale */}
-          <div className="flex flex-col lg:flex-row gap-8 xl:gap-12 items-center bg-white/10 p-6 md:p-10 rounded-[40px] backdrop-blur-md border-2 border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
+          <div className="flex flex-col lg:flex-row gap-0 items-stretch rounded-[40px] border-2 border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.5)] lg:flex-1 lg:min-h-0 overflow-hidden">
 
-            {/* Image gauche */}
-            <div className="w-full lg:w-[45%] shrink-0 relative">
-              {/* Tilt background */}
-              <div className="absolute inset-0 bg-yellow rounded-[20px] transform -rotate-3 scale-[1.04] z-0 shadow-[0_15px_30px_rgba(245,184,0,0.4)]" />
+            {/* Bande PALOP en haut (mobile) / gauche (desktop) */}
+            <div className="flex lg:flex-col h-2 lg:h-auto lg:w-2 shrink-0">
+              {['#1A5CB5','#E8620A','#F5B800','#2D7A5E','#4A7FD4'].map((c) => (
+                <div key={c} className="flex-1" style={{ backgroundColor: c }} />
+              ))}
+            </div>
+
+            {/* Image gauche — pleine hauteur */}
+            <div className="w-full lg:w-[44%] shrink-0 relative min-h-[300px] lg:min-h-0">
               <img
                 src={imgFestival}
                 alt="Festival Cultura PALOPs Suiça"
-                className="relative z-10 w-full rounded-[20px] shadow-2xl object-cover h-[360px] md:h-[420px] border-4 border-white/20"
+                className="w-full h-full object-cover"
               />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#0B1B3D]/60 pointer-events-none" />
+              <div className="absolute bottom-6 left-6">
+                <span className="bg-yellow text-deep px-4 py-1.5 rounded-full font-body font-bold text-xs uppercase tracking-widest shadow-[0_0_15px_rgba(245,184,0,0.6)]">
+                  {t('Events', 'featuredBadge')}
+                </span>
+              </div>
             </div>
 
             {/* Texte droit */}
-            <div className="w-full lg:flex-1 min-w-0 text-white">
-              <span className="bg-yellow text-deep px-5 py-2 rounded-full font-body font-bold text-sm uppercase tracking-widest inline-block mb-6 shadow-[0_0_15px_rgba(245,184,0,0.5)]">
-                {t('Events', 'featuredBadge')}
-              </span>
+            <div className="w-full lg:flex-1 min-w-0 text-white flex flex-col justify-center p-6 md:p-10 bg-gradient-to-br from-[#0B1B3D]/80 to-[#0B1B3D]/40 backdrop-blur-md">
+              {/* Accent bar titre */}
+              <div className="flex gap-1 mb-4">
+                <span className="h-1 w-8 rounded-full bg-yellow" />
+                <span className="h-1 w-4 rounded-full bg-orange" />
+                <span className="h-1 w-2 rounded-full bg-red" />
+              </div>
 
-              <h1 className="text-white mb-6 text-5xl md:text-6xl xl:text-7xl leading-none drop-shadow-lg">
+              <h1 className="text-white mb-4 text-4xl md:text-5xl xl:text-6xl leading-none drop-shadow-lg">
                 CULTURA<br/>PALOPS<br/>SUIÇA 2026
               </h1>
 
-              <p className="font-body text-xl opacity-90 mb-8 leading-relaxed">
+              <p className="font-body text-base md:text-lg opacity-80 mb-5 leading-relaxed">
                 {t('Events', 'featuredText')}
               </p>
 
               {/* Infos box */}
-              <div className="flex flex-col gap-4 mb-10 font-body font-semibold bg-white/5 backdrop-blur-xl p-6 md:p-8 rounded-[2rem] border border-white/10 w-full max-w-sm shadow-2xl">
-                <div className="flex items-center gap-4 text-white hover:text-white/80 transition-colors">
-                  <MapPin size={22} className="text-primary shrink-0" />
-                  <span className="text-sm md:text-base tracking-wide">{t('Events', 'festivalCity')}</span>
+              <div className="flex flex-col gap-3 mb-5 font-body font-semibold bg-white/5 p-4 md:p-5 rounded-[1.5rem] border border-white/10 w-full max-w-sm">
+                <div className="flex items-center gap-3 text-white">
+                  <MapPin size={18} className="text-yellow shrink-0" />
+                  <span className="text-sm md:text-base">{t('Events', 'festivalCity')}</span>
                 </div>
-                <div className="flex items-center gap-4 text-white hover:text-white/80 transition-colors">
-                  <Ticket size={22} className="text-primary shrink-0" />
-                  <span className="text-sm md:text-base tracking-wide">{t('Events', 'festivalPass')}</span>
+                <div className="flex items-center gap-3 text-white">
+                  <Ticket size={18} className="text-orange shrink-0" />
+                  <span className="text-sm md:text-base">{t('Events', 'festivalPass')}</span>
                 </div>
-                <div className="flex items-center gap-4 text-white hover:text-white/80 transition-colors">
-                  <Calendar size={22} className="text-primary shrink-0" />
-                  <span className="text-sm md:text-base tracking-wide">{t('Events', 'festivalDate')}</span>
+                <div className="flex items-center gap-3 text-white">
+                  <Calendar size={18} className="text-green shrink-0" />
+                  <span className="text-sm md:text-base">{t('Events', 'festivalDate')}</span>
                 </div>
               </div>
 
               <Button
                 variant="primary"
-                className="bg-primary hover:bg-orange text-white text-base md:text-lg px-8 py-4 shadow-[0_10px_30px_rgba(232,98,10,0.5)] font-bold rounded-full w-full max-w-sm transition-all focus:ring-4 focus:ring-primary/20"
+                className="bg-orange hover:bg-yellow hover:text-deep text-white text-base px-8 py-3.5 shadow-[0_10px_30px_rgba(232,117,26,0.6)] font-bold rounded-full w-full max-w-sm transition-all"
               >
                 {t('Events', 'reserveBtn')}
               </Button>

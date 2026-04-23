@@ -79,15 +79,14 @@ export const Gallery = () => {
   return (
     <div className="w-full min-h-screen pb-section px-4 md:px-xl relative">
       {/* ── DYNAMIC BACKGROUND ── */}
-      <div className="fixed inset-0 z-0 bg-brand-bg pointer-events-none">
-        {/* Orbs */}
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/3" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] translate-y-1/3 -translate-x-1/4" />
-        {/* Texture */}
-        <PatternBg className="text-primary opacity-5 absolute inset-0 mix-blend-multiply" />
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <img
+          src="/Sections_fonds/fond page galerie.png"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover opacity-60"
+        />
+        <div className="absolute inset-0 bg-[#F5EDE3]/40" />
       </div>
-
-      <CarnivalMask className="fixed top-20 right-[-100px] text-accent opacity-20 w-[400px] h-[400px] rotate-[15deg] pointer-events-none z-0" />
       <Confetti className="fixed inset-0 text-deep opacity-[0.03] pointer-events-none z-0" />
 
       <div className="fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[150px] md:text-[250px] font-display text-primary opacity-[0.02] pointer-events-none select-none z-0 leading-none tracking-widest whitespace-nowrap">

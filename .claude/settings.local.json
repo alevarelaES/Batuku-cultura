@@ -9,7 +9,8 @@
       "Bash(git add *)",
       "Bash(git commit *)",
       "Bash(git push *)",
-      "Bash(find /c/Users/41786/Projets/Batuku-cultura/public/flags -type f -exec ls -lh {} \\\\;)"
+      "Bash(find /c/Users/41786/Projets/Batuku-cultura/public/flags -type f -exec ls -lh {} \\\\;)",
+      "Bash(grep -E \"\\\\.\\(ts|tsx\\)$\")"
     ]
   }
 }

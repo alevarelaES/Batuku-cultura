@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { FadeIn } from './components/FadeIn';
 import { PatternBg, CapeVerdeIslands } from './components/Decorations';
-import { MotifDrum, MotifTribal, MotifIcons, CapeVerdeStars } from './components/CulturalMotifs';
+import { CapeVerdeStars } from './components/CulturalMotifs';
 import { countriesData, SubTabId } from './data/cultureData';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 import { useLanguage } from './contexts/LanguageContext';
@@ -11,6 +11,18 @@ export const Culture = () => {
   const { t, lang } = useLanguage();
   const [activeCountryId, setActiveCountryId] = useState<string>('cap-vert');
   const [activeSubTab, setActiveSubTab] = useState<SubTabId>('history');
+  const contentRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const [showFloatingNav, setShowFloatingNav] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowFloatingNav(!entry.isIntersecting),
+      { threshold: 0 }
+    );
+    if (heroRef.current) observer.observe(heroRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   const subTabs: { id: SubTabId; label: string }[] = [
     { id: 'history', label: t('Culture', 'history') },
@@ -21,68 +33,85 @@ export const Culture = () => {
   const country = countriesData.find((c) => c.id === activeCountryId) || countriesData[0];
   const section = country[activeSubTab];
 
+  // São Tomé (#002654) est trop sombre sur fond dark — on utilise une couleur d'affichage plus lumineuse
+  const getDisplayColor = (c: typeof country) =>
+    c.color === '#002654' ? '#4A7FD4' : c.color;
+
+  const selectCountry = (id: string) => {
+    setActiveCountryId(id);
+    setActiveSubTab('history');
+    setTimeout(() => {
+      contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+  };
+
   return (
     <div className="w-full min-h-screen relative bg-brand-bg flex flex-col font-body">
-      {/* Pattern de fond global */}
       <PatternBg className={`opacity-5 fixed inset-0 z-0 pointer-events-none ${country.textColor}`} />
 
-      {/* ── HERO ─────────────────────────────────────────────────── */}
-      <section className="bg-primary py-20 px-4 text-center relative overflow-hidden">
-        <CapeVerdeStars className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-10 w-[600px] h-[600px] z-0 pointer-events-none animate-[spin_60s_linear_infinite]" />
-        <div
-          className="absolute inset-0 opacity-20 pointer-events-none z-0"
-          style={{
-            backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.05) 10px, rgba(255,255,255,0.05) 20px)',
-          }}
-        />
-        <CapeVerdeIslands className="absolute top-0 right-10 text-white opacity-[0.05] w-[400px] h-[250px] pointer-events-none z-0 rotate-[15deg]" />
-        <div className="relative z-10">
-          <h1 className="font-display text-accent text-5xl md:text-7xl mb-3 drop-shadow-md">
+      {/* ── HERO + SÉLECTEUR PAYS ─────────────────────────────── */}
+      <section ref={heroRef} className="relative bg-deep pt-24 pb-16 px-4 overflow-hidden flex flex-col items-center">
+        <CapeVerdeStars className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-[0.07] w-[900px] h-[900px] z-0 pointer-events-none animate-[spin_90s_linear_infinite]" />
+        <CapeVerdeIslands className="absolute top-0 right-0 text-white opacity-[0.04] w-[500px] h-[300px] pointer-events-none z-0 rotate-[10deg]" />
+
+        <div className="relative z-10 text-center mb-12">
+          <span className="inline-block font-body text-xs font-bold tracking-[0.3em] uppercase text-white/40 mb-4">
+            PALOP · SUISSE ROMANDE
+          </span>
+          <h1 className="font-display text-white text-5xl md:text-7xl mb-4 drop-shadow-md">
             {t('Culture', 'pageTitle')}
           </h1>
-          <p className="font-body text-white/90 text-lg italic">
+          <p className="font-body text-white/60 text-lg italic">
             {t('Culture', 'pageSubtitle')}
           </p>
         </div>
-      </section>
 
-      {/* ── ONGLETS PAYS (sticky) ─────────────────────────────────── */}
-      <div className="sticky top-[4.5rem] z-40 bg-white/80 backdrop-blur-xl border-b border-white shadow-sm transition-all duration-300">
-        <div className="max-w-7xl mx-auto overflow-x-auto scrollbar-hide">
-          <div className="flex min-w-max justify-start md:justify-center p-3 sm:p-4 gap-2 sm:gap-4 md:px-8">
-            {countriesData.map((c) => {
-              const isActive = activeCountryId === c.id;
-              return (
-                <button
-                  key={c.id}
-                  onClick={() => {
-                    setActiveCountryId(c.id);
-                    setActiveSubTab('history');
-                  }}
-                  className={`px-6 sm:px-8 py-2 md:py-3 rounded-full font-body font-bold text-sm sm:text-base tracking-widest transition-all whitespace-nowrap uppercase shadow-sm hover:-translate-y-0.5 border border-white/50 ${
-                    isActive
-                      ? 'text-white shadow-md'
-                      : 'text-brand-text/70 bg-white/40 hover:bg-white hover:text-brand-text'
-                  }`}
-                  style={
-                    isActive
-                      ? { backgroundColor: c.color, borderColor: c.color }
-                      : {}
-                  }
+        {/* Cards pays */}
+        <div className="relative z-10 w-full max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-5 gap-3">
+          {countriesData.map((c, idx) => {
+            const isActive = activeCountryId === c.id;
+            const isLastOdd = idx === countriesData.length - 1 && countriesData.length % 2 !== 0;
+            return (
+              <button
+                key={c.id}
+                onClick={() => selectCountry(c.id)}
+                className={`group relative rounded-2xl px-4 py-8 text-center transition-all duration-300 hover:-translate-y-1 overflow-hidden border-2 cursor-pointer ${isLastOdd ? 'col-span-2 md:col-span-1' : ''}`}
+                style={
+                  isActive
+                    ? { backgroundColor: c.color, borderColor: c.color }
+                    : { borderColor: `${getDisplayColor(c)}80`, backgroundColor: `${getDisplayColor(c)}18` }
+                }
+              >
+                {/* Code watermark */}
+                <span
+                  className="absolute inset-0 flex items-center justify-center font-display text-[4.5rem] font-bold pointer-events-none select-none leading-none"
+                  style={{ color: isActive ? 'rgba(255,255,255,0.12)' : `${getDisplayColor(c)}30` }}
+                >
+                  {c.code}
+                </span>
+                <span
+                  className="relative font-display text-sm md:text-base font-bold tracking-widest uppercase block"
+                  style={{ color: isActive ? '#fff' : getDisplayColor(c) }}
                 >
                   {c.name[lang]}
-                </button>
-              );
-            })}
-          </div>
+                </span>
+                <span
+                  className="relative block mt-3 text-xs font-body font-medium transition-all duration-300"
+                  style={{ color: isActive ? 'rgba(255,255,255,0.7)' : `${getDisplayColor(c)}90` }}
+                >
+                  {isActive ? 'sélectionné' : 'Explorer →'}
+                </span>
+              </button>
+            );
+          })}
         </div>
-      </div>
+      </section>
 
       {/* ── CONTENU PAYS ─────────────────────────────────────────── */}
-      <div className="flex-grow relative bg-gradient-to-b from-brand-bg via-brand-bg to-[#f4f4f6]">
+      <div ref={contentRef} className="flex-grow relative bg-gradient-to-b from-brand-bg via-brand-bg to-[#f4f4f6] scroll-mt-20">
 
         {/* ── SOUS-ONGLETS ─────────────────────────────────────────── */}
-        <div id="culture-subtabs" className="max-w-5xl mx-auto pt-10 pb-6 px-4 relative z-10">
+        <div className="max-w-5xl mx-auto pt-10 pb-6 px-4 relative z-10">
           <div className="flex flex-wrap justify-center gap-3 bg-white/40 backdrop-blur-lg p-2 rounded-[2rem] border border-white/60 shadow-sm w-fit mx-auto">
             {subTabs.map((tab) => {
               const isActive = activeSubTab === tab.id;
@@ -149,7 +178,6 @@ export const Culture = () => {
                   </p>
                 ))}
 
-                {/* Citation */}
                 {section.quote && (
                   <div
                     className="mt-8 p-6 rounded-2xl italic shadow-sm"
@@ -188,12 +216,10 @@ export const Culture = () => {
             </div>
 
             {/* Facts cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
               {section.facts.map((fact, idx) => (
                 <FadeIn key={idx} delay={idx * 0.1}>
-                  <div
-                    className="bg-white/60 backdrop-blur-md border border-white rounded-[2rem] p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_10px_40px_rgb(0,0,0,0.08)] transition-all h-full flex flex-col justify-center items-center text-center hover:-translate-y-1 relative overflow-hidden"
-                  >
+                  <div className="bg-white/60 backdrop-blur-md border border-white rounded-[2rem] p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_10px_40px_rgb(0,0,0,0.08)] transition-all h-full flex flex-col justify-center items-center text-center hover:-translate-y-1 relative overflow-hidden">
                     <div className="absolute top-0 left-0 right-0 h-1" style={{ backgroundColor: country.color }} />
                     <div
                       className="font-body text-sm font-bold tracking-widest uppercase mb-3 opacity-90"
@@ -209,33 +235,29 @@ export const Culture = () => {
               ))}
             </div>
 
-            {/* Navigation entre sous-onglets */}
-            <div className="flex justify-between items-center pt-8 border-t border-black/5">
+            {/* Navigation sous-onglets */}
+            <div className="flex justify-between items-center pt-8 border-t border-black/5 mb-16">
               <button
                 onClick={() => {
                   const idx = subTabs.findIndex(t => t.id === activeSubTab);
                   if (idx > 0) {
                     setActiveSubTab(subTabs[idx - 1].id);
-                    const el = document.getElementById('culture-subtabs');
-                    if (el) {
-                      const y = el.getBoundingClientRect().top + window.scrollY - 100;
-                      window.scrollTo({ top: y, behavior: 'smooth' });
-                    }
+                    setTimeout(() => contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
                   }
                 }}
                 disabled={activeSubTab === 'history'}
-                className="font-body font-semibold text-sm md:text-base px-6 py-3 rounded-full transition-all disabled:opacity-30"
-                style={{ color: country.color, border: `2px solid ${country.color}` }}
+                className="cursor-pointer font-body font-semibold text-sm md:text-base px-6 py-3 rounded-full border-2 transition-all disabled:opacity-30 disabled:cursor-default hover:-translate-x-1"
+                style={{ color: country.color, borderColor: country.color }}
               >
-                {t('Culture', 'prev')}
+                ← {t('Culture', 'prev')}
               </button>
 
-              {/* Indicateur */}
-              <div className="flex gap-3">
+              <div className="flex gap-2">
                 {subTabs.map((tab) => (
-                  <div
+                  <button
                     key={tab.id}
-                    className="w-2.5 h-2.5 rounded-full transition-all duration-300"
+                    onClick={() => setActiveSubTab(tab.id)}
+                    className="w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer"
                     style={{
                       backgroundColor: activeSubTab === tab.id ? country.color : '#ddd',
                       transform: activeSubTab === tab.id ? 'scale(1.5)' : 'scale(1)',
@@ -249,57 +271,61 @@ export const Culture = () => {
                   const idx = subTabs.findIndex(t => t.id === activeSubTab);
                   if (idx < subTabs.length - 1) {
                     setActiveSubTab(subTabs[idx + 1].id);
-                    const el = document.getElementById('culture-subtabs');
-                    if (el) {
-                      const y = el.getBoundingClientRect().top + window.scrollY - 100;
-                      window.scrollTo({ top: y, behavior: 'smooth' });
-                    }
+                    setTimeout(() => contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
                   }
                 }}
                 disabled={activeSubTab === 'gastronomy'}
-                className="font-body font-semibold text-sm md:text-base px-6 py-3 rounded-full transition-all disabled:opacity-30 text-white"
+                className="cursor-pointer font-body font-semibold text-sm md:text-base px-6 py-3 rounded-full transition-all disabled:opacity-30 disabled:cursor-default hover:translate-x-1 text-white"
                 style={{ backgroundColor: country.color }}
               >
-                {t('Culture', 'next')}
+                {t('Culture', 'next')} →
               </button>
             </div>
           </motion.div>
         </AnimatePresence>
-
-        {/* ── NAVIGATION PAYS ──────────────────────────────────────── */}
-        <div
-          className="py-16 px-4 md:px-12 relative z-10 mt-10 transition-colors duration-500 rounded-t-[3rem] border-t border-white/50 shadow-[0_-10px_40px_rgba(0,0,0,0.02)]"
-          style={{ backgroundColor: country.color + '0C' }}
-        >
-          <div className="max-w-6xl mx-auto">
-            <p className="font-display text-4xl text-center mb-12"
-              style={{ color: country.color }}>
-              {t('Culture', 'exploreTitle')}
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
-              {countriesData.map((c) => (
-                <button
-                  key={c.id}
-                  onClick={() => {
-                    setActiveCountryId(c.id);
-                    setActiveSubTab('history');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className="rounded-[2rem] p-6 text-center transition-all hover:-translate-y-2 shadow-sm hover:shadow-xl bg-white/40 backdrop-blur-sm border border-white/60"
-                  style={
-                    activeCountryId === c.id
-                      ? { backgroundColor: c.color, color: '#fff' }
-                      : { color: c.color }
-                  }
-                >
-                  <div className="font-body font-bold text-sm md:text-base tracking-widest uppercase">{c.name[lang]}</div>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
       </div>
+      {/* ── FLOATING COUNTRY NAV ─────────────────────────────── */}
+      <AnimatePresence>
+        {showFloatingNav && (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.25 }}
+            className="hidden lg:block fixed right-4 top-1/2 -translate-y-1/2 z-50 group"
+          >
+            <div className="bg-deep/90 backdrop-blur-md rounded-2xl p-2.5 flex flex-col gap-1.5 border border-white/10 shadow-2xl">
+              {countriesData.map((c) => {
+                const isActive = activeCountryId === c.id;
+                const dc = getDisplayColor(c);
+                return (
+                  <button
+                    key={c.id}
+                    onClick={() => selectCountry(c.id)}
+                    title={c.name[lang]}
+                    className="flex items-center gap-0 group-hover:gap-2.5 rounded-xl px-1.5 group-hover:px-3 py-2 transition-all duration-300 cursor-pointer hover:bg-white/10"
+                  >
+                    <div
+                      className="w-2.5 h-2.5 rounded-full flex-shrink-0 transition-all duration-300"
+                      style={{
+                        backgroundColor: isActive ? dc : 'transparent',
+                        border: `2px solid ${dc}`,
+                        boxShadow: isActive ? `0 0 8px ${dc}80` : 'none',
+                      }}
+                    />
+                    <span
+                      className="font-body text-xs font-bold tracking-widest uppercase whitespace-nowrap overflow-hidden max-w-0 opacity-0 group-hover:max-w-[96px] group-hover:opacity-100 transition-all duration-300"
+                      style={{ color: isActive ? '#fff' : dc }}
+                    >
+                      {c.name[lang]}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
