@@ -1,4 +1,5 @@
 import React from 'react';
+import { FadeInGroup, FadeInItem } from './components/FadeInStagger';
 import { FadeIn } from './components/FadeIn';
 import {
   PatternBg,
@@ -11,17 +12,62 @@ import {
 import { useLanguage } from './contexts/LanguageContext';
 import { MapPin, Calendar, Heart, Flame, Sparkles } from 'lucide-react';
 
+// pos = objectPosition CSS value, tuned per photo
 const teamData = [
-  { name: 'Ercelina Correia Garcia',        roleKey: 'rolePresidente',             img: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#003893' },
-  { name: 'Emilita Mendes Stevens',         roleKey: 'roleVicePresidente',         img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#E8751A' },
-  { name: 'Carla Sofia Lopes De Oliveira',  roleKey: 'roleTresoriereSecretaire',   img: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#F7D116' },
-  { name: 'Maria dos Anjos Freitas Cruz',   roleKey: 'roleRespCulinaire',          img: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#1A6B3C' },
-  { name: 'Helder Correia Garcia',          roleKey: 'roleRespOrganisation',       img: 'https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#003893' },
-  { name: 'Maria Paula Lopes Monteiro Vaz', roleKey: 'roleRespSante',              img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#CE1126' },
-  { name: 'Maria José Furtado',             roleKey: 'roleRespEvenements',         img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#E8751A' },
-  { name: 'Monica Josefa (Nelcy)',          roleKey: 'roleCommunicationDigitale',  img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#1A6B3C', extern: true },
-  { name: 'Kelton Lamine Correia Garcia',   roleKey: 'roleIntervenantMusical',     img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=faces&q=80', accent: '#F7D116', extern: true },
+  { name: 'Ercelina Correia Garcia',        roleKey: 'rolePresidente',            img: '/membres/Ercelina%20Correia%20Garcia.jpeg',             accent: '#003893', pos: 'center 15%' },
+  { name: 'Emilita Mendes Stevens',         roleKey: 'roleVicePresidente',        img: '/membres/Emilita%20Mendes%20Stevens.jpeg',              accent: '#E8751A', pos: 'center 25%' },
+  { name: 'Carla Sofia Lopes De Oliveira',  roleKey: 'roleTresoriereSecretaire',  img: '/membres/Carla%20lopes%20Oliveira.jpeg',                accent: '#F7D116', pos: 'center 20%' },
+  { name: 'Helder Correia Garcia',          roleKey: 'roleRespOrganisation',      img: '/membres/Helder%20Correia%20Garcia.jpeg',               accent: '#003893', pos: 'center 15%' },
+  { name: 'Maria Paula Lopes Monteiro Vaz', roleKey: 'roleRespSante',             img: '/membres/Maria%20Paula%20Lopes%20Monteiro%20Vaz.jpeg',  accent: '#CE1126', pos: 'center 20%' },
+  { name: 'Monica Gomes',                   roleKey: 'roleRespImageCoordination', img: '/membres/Monica%20gomes.jpeg',                          accent: '#1A6B3C', pos: 'center 20%', extern: true },
+  { name: 'DJ Smile',                       roleKey: 'roleIngenieurSonDJ',        img: '/membres/DJ%20Smile.jpeg',                              accent: '#F7D116', pos: 'center 20%', extern: true },
 ];
+
+interface MemberCardProps {
+  member: typeof teamData[number];
+  label: string;
+}
+
+const MemberCard = ({ member, label }: MemberCardProps) => (
+  <div
+    className="group relative rounded-2xl overflow-hidden cursor-default transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 md:hover:shadow-[0_16px_36px_rgba(0,0,0,0.28)]"
+    style={{ background: '#0D1B2E' }}
+  >
+    <div className="relative aspect-[3/4] overflow-hidden">
+      <img
+        src={member.img}
+        alt={member.name}
+        loading="lazy"
+        className="w-full h-full object-cover"
+        style={{ objectPosition: member.pos }}
+      />
+      {/* Gradient bas uniquement */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: 'linear-gradient(to top, #0D1B2E 0%, #0D1B2E 12%, rgba(13,27,46,0.35) 38%, transparent 58%)',
+        }}
+      />
+    </div>
+
+    {/* Infos */}
+    <div className="absolute bottom-0 left-0 right-0 px-4 pb-4">
+      <div className="w-8 h-[3px] rounded-full mb-2" style={{ background: member.accent }} />
+      <h3 className="text-white font-display text-sm md:text-base leading-snug mb-0.5">
+        {member.name}
+      </h3>
+      <p className="font-body font-semibold text-[10px] md:text-xs uppercase tracking-widest" style={{ color: member.accent }}>
+        {label}
+      </p>
+    </div>
+
+    {/* Bordure colorée au survol */}
+    <div
+      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+      style={{ boxShadow: `inset 0 0 0 2px ${member.accent}` }}
+    />
+  </div>
+);
 
 export const About = () => {
   const { t } = useLanguage();
@@ -29,11 +75,11 @@ export const About = () => {
   const activities = t('About', 'activities').split(',');
 
   const palopPills = [
-    { abbr: 'CPV', nameKey: 'palopCv',  color: 'bg-primary', star: true },
-    { abbr: 'ANG', nameKey: 'palopAng', color: 'bg-red' },
-    { abbr: 'GNB', nameKey: 'palopGnb', color: 'bg-yellow text-brand-text' },
-    { abbr: 'MOZ', nameKey: 'palopMoz', color: 'bg-green' },
-    { abbr: 'STP', nameKey: 'palopStp', color: 'bg-deep border border-white/20' },
+    { abbr: 'CPV', nameKey: 'palopCv',  color: 'bg-primary', flag: '/flags/flag-cape-verde.jpg' },
+    { abbr: 'ANG', nameKey: 'palopAng', color: 'bg-red',     flag: '/flags/flag-angola.jpg' },
+    { abbr: 'GNB', nameKey: 'palopGnb', color: 'bg-yellow text-brand-text', flag: '/flags/flag-guinea-bissau.jpg' },
+    { abbr: 'MOZ', nameKey: 'palopMoz', color: 'bg-green',   flag: '/flags/flag-mozambique.jpg' },
+    { abbr: 'STP', nameKey: 'palopStp', color: 'bg-deep border border-white/20', flag: '/flags/flag-sao-tome-principe.jpg' },
   ];
 
   return (
@@ -99,7 +145,7 @@ export const About = () => {
                 <div className="inline-flex items-center gap-2 bg-orange/20 border border-orange/30 px-3 py-1.5 rounded-full mb-5">
                   <span className="w-2 h-2 rounded-full bg-orange inline-block shrink-0" />
                   <span className="font-body font-bold text-orange text-[10px] tracking-[0.2em] uppercase">
-                    Payerne · 2025
+                    {t('About', 'payerneYear')}
                   </span>
                 </div>
                 <h2 className="text-orange text-3xl md:text-4xl font-display mb-4 leading-tight">
@@ -162,7 +208,7 @@ export const About = () => {
             <div className="text-center max-w-4xl mx-auto mb-16">
               <span className="inline-flex items-center gap-3 font-body font-medium uppercase tracking-[0.3em] text-orange/80 text-sm mb-6">
                 <span className="w-8 h-px bg-orange/40 shrink-0"></span>
-                Notre Raison d'Être
+                {t('About', 'reasonLabel')}
               </span>
               <h2 className="text-white text-5xl md:text-6xl font-display mb-6 leading-tight drop-shadow-md">
                 {t('About', 'transmissionTitle')}
@@ -176,7 +222,7 @@ export const About = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
               {/* Box 1: Mission */}
-              <div className="group bg-gradient-to-b from-white/10 to-white/5 hover:from-white/15 hover:to-white/10 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-500 hover:-translate-y-2 relative overflow-hidden flex flex-col">
+              <div className="group bg-gradient-to-b from-white/10 to-white/5 hover:from-white/15 hover:to-white/10 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 relative overflow-hidden flex flex-col">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-orange/20 rounded-full blur-3xl group-hover:bg-orange/30 transition-colors duration-500"></div>
                 <h3 className="text-2xl font-display text-white mb-4 relative z-10">{t('About', 'missionTitle')}</h3>
                 <p className="text-base md:text-lg font-body font-light text-white/80 leading-relaxed mb-4 relative z-10">
@@ -188,25 +234,26 @@ export const About = () => {
               </div>
               
               {/* Box 2: Transmission */}
-              <div className="group bg-gradient-to-b from-white/10 to-white/5 hover:from-white/15 hover:to-white/10 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-500 hover:-translate-y-2 relative overflow-hidden flex flex-col">
+              <div className="group bg-gradient-to-b from-white/10 to-white/5 hover:from-white/15 hover:to-white/10 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 relative overflow-hidden flex flex-col">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/30 transition-colors duration-500"></div>
-                <h3 className="text-2xl font-display text-white mb-4 relative z-10">Transmission</h3>
+                <h3 className="text-2xl font-display text-white mb-4 relative z-10">{t('About', 'transmissionBoxTitle')}</h3>
                 <p className="text-base md:text-lg font-body font-light text-white/80 leading-relaxed mb-6 relative z-10 flex-1">
                   {t('About', 'transmissionText1')} {t('About', 'transmissionText2')}
                 </p>
-                <div className="flex flex-wrap gap-2 mt-auto relative z-10">
+                <div className="flex flex-wrap gap-3 mt-auto relative z-10">
                   {palopPills.map((p, i) => (
-                    <div key={i} className={`${p.color} px-3 py-1.5 rounded-full flex items-center gap-1.5 text-xs uppercase font-bold tracking-widest shadow-lg`}>
-                      {p.abbr}
+                    <div key={i} className="flex items-center gap-2.5 bg-white/10 hover:bg-white/18 border border-white/25 px-3 py-2 rounded-full shadow-lg transition-colors">
+                      <img src={p.flag} alt={p.abbr} loading="lazy" className="w-7 h-7 rounded-full object-cover shrink-0 ring-2 ring-white/40 shadow-md" />
+                      <span className="text-white/90 text-xs uppercase font-bold tracking-widest">{p.abbr}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Box 3: Activités & Valeurs */}
-              <div className="group bg-gradient-to-b from-white/10 to-white/5 hover:from-white/15 hover:to-white/10 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-500 hover:-translate-y-2 relative overflow-hidden flex flex-col">
+              <div className="group bg-gradient-to-b from-white/10 to-white/5 hover:from-white/15 hover:to-white/10 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 relative overflow-hidden flex flex-col">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-yellow/20 rounded-full blur-3xl group-hover:bg-yellow/30 transition-colors duration-500"></div>
-                <h3 className="text-2xl font-display text-white mb-6 relative z-10">Activités & Valeurs</h3>
+                <h3 className="text-2xl font-display text-white mb-6 relative z-10">{t('About', 'activitiesValuesBoxTitle')}</h3>
                 <div className="space-y-3 mb-6 relative z-10 flex-1">
                   {activities.map((act, idx) => (
                     <div key={idx} className="flex items-center gap-3 text-white/90 text-sm md:text-base font-light">
@@ -228,71 +275,38 @@ export const About = () => {
         </div>
       </section>
 
-      {/* ─── SECTION 5 : L'ÉQUIPE (CONDENSÉE) ─── */}
-      <section className="py-16 md:py-20 px-6 relative z-10 bg-brand-bg">
+      {/* ─── SECTION 5 : L'ÉQUIPE ─── */}
+      <section className="py-16 md:py-20 relative z-10 bg-brand-bg">
         <FadeIn>
-          <div className="text-center mb-12">
+          <div className="text-center mb-10 px-6">
             <h2 className="text-primary text-4xl md:text-5xl font-display leading-tight">
               {t('About', 'teamTitle')}
             </h2>
             <div className="w-16 h-1 bg-orange mx-auto mt-4 rounded-full" />
           </div>
-          <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+
+          {/* ── MOBILE : carousel horizontal scroll-snap ── */}
+          <div
+            className="md:hidden flex gap-4 overflow-x-auto pb-6 snap-x snap-mandatory pl-6"
+            style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
+          >
             {teamData.map((member, idx) => (
-              <div
-                key={idx}
-                className="group relative rounded-2xl overflow-hidden cursor-default"
-                style={{ background: '#0D1B2E' }}
-              >
-                {/* Photo portrait */}
-                <div className="relative aspect-[3/4] overflow-hidden">
-                  <img
-                    src={member.img}
-                    alt={member.name}
-                    loading="lazy"
-                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                  />
-                  {/* Gradient bas → fond dark */}
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background: 'linear-gradient(to top, #0D1B2E 0%, #0D1B2E 5%, rgba(13,27,46,0.5) 45%, transparent 75%)',
-                    }}
-                  />
-                  {/* Badge extern */}
-                  {member.extern && (
-                    <span
-                      className="absolute top-3 right-3 font-body font-bold text-[9px] uppercase tracking-widest px-2 py-1 rounded-full"
-                      style={{ background: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(8px)' }}
-                    >
-                      {t('About', 'extern')}
-                    </span>
-                  )}
-                </div>
-
-                {/* Infos — flottent sur le gradient */}
-                <div className="absolute bottom-0 left-0 right-0 px-4 pb-4">
-                  {/* Trait de couleur */}
-                  <div className="w-8 h-[3px] rounded-full mb-2" style={{ background: member.accent }} />
-                  <h3 className="text-white font-display text-sm md:text-base leading-snug mb-0.5">
-                    {member.name}
-                  </h3>
-                  <p
-                    className="font-body font-semibold text-[10px] md:text-xs uppercase tracking-widest"
-                    style={{ color: member.accent }}
-                  >
-                    {t('About', member.roleKey)}
-                  </p>
-                </div>
-
-                {/* Glow coloré au survol */}
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{ boxShadow: `inset 0 0 0 1.5px ${member.accent}55` }}
-                />
+              <div key={idx} className="snap-start shrink-0 w-[68vw] max-w-[240px]">
+                <MemberCard member={member} label={t('About', member.roleKey)} />
               </div>
             ))}
+            {/* Spacer fin de liste */}
+            <div className="shrink-0 w-2" />
           </div>
+
+          {/* ── DESKTOP : grille ── */}
+          <FadeInGroup className="hidden md:grid md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 max-w-6xl mx-auto px-6" stagger={0.07}>
+            {teamData.map((member, idx) => (
+              <FadeInItem key={idx}>
+                <MemberCard member={member} label={t('About', member.roleKey)} />
+              </FadeInItem>
+            ))}
+          </FadeInGroup>
         </FadeIn>
       </section>
 

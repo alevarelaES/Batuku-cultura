@@ -20,7 +20,7 @@ export const EventCard = ({ image, date, title, location, badges }: EventCardPro
         <img 
           src={image} 
           alt={title} 
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+          className="w-full h-full object-cover"
         />
         {/* Badges on top right of image */}
         <div className="absolute top-4 right-4 z-20 flex flex-col gap-2">

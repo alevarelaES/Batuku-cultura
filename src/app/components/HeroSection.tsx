@@ -1,17 +1,57 @@
+import { motion, useScroll, useTransform } from 'motion/react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useRef } from 'react';
+
+const IS_MOBILE = typeof window !== 'undefined' && window.matchMedia('(max-width: 768px)').matches;
+
+const TITLE = 'BATUKU';
+
+const letterVariant = {
+  hidden:  { opacity: 0, y: 56 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.65, delay: 0.2 + i * 0.08, ease: [0.22, 1, 0.36, 1] as const },
+  }),
+};
+
+const subtitleVariant = {
+  hidden:  { opacity: 0, x: -20 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.7, delay: 0.9, ease: 'easeOut' } },
+};
+
+const bottomVariant = {
+  hidden:  { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 1.15, ease: 'easeOut' } },
+};
 
 export const HeroSection = () => {
   const { t } = useLanguage();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Parallax only on desktop
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
+  const flagParallax  = useTransform(scrollYProgress, [0, 1], IS_MOBILE ? [0, 0] : [0, 120]);
+  const contentParallax = useTransform(scrollYProgress, [0, 1], IS_MOBILE ? [0, 0] : [0, -60]);
+
+  const gradientStyle = {
+    fontSize: 'clamp(2.8rem, 14vw, 22rem)',
+    background: 'linear-gradient(120deg, #F7D116 0%, #E8751A 38%, #CE1126 72%, #E8751A 100%)',
+    WebkitBackgroundClip: 'text' as const,
+    WebkitTextFillColor: 'transparent' as const,
+    backgroundClip: 'text' as const,
+  };
 
   return (
     <section
+      ref={sectionRef}
       className="relative w-full overflow-hidden flex flex-col"
       style={{ background: '#08111F', marginTop: '-5rem', minHeight: 'calc(100vh + 5rem)' }}
     >
       {/* ── BACKGROUND ── */}
 
-      {/* Drapeau Cap-Vert — demi-droite, plus visible */}
-      <img
+      {/* Drapeau Cap-Vert — parallax sur desktop */}
+      <motion.img
         src="/flags/flag-cape-verde.jpg"
         alt=""
         aria-hidden="true"
@@ -19,6 +59,7 @@ export const HeroSection = () => {
         style={{
           opacity: 0.2,
           zIndex: 2,
+          y: flagParallax,
           maskImage: 'linear-gradient(to left, black 0%, black 45%, transparent 80%)',
           WebkitMaskImage: 'linear-gradient(to left, black 0%, black 45%, transparent 80%)',
         }}
@@ -38,67 +79,119 @@ export const HeroSection = () => {
       />
 
       {/* ── MAIN CONTENT ── */}
-      <div
+      <motion.div
         className="relative flex flex-col px-8 md:px-14 lg:px-20"
-        style={{ zIndex: 10, minHeight: '100vh', paddingTop: '5rem', paddingBottom: '3rem' }}
+        style={{ zIndex: 10, minHeight: '100vh', paddingTop: '5rem', paddingBottom: '3rem', y: contentParallax }}
       >
-        {/* BATUKU — flex-1 + items-center = centré verticalement */}
-        <div className="flex-1 flex flex-col justify-center animate-[fade-in-up_0.9s_ease-out_0.1s_both]">
+        {/* BATUKU — centré verticalement */}
+        <div className="flex-1 flex flex-col justify-center">
           <p
             className="font-body font-semibold uppercase mb-3 ml-1"
             style={{ fontSize: 'clamp(0.6rem, 1.1vw, 0.85rem)', color: 'rgba(255,255,255,0.38)', letterSpacing: '0.22em' }}
           >
-            Association Batuku &amp; Cultura — PALOP · Suisse Romande
+            {t('Home', 'assocSubtitle')}
           </p>
 
-          <h1
-            className="font-display font-bold leading-[0.82] tracking-tight select-none hero-title"
-            style={{
-              fontSize: 'clamp(2.8rem, 14vw, 22rem)',
-              background: 'linear-gradient(120deg, #F7D116 0%, #E8751A 38%, #CE1126 72%, #E8751A 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
+          {/* ── TITLE ── */}
+          {IS_MOBILE ? (
+            /* Mobile: plain text, no JS animation */
+            <h1
+              className="font-display font-bold leading-[0.82] tracking-tight select-none hero-title"
+              style={gradientStyle}
+            >
+              {TITLE}
+            </h1>
+          ) : (
+            /* Desktop: letter-by-letter reveal */
+            <h1
+              className="font-display font-bold leading-[0.82] tracking-tight select-none hero-title"
+              style={gradientStyle}
+              aria-label={TITLE}
+            >
+              {TITLE.split('').map((char, i) => (
+                <motion.span
+                  key={i}
+                  custom={i}
+                  variants={letterVariant}
+                  initial="hidden"
+                  animate="visible"
+                  style={{ display: 'inline-block' }}
+                >
+                  {char}
+                </motion.span>
+              ))}
+            </h1>
+          )}
+
+          {/* ── SUBTITLE & CULTURA ── */}
+          {IS_MOBILE ? (
+            <div className="flex items-baseline gap-3 mt-1 ml-1">
+              <span
+                className="font-display font-extralight italic leading-none"
+                style={{ fontSize: 'clamp(0.9rem, 3vw, 5rem)', color: 'rgba(255,255,255,0.18)' }}
+              >&amp;</span>
+              <span
+                className="font-display font-light leading-none tracking-wide"
+                style={{ fontSize: 'clamp(1.3rem, 5vw, 7.5rem)', color: 'rgba(255,255,255,0.16)' }}
+              >CULTURA</span>
+            </div>
+          ) : (
+            <motion.div
+              className="flex items-baseline gap-3 mt-1 ml-1"
+              variants={subtitleVariant}
+              initial="hidden"
+              animate="visible"
+            >
+              <span
+                className="font-display font-extralight italic leading-none"
+                style={{ fontSize: 'clamp(0.9rem, 3vw, 5rem)', color: 'rgba(255,255,255,0.18)' }}
+              >&amp;</span>
+              <span
+                className="font-display font-light leading-none tracking-wide"
+                style={{ fontSize: 'clamp(1.3rem, 5vw, 7.5rem)', color: 'rgba(255,255,255,0.16)' }}
+              >CULTURA</span>
+            </motion.div>
+          )}
+        </div>
+
+        {/* BAS — description + citation */}
+        {IS_MOBILE ? (
+          <div className="flex items-end justify-between gap-8">
+            <div className="flex flex-col gap-1 max-w-sm">
+              <p className="font-body font-semibold text-base" style={{ color: 'rgba(255,255,255,0.72)' }}>
+                {t('Home', 'cultAssocLabel')}
+              </p>
+              <p className="font-body text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.36)' }}>
+                {t('Home', 'heroSubtitle')}
+              </p>
+            </div>
+            <p className="hidden md:block font-body text-sm italic" style={{ color: '#F7D116', opacity: 0.58 }}>
+              {t('Home', 'heroSlogan')}
+            </p>
+          </div>
+        ) : (
+          <motion.div
+            className="flex items-end justify-between gap-8"
+            variants={bottomVariant}
+            initial="hidden"
+            animate="visible"
           >
-            BATUKU
-          </h1>
-
-          <div className="flex items-baseline gap-3 mt-1 ml-1 animate-[fade-in-up_1.1s_ease-out_0.3s_both]">
-            <span
-              className="font-display font-extralight italic leading-none"
-              style={{ fontSize: 'clamp(0.9rem, 3vw, 5rem)', color: 'rgba(255,255,255,0.18)' }}
-            >
-              &amp;
-            </span>
-            <span
-              className="font-display font-light leading-none tracking-wide"
-              style={{ fontSize: 'clamp(1.3rem, 5vw, 7.5rem)', color: 'rgba(255,255,255,0.16)' }}
-            >
-              CULTURA
-            </span>
-          </div>
-        </div>
-
-        {/* BAS — description + citation, sans boutons */}
-        <div className="flex items-end justify-between gap-8 animate-[fade-in-up_1.3s_ease-out_0.5s_both]">
-
-          <div className="flex flex-col gap-1 max-w-sm">
-            <p className="font-body font-semibold text-base" style={{ color: 'rgba(255,255,255,0.72)' }}>
-              Association Culturelle Cap-Verdienne
+            <div className="flex flex-col gap-1 max-w-sm">
+              <p className="font-body font-semibold text-base" style={{ color: 'rgba(255,255,255,0.72)' }}>
+                {t('Home', 'cultAssocLabel')}
+              </p>
+              <p className="font-body text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.36)' }}>
+                {t('Home', 'heroSubtitle')}
+              </p>
+            </div>
+            <p className="hidden md:block font-body text-sm italic" style={{ color: '#F7D116', opacity: 0.58 }}>
+              {t('Home', 'heroSlogan')}
             </p>
-            <p className="font-body text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.36)' }}>
-              {t('Home', 'heroSubtitle')}
-            </p>
-          </div>
+          </motion.div>
+        )}
 
-          <p className="hidden md:block font-body text-sm italic" style={{ color: '#F7D116', opacity: 0.58 }}>
-            "A cultura não se explica. Vive-se."
-          </p>
-        </div>
-
-        {/* SCROLL INDICATOR — centré, subtil */}
-        <div className="flex justify-center mt-6 animate-[fade-in-up_1.6s_ease-out_0.8s_both]">
+        {/* SCROLL INDICATOR */}
+        <div className="flex justify-center mt-6">
           <div
             className="flex justify-center items-start pt-1.5 rounded-full"
             style={{ width: 22, height: 36, border: '1.5px solid rgba(255,255,255,0.22)' }}
@@ -114,7 +207,7 @@ export const HeroSection = () => {
             />
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* BOTTOM — bande PALOP */}
       <div className="absolute bottom-0 left-0 right-0 flex" style={{ height: 4, zIndex: 20 }}>

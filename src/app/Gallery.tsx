@@ -1,84 +1,197 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
+import { X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
 import { FadeIn } from './components/FadeIn';
-import { PatternBg, Confetti, CarnivalMask, CapeVerdeIslands } from './components/Decorations';
-import { MotifIcons, MotifGuitar, CapeVerdeStars } from './components/CulturalMotifs';
+import { Confetti, CapeVerdeIslands } from './components/Decorations';
+import { CapeVerdeStars } from './components/CulturalMotifs';
 import { useLanguage } from './contexts/LanguageContext';
 
 type Category = 'all' | 'batuku' | 'events' | 'gastronomy';
 
-const galleryItems = [
+interface GalleryItem {
+  src: string;
+  category: Exclude<Category, 'all'>;
+  labelKey: string;
+}
+
+const galleryItems: GalleryItem[] = [
+  // ── GROUPE BATUKU ──
   {
-    src: 'https://images.unsplash.com/photo-1696236930810-5bd7ea978369?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwbXVzaWMlMjBmZXN0aXZhbCUyMGNyb3dkJTIwY29sb3JmdWx8ZW58MXx8fHwxNzc0MjcxMTM1fDA&ixlib=rb-4.1.0&q=80&w=1080',
-    category: 'events' as Category,
-    labelKey: 'labelFestival',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1581536678606-3a35fecc8fc5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXBlJTIwdmVyZGVhbiUyMHdvbWVuJTIwdHJhZGl0aW9uYWwlMjBkcnVtc3xlbnwxfHx8fDE3NzQyNzExMzV8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    category: 'batuku' as Category,
+    src: '/groupe%20batuku/groupo%20batuku%201.jpeg',
+    category: 'batuku',
     labelKey: 'labelBatukuRepet',
   },
   {
-    src: 'https://images.unsplash.com/photo-1772268337010-03e52e5b9a11?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwdHJhZGl0aW9uYWwlMjBkYW5jZXxlbnwxfHx8fDE3NzQyNzExMzV8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    category: 'batuku' as Category,
-    labelKey: 'labelDanseTrad',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1672856181212-b5b5a0065a08?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXBlJTIwdmVyZGUlMjBtdXNpY3xlbnwxfHx8fDE3NzQyNzExMzV8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    category: 'events' as Category,
-    labelKey: 'labelNuitKizomba',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1767293940906-6aa1c13b514b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwdHJhZGl0aW9uYWwlMjBkcnVtfGVufDF8fHx8MTc3NDI3MTEzNXww&ixlib=rb-4.1.0&q=80&w=1080',
-    category: 'batuku' as Category,
+    src: '/groupe%20batuku/groupo%20batuku%202.jpeg',
+    category: 'batuku',
     labelKey: 'labelPercussions',
   },
   {
-    src: 'https://images.unsplash.com/photo-1615476983313-81a3ac618e0f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwZmVtYWxlJTIwZGFuY2VyfGVufDF8fHx8MTc3NDI2NzI2M3ww&ixlib=rb-4.1.0&q=80&w=1080',
-    category: 'batuku' as Category,
-    labelKey: 'labelDanseuse',
+    src: '/groupe%20batuku/groupo%20batuku%203.jpeg',
+    category: 'batuku',
+    labelKey: 'labelDanseTrad',
   },
+
+  // ── ÉVÉNEMENTS — vide pour l'instant (pas encore de vraies photos) ──
+
+  // ── GASTRONOMIE (photos locales en attendant) ──
   {
-    src: 'https://images.unsplash.com/photo-1764670274687-ab62458d6306?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhZnJpY2FuJTIwcGVyY3Vzc2lvbiUyMGdyb3VwfGVufDF8fHx8MTc3NDI2NzI2M3ww&ixlib=rb-4.1.0&q=80&w=1080',
-    category: 'events' as Category,
-    labelKey: 'labelPercussionsLive',
-  },
-  {
-    src: 'https://images.unsplash.com/photo-1688940738506-acfe9334bf5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBZnJpY2FuJTIwZm9vZCUyMGNhY2h1cGElMjBDYXBlJTIwVmVyZGUlMjB0cmFkaXRpb25hbCUyMGRpc2h8ZW58MXx8fHwxNzc0Mjc1MTYyfDA&ixlib=rb-4.1.0&q=80&w=1080',
-    category: 'gastronomy' as Category,
+    src: '/about%20par%20pays/gastronomie/cap%20vert/cachupa-sal-cabo-verde-1.png',
+    category: 'gastronomy',
     labelKey: 'labelCachupa',
   },
   {
-    src: 'https://images.unsplash.com/photo-1702827482556-481adcd68f3b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxBZnJpY2FuJTIwZ2FzdHJvbm9teSUyMGNvbG9yZnVsJTIwZm9vZCUyMHBsYXR0ZXJ8ZW58MXx8fHwxNzc0Mjc1MTY5fDA&ixlib=rb-4.1.0&q=80&w=1080',
-    category: 'gastronomy' as Category,
+    src: '/about%20par%20pays/gastronomie/angola/maxresdefault.jpg',
+    category: 'gastronomy',
     labelKey: 'labelCuisinePalop',
   },
   {
-    src: 'https://images.unsplash.com/photo-1647998270792-69ac80570183?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxXZXN0JTIwQWZyaWNhbiUyMGRpbm5lciUyMGZlYXN0JTIwdHJhZGl0aW9uYWwlMjBtZWFsfGVufDF8fHx8MTc3NDI3NTE3N3ww&ixlib=rb-4.1.0&q=80&w=1080',
-    category: 'gastronomy' as Category,
+    src: '/about%20par%20pays/gastronomie/Mozambique/P1018787.png',
+    category: 'gastronomy',
+    labelKey: 'labelCuisinePalop',
+  },
+  {
+    src: '/about%20par%20pays/gastronomie/Guin%C3%A9%20Bissau/caldo-de-mancarra-frango.png',
+    category: 'gastronomy',
+    labelKey: 'labelCuisinePalop',
+  },
+  {
+    src: '/about%20par%20pays/gastronomie/sao%20tom%C3%A9/Calulu.jpg',
+    category: 'gastronomy',
     labelKey: 'labelDinerGala',
   },
 ];
 
+/* ─── Lightbox ─────────────────────────────────────────── */
+interface LightboxProps {
+  items: GalleryItem[];
+  index: number;
+  getLabel: (key: string) => string;
+  getCategoryLabel: (cat: Exclude<Category, 'all'>) => string;
+  onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+}
+
+const Lightbox = ({ items, index, getLabel, getCategoryLabel, onClose, onPrev, onNext }: LightboxProps) => {
+  const item = items[index];
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft') onPrev();
+      if (e.key === 'ArrowRight') onNext();
+    };
+    window.addEventListener('keydown', handleKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = '';
+    };
+  }, [onClose, onPrev, onNext]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      {/* Close */}
+      <button
+        onClick={onClose}
+        className="absolute top-5 right-5 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors duration-200"
+        aria-label="Fermer"
+      >
+        <X size={18} />
+      </button>
+
+      {/* Prev */}
+      {items.length > 1 && (
+        <button
+          onClick={(e) => { e.stopPropagation(); onPrev(); }}
+          className="absolute left-4 md:left-8 z-10 w-11 h-11 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors duration-200"
+          aria-label="Précédent"
+        >
+          <ChevronLeft size={22} />
+        </button>
+      )}
+
+      {/* Next */}
+      {items.length > 1 && (
+        <button
+          onClick={(e) => { e.stopPropagation(); onNext(); }}
+          className="absolute right-4 md:right-8 z-10 w-11 h-11 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors duration-200"
+          aria-label="Suivant"
+        >
+          <ChevronRight size={22} />
+        </button>
+      )}
+
+      {/* Photo */}
+      <div
+        className="relative max-w-[90vw] max-h-[88vh] flex flex-col items-center gap-4"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <img
+          src={item.src}
+          alt={getLabel(item.labelKey)}
+          className="max-w-full max-h-[78vh] object-contain rounded-2xl shadow-2xl"
+          draggable={false}
+        />
+        <div className="flex items-center gap-3">
+          <span className="font-body text-white/80 text-sm">{getLabel(item.labelKey)}</span>
+          <span className="bg-white/15 text-white/70 font-body text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+            {getCategoryLabel(item.category)}
+          </span>
+        </div>
+        <span className="absolute -bottom-8 font-body text-white/30 text-xs">
+          {index + 1} / {items.length}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+/* ─── Gallery Page ──────────────────────────────────────── */
 export const Gallery = () => {
   const { t } = useLanguage();
   const [activeFilter, setActiveFilter] = useState<Category>('all');
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  const filters: { key: Category; label: string }[] = [
-    { key: 'all', label: t('Gallery', 'filterAll') },
-    { key: 'batuku', label: t('Gallery', 'filterBatuku') },
-    { key: 'events', label: t('Gallery', 'filterEvents') },
+  const allFilters: { key: Category; label: string }[] = [
+    { key: 'all',        label: t('Gallery', 'filterAll') },
+    { key: 'batuku',     label: t('Gallery', 'filterBatuku') },
+    { key: 'events',     label: t('Gallery', 'filterEvents') },
     { key: 'gastronomy', label: t('Gallery', 'filterGastronomy') },
   ];
+
+  // N'affiche un filtre que s'il y a au moins 1 photo (sauf "Tout")
+  const filters = allFilters.filter(
+    (f) => f.key === 'all' || galleryItems.some((i) => i.category === f.key),
+  );
 
   const filtered =
     activeFilter === 'all'
       ? galleryItems
       : galleryItems.filter((img) => img.category === activeFilter);
 
+  const openLightbox = useCallback((index: number) => setLightboxIndex(index), []);
+  const closeLightbox = useCallback(() => setLightboxIndex(null), []);
+  const prevPhoto = useCallback(() =>
+    setLightboxIndex((i) => (i === null ? null : (i - 1 + filtered.length) % filtered.length)),
+    [filtered.length],
+  );
+  const nextPhoto = useCallback(() =>
+    setLightboxIndex((i) => (i === null ? null : (i + 1) % filtered.length)),
+    [filtered.length],
+  );
+
+  const getCategoryLabel = (cat: Exclude<Category, 'all'>) =>
+    filters.find((f) => f.key === cat)?.label ?? cat;
+
   return (
     <div className="w-full min-h-screen pb-section px-4 md:px-xl relative">
-      {/* ── DYNAMIC BACKGROUND ── */}
+
+      {/* ── BACKGROUND ── */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <img
           src="/Sections_fonds/fond page galerie.png"
@@ -88,14 +201,13 @@ export const Gallery = () => {
         <div className="absolute inset-0 bg-[#F5EDE3]/40" />
       </div>
       <Confetti className="fixed inset-0 text-deep opacity-[0.03] pointer-events-none z-0" />
-
       <div className="fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[150px] md:text-[250px] font-display text-primary opacity-[0.02] pointer-events-none select-none z-0 leading-none tracking-widest whitespace-nowrap">
         MEMORIES
       </div>
-
       <CapeVerdeStars className="hidden md:block fixed -top-[100px] -left-[100px] text-accent opacity-[0.05] w-[700px] h-[700px] pointer-events-none z-0 animate-[spin_80s_linear_infinite]" />
       <CapeVerdeIslands className="fixed top-1/3 right-10 text-primary opacity-[0.03] w-[400px] h-[250px] pointer-events-none z-0 rotate-12" />
 
+      {/* ── CONTENT ── */}
       <div className="relative z-10 pt-10 md:pt-14">
         <FadeIn>
           <h1 className="text-brand-text text-center mb-6 text-5xl md:text-6xl drop-shadow-sm font-display tracking-tight">
@@ -108,28 +220,31 @@ export const Gallery = () => {
 
         {/* Filter Tabs */}
         <FadeIn delay={0.1}>
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
-            {filters.map((f) => (
-              <button
-                key={f.key}
-                onClick={() => setActiveFilter(f.key)}
-                className={`px-6 md:px-8 py-3 rounded-full font-body font-bold text-sm md:text-base border transition-all duration-300 flex items-center justify-center ${
-                  activeFilter === f.key
-                    ? 'bg-primary border-primary text-white shadow-[0_8px_20px_rgba(0,56,147,0.35)] scale-105'
-                    : 'border-black/5 text-primary hover:bg-white hover:border-black/10 hover:shadow-md bg-white/60 backdrop-blur-sm'
-                }`}
-              >
-                {f.label}
-                {activeFilter === f.key && (
-                  <span className="ml-2 bg-white/20 rounded-full px-2.5 py-0.5 text-[10px] md:text-xs">
-                    {filtered.length}
+          <div className="flex flex-wrap justify-center gap-2 mb-12">
+            {filters.map((f) => {
+              const count = f.key === 'all' ? galleryItems.length : galleryItems.filter((i) => i.category === f.key).length;
+              const isActive = activeFilter === f.key;
+              return (
+                <button
+                  key={f.key}
+                  onClick={() => setActiveFilter(f.key)}
+                  className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-body font-semibold text-sm border transition-[background-color,border-color,box-shadow,transform] duration-300 ${
+                    isActive
+                      ? 'bg-primary border-primary text-white shadow-[0_6px_18px_rgba(0,56,147,0.30)] scale-105'
+                      : 'border-black/8 text-primary hover:bg-white hover:border-black/10 hover:shadow-md bg-white/60 backdrop-blur-sm'
+                  }`}
+                >
+                  {f.label}
+                  <span className={`text-[10px] font-bold rounded-full px-2 py-0.5 leading-none ${isActive ? 'bg-white/20 text-white' : 'bg-black/8 text-primary/60'}`}>
+                    {count}
                   </span>
-                )}
-              </button>
-            ))}
+                </button>
+              );
+            })}
           </div>
         </FadeIn>
 
+        {/* Masonry Grid */}
         <FadeIn delay={0.2}>
           <div className="max-w-7xl mx-auto">
             {filtered.length === 0 ? (
@@ -138,26 +253,36 @@ export const Gallery = () => {
               </div>
             ) : (
               <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 1024: 3 }}>
-                <Masonry gutter="24px">
+                <Masonry gutter="20px">
                   {filtered.map((item, i) => (
                     <div
                       key={`${item.category}-${i}`}
-                      className="overflow-hidden rounded-[2rem] group relative cursor-pointer shadow-[0_8px_30px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgba(0,56,147,0.15)] hover:-translate-y-2 transition-all duration-500 border-[6px] border-white bg-white"
+                      onClick={() => openLightbox(i)}
+                      className="overflow-hidden rounded-[1.75rem] group relative cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.08)] md:hover:shadow-[0_12px_28px_rgba(0,56,147,0.14)] md:hover:-translate-y-1 transition-[transform,box-shadow] duration-500 ease-out border-[5px] border-white bg-white"
                     >
-                      <div className="absolute inset-0 bg-gradient-to-t from-deep/90 via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
+                      {/* Hover overlay — simple black gradient for legibility */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 ease-out z-10 rounded-[1.2rem]" />
+
+                      {/* Zoom hint icon */}
+                      <div className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-white/90 flex items-center justify-center opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 shadow-sm">
+                        <ZoomIn size={14} className="text-primary" />
+                      </div>
+
                       <img
                         src={item.src}
-                        alt={item.labelKey}
+                        alt={t('Gallery', item.labelKey)}
                         loading="lazy"
-                        className="w-full block transform group-hover:scale-110 transition-transform duration-700 object-cover"
-                        style={{ minHeight: '250px' }}
+                        className="w-full block object-cover"
+                        style={{ minHeight: '220px' }}
                       />
-                      <div className="absolute bottom-6 left-6 right-6 z-20 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-                        <p className="text-white font-display text-2xl tracking-widest">
+
+                      {/* Caption (visible on hover) */}
+                      <div className="absolute bottom-5 left-5 right-5 z-20 opacity-0 md:group-hover:opacity-100 translate-y-2 md:group-hover:translate-y-0 transition-[opacity,transform] duration-500 ease-out">
+                        <p className="text-white font-display text-lg leading-snug mb-2 drop-shadow-md">
                           {t('Gallery', item.labelKey)}
                         </p>
-                        <span className="inline-block mt-2 bg-accent text-deep px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
-                          {filters.find((f) => f.key === item.category)?.label}
+                        <span className="inline-block bg-white text-primary font-body text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-sm">
+                          {getCategoryLabel(item.category)}
                         </span>
                       </div>
                     </div>
@@ -168,6 +293,19 @@ export const Gallery = () => {
           </div>
         </FadeIn>
       </div>
+
+      {/* Lightbox */}
+      {lightboxIndex !== null && (
+        <Lightbox
+          items={filtered}
+          index={lightboxIndex}
+          getLabel={(key) => t('Gallery', key)}
+          getCategoryLabel={getCategoryLabel}
+          onClose={closeLightbox}
+          onPrev={prevPhoto}
+          onNext={nextPhoto}
+        />
+      )}
     </div>
   );
 };

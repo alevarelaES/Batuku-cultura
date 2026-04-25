@@ -74,10 +74,10 @@ export const Footer = () => {
                 </span>
                 <div className="flex flex-wrap gap-2 mt-1">
                   <span className="font-body text-[9px] font-bold uppercase tracking-[0.3em] text-white/50 border border-white/20 px-3 py-1 rounded-full">
-                    Cap-Vert · Suisse
+                    {t('Footer', 'capVertSuisseBadge')}
                   </span>
                   <span className="font-body text-[9px] font-bold uppercase tracking-[0.3em] text-white/30 border border-white/10 px-3 py-1 rounded-full">
-                    Cultures PALOP
+                    {t('Footer', 'culturesPalopBadge')}
                   </span>
                 </div>
               </div>
@@ -160,7 +160,7 @@ export const Footer = () => {
           {/* Col 3: Social + Founded */}
           <div>
             <h4 className="font-body font-bold text-white/30 uppercase tracking-[0.3em] text-[10px] mb-6">
-              Réseaux
+              {t('Footer', 'reseauxTitle')}
             </h4>
             <a
               href={CONTACT.instagramUrl}
@@ -173,7 +173,7 @@ export const Footer = () => {
               </div>
               <div className="flex flex-col min-w-0">
                 <span className="text-white font-body font-semibold text-sm">{CONTACT.instagram}</span>
-                <span className="text-white/40 text-xs font-body">Suivez-nous sur Instagram</span>
+                <span className="text-white/40 text-xs font-body">{t('Footer', 'followInstagram')}</span>
               </div>
               <ArrowUpRight size={14} className="text-white/30 group-hover:text-white/70 transition-colors ml-auto shrink-0" />
             </a>
@@ -188,23 +188,31 @@ export const Footer = () => {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/[0.08] pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          {/* PALOP color strip (subtle) */}
-          <div className="flex items-center gap-2">
-            {PALOP_COLORS.map((color, i) => (
-              <div
-                key={i}
-                className="w-5 h-1 rounded-full"
-                style={{ backgroundColor: color, opacity: 0.7 }}
-              ></div>
-            ))}
+        <div className="border-t border-white/[0.08] pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
+          {/* PALOP color strip + CHE */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5">
+              {PALOP_COLORS.map((color, i) => (
+                <div
+                  key={i}
+                  className="w-4 h-1 rounded-full"
+                  style={{ backgroundColor: color, opacity: 0.7 }}
+                ></div>
+              ))}
+            </div>
+            <span className="font-body text-white/20 text-[10px] font-mono tracking-wider">CHE-333.176.096</span>
           </div>
           <p className="font-body text-white/25 text-xs text-center">
             {t('Footer', 'rights')}
           </p>
-          <NavLink to="/contact" className="font-body text-white/30 hover:text-white/60 text-xs transition-colors tracking-widest uppercase">
-            Contact →
-          </NavLink>
+          <div className="flex items-center gap-4">
+            <NavLink to="/mentions-legales" className="font-body text-white/30 hover:text-white/60 text-xs transition-colors tracking-widest uppercase">
+              {t('Footer', 'legalLink')}
+            </NavLink>
+            <NavLink to="/contact" className="font-body text-white/30 hover:text-white/60 text-xs transition-colors tracking-widest uppercase">
+              {t('Footer', 'contactLink')}
+            </NavLink>
+          </div>
         </div>
 
       </div>

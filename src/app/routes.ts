@@ -8,7 +8,8 @@ const Batuku  = lazy(() => import("./Batuku").then(m => ({ default: m.Batuku }))
 const Culture = lazy(() => import("./Culture").then(m => ({ default: m.Culture })));
 const Events  = lazy(() => import("./Events").then(m => ({ default: m.Events })));
 const Gallery = lazy(() => import("./Gallery").then(m => ({ default: m.Gallery })));
-const Contact = lazy(() => import("./Contact").then(m => ({ default: m.Contact })));
+const Contact        = lazy(() => import("./Contact").then(m => ({ default: m.Contact })));
+const MentionsLegales = lazy(() => import("./MentionsLegales").then(m => ({ default: m.MentionsLegales })));
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ export const router = createBrowserRouter([
       { path: "events", Component: Events },
       { path: "gallery", Component: Gallery },
       { path: "contact", Component: Contact },
+      { path: "mentions-legales", Component: MentionsLegales },
     ],
   },
 ]);

@@ -24,6 +24,21 @@ export const Culture = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Lire le hash de l'URL pour pré-sélectionner un pays et scroller vers le contenu
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (!hash) return;
+    const matched = countriesData.find((c) => c.id === hash);
+    if (!matched) return;
+    setActiveCountryId(matched.id);
+    setActiveSubTab('history');
+    // Laisser le temps au DOM de se mettre à jour avant de scroller
+    const timer = setTimeout(() => {
+      contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 150);
+    return () => clearTimeout(timer);
+  }, []);
+
   const subTabs: { id: SubTabId; label: string }[] = [
     { id: 'history', label: t('Culture', 'history') },
     { id: 'culture', label: t('Culture', 'musicDance') },
@@ -56,7 +71,7 @@ export const Culture = () => {
 
         <div className="relative z-10 text-center mb-12">
           <span className="inline-block font-body text-xs font-bold tracking-[0.3em] uppercase text-white/40 mb-4">
-            PALOP · SUISSE ROMANDE
+            {t('Culture', 'palopBadge')}
           </span>
           <h1 className="font-display text-white text-5xl md:text-7xl mb-4 drop-shadow-md">
             {t('Culture', 'pageTitle')}
@@ -99,7 +114,7 @@ export const Culture = () => {
                   className="relative block mt-3 text-xs font-body font-medium transition-all duration-300"
                   style={{ color: isActive ? 'rgba(255,255,255,0.7)' : `${getDisplayColor(c)}90` }}
                 >
-                  {isActive ? 'sélectionné' : 'Explorer →'}
+                  {isActive ? t('Culture', 'selectedLabel') : t('Culture', 'exploreArrow')}
                 </span>
               </button>
             );
@@ -209,7 +224,7 @@ export const Culture = () => {
                   <ImageWithFallback
                     src={section.image}
                     alt={section.imageAlt}
-                    className="object-cover w-full h-[400px] md:h-[500px] hover:scale-110 transition-transform duration-700 ease-out"
+                    className="object-cover w-full h-[400px] md:h-[500px]"
                   />
                 </div>
               </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FadeIn } from './components/FadeIn';
+import { FadeInGroup, FadeInItem } from './components/FadeInStagger';
 import { Button } from './components/Button';
 import { ArrowRight, PlayCircle, Calendar, MapPin } from 'lucide-react';
 import {
@@ -11,7 +12,7 @@ import { useLanguage } from './contexts/LanguageContext';
 import { NavLink } from 'react-router';
 import { events, formatEventDate } from '../data/events';
 
-const BATUKU_IMG = "https://images.unsplash.com/photo-1581536678606-3a35fecc8fc5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1080&q=80";
+const BATUKU_IMG = "/Sections_fonds/Batuku_1.png";
 
 const MUSIC_GENRES: { key: string; descKey: string; Icon: React.FC<{ className?: string }>; bgClass: string; iconClass: string; badgeKey: string }[] = [
   { key: 'mornaTitle', descKey: 'mornaDesc', Icon: MusicNotes, bgClass: 'bg-primary', iconClass: 'text-primary', badgeKey: 'UNESCO 2019' },
@@ -23,7 +24,7 @@ const MUSIC_GENRES: { key: string; descKey: string; Icon: React.FC<{ className?:
 export const Home = () => {
   const { t, lang } = useLanguage();
 
-  const upcomingEvents = events.filter((e) => !e.featured);
+  const upcomingEvents = events.filter((e) => !e.featured && !e.past);
 
   return (
     <div className="w-full relative">
@@ -52,7 +53,7 @@ export const Home = () => {
               <div className="flex-1">
                 <span className="inline-flex items-center gap-3 font-body font-medium uppercase tracking-[0.3em] text-primary/80 text-sm mb-6">
                   <span className="w-8 h-px bg-primary/40 shrink-0"></span>
-                  Notre Mission
+                  {t('Home', 'missionLabel')}
                 </span>
                 <h2 className="text-brand-text text-4xl sm:text-5xl md:text-6xl font-display leading-[1.1] mb-6 font-light">
                   {t('Home', 'capVertSection')}
@@ -71,12 +72,12 @@ export const Home = () => {
                 </div>
               </div>
 
-              {/* Right Grid (4 Genres) */}
-              <div className="flex-1 w-full grid grid-cols-1 sm:grid-cols-2 gap-5 relative">
+              {/* Right Grid (4 Genres) — stagger on desktop */}
+              <FadeInGroup className="flex-1 w-full grid grid-cols-1 sm:grid-cols-2 gap-5 relative" stagger={0.1}>
                 <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[200px] bg-orange/10 blur-[80px] rounded-full z-0 pointer-events-none"></div>
 
                 {MUSIC_GENRES.map((genre, idx) => (
-                  <FadeIn key={idx} delay={idx * 0.08} className="relative z-10">
+                  <FadeInItem key={idx} className="relative z-10">
                     <div className="group bg-white/70 backdrop-blur-md rounded-[2rem] p-6 flex flex-col items-start shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(232,117,26,0.1)] border border-white/80 transition-all duration-500 hover:-translate-y-1.5 h-full min-h-[200px]">
                       <div className="flex items-center justify-between w-full mb-5 relative">
                         <div className={`absolute inset-0 opacity-10 rounded-full blur-xl transition-opacity duration-300 group-hover:opacity-20 ${genre.bgClass}`}></div>
@@ -92,9 +93,9 @@ export const Home = () => {
                         {t('Home', genre.descKey)}
                       </p>
                     </div>
-                  </FadeIn>
+                  </FadeInItem>
                 ))}
-              </div>
+              </FadeInGroup>
             </div>
           </FadeIn>
         </div>
@@ -130,7 +131,7 @@ export const Home = () => {
                   <img src={BATUKU_IMG} alt="Groupe Batuku" loading="lazy" className="w-full h-full object-cover rounded-t-[9rem] rounded-b-[1.5rem] brightness-105" />
                   <NavLink to="/batuku" className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-3 bg-white/80 backdrop-blur-md rounded-full pl-3 pr-5 py-2.5 shadow-xl hover:scale-105 transition-transform border border-white">
                     <PlayCircle size={28} className="text-green shrink-0" />
-                    <span className="font-body font-bold text-sm text-brand-text whitespace-nowrap">Découvrir le Batuku</span>
+                    <span className="font-body font-bold text-sm text-brand-text whitespace-nowrap">{t('Home', 'discoverBatuku')}</span>
                   </NavLink>
                 </div>
               </div>
@@ -181,15 +182,15 @@ export const Home = () => {
               <div>
                 <span className="inline-flex items-center gap-3 font-body font-medium uppercase tracking-[0.3em] text-brand-text/70 text-sm mb-3">
                   <span className="w-8 h-px bg-brand-text/40 shrink-0"></span>
-                  Nos Origines
+                  {t('Home', 'nosOriginesLabel')}
                 </span>
                 <h2 className="text-brand-text text-4xl sm:text-5xl md:text-6xl font-display font-medium leading-none">
-                  5 Nations,<br />
-                  <span className="text-primary">1 Langue.</span>
+                  {t('Home', 'nationsTitle')}<br />
+                  <span className="text-primary">{t('Home', 'nationsLangue')}</span>
                 </h2>
               </div>
               <p className="font-body text-brand-text/80 text-base max-w-xs leading-relaxed md:text-right">
-                Les pays lusophones d'Afrique, unis par une langue et mille rythmes.
+                {t('Home', 'nationsDesc')}
               </p>
             </div>
 
@@ -197,32 +198,30 @@ export const Home = () => {
             <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-4">
 
               {/* CAP-VERT — Featured tall card */}
-              <NavLink to="/culture" className="group relative overflow-hidden rounded-[2rem] min-h-[420px] lg:min-h-[520px] flex flex-col justify-end p-8 md:p-10">
-                {/* Gradient background using CV flag colors: deep blue → soft red stripe → yellow accent */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#003893] via-[#0052CC] to-[#0B1B3D]"></div>
-                {/* Red band accent */}
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[3px] bg-gradient-to-r from-[#CE1126]/0 via-[#CE1126]/60 to-[#CE1126]/0"></div>
+              <NavLink to="/culture#cap-vert" className="group relative overflow-hidden rounded-[2rem] min-h-[420px] lg:min-h-[520px] flex flex-col justify-end p-8 md:p-10 transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 md:hover:shadow-[0_20px_50px_rgba(0,56,147,0.3)]">
+                {/* Real flag image */}
+                <img src="/flags/flag-cape-verde.jpg" alt="" loading="lazy" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
+                {/* Dark overlay for readability */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
                 {/* Yellow star cluster accent */}
                 <div className="absolute top-8 right-8 flex flex-wrap gap-1.5 w-20">
                   {[...Array(10)].map((_, i) => (
                     <div key={i} className="w-2 h-2 rounded-full bg-yellow/70"></div>
                   ))}
                 </div>
-                {/* Warm glow */}
-                <div className="absolute bottom-0 left-1/4 w-[300px] h-[300px] bg-primary/30 rounded-full blur-[80px] opacity-50 group-hover:opacity-70 transition-opacity duration-700"></div>
 
                 <div className="relative z-10">
                   <span className="inline-block bg-yellow/20 backdrop-blur border border-yellow/30 text-yellow text-[10px] font-bold uppercase tracking-[0.25em] px-3 py-1.5 rounded-full mb-6">
-                    Notre Berceau
+                    {t('Home', 'palopFeaturedLabel')}
                   </span>
                   <h3 className="font-display font-light text-white text-4xl sm:text-5xl md:text-6xl leading-none mb-3">
-                    Cap-Vert
+                    {t('Events', 'palopCapVert')}
                   </h3>
                   <p className="font-body text-white/90 text-sm leading-relaxed max-w-xs">
-                    Archipel de l'Atlantique. Berceau de la Morna, du Batuku, de la Coladeira.
+                    {t('Home', 'capVertCardDesc')}
                   </p>
                   <div className="mt-8 flex items-center gap-3 text-white/80 font-body font-medium text-xs uppercase tracking-widest group-hover:text-white transition-colors">
-                    Explorer la culture
+                    {t('Home', 'exploreCountry')}
                     <span className="w-5 h-px bg-current transition-all group-hover:w-10"></span>
                   </div>
                 </div>
@@ -232,47 +231,42 @@ export const Home = () => {
               <div className="grid grid-cols-2 grid-rows-2 gap-4">
 
                 {/* ANGOLA */}
-                <NavLink to="/culture" className="group relative overflow-hidden rounded-[1.8rem] flex flex-col justify-end p-6 min-h-[200px] lg:min-h-[248px]">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a0a] via-[#3d0a0a] to-[#0a0a0a]"></div>
-                  <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#CC092F] to-[#CC092F]/50"></div>
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#F9D61B] to-[#F9D61B]/30"></div>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-10 text-7xl font-display text-[#CC092F]">A</div>
+                <NavLink to="/culture#angola" className="group relative overflow-hidden rounded-[1.8rem] flex flex-col justify-end p-6 min-h-[200px] lg:min-h-[248px] transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 md:hover:shadow-[0_14px_32px_rgba(204,9,47,0.25)]">
+                  <img src="/flags/flag-angola.jpg" alt="" loading="lazy" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/10"></div>
                   <div className="relative z-10">
-                    <h3 className="font-display font-light text-white text-3xl leading-none mb-1">Angola</h3>
-                    <p className="font-body text-white/70 text-xs uppercase tracking-widest">Kizomba · Semba</p>
+                    <h3 className="font-display font-light text-white text-3xl leading-none mb-1">{t('Events', 'palopAngola')}</h3>
+                    <p className="font-body text-white/70 text-xs uppercase tracking-widest">{t('Home', 'angolaGenres')}</p>
                   </div>
                 </NavLink>
 
                 {/* GUINÉE-BISSAU */}
-                <NavLink to="/culture" className="group relative overflow-hidden rounded-[1.8rem] flex flex-col justify-end p-6 min-h-[200px] lg:min-h-[248px]">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#0d1f0d] via-[#0d3d0d] to-[#0a0a0a]"></div>
-                  <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-[#CE1126] via-[#F7D116] to-[#009A44]"></div>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-10 text-7xl font-display text-[#009A44]">G</div>
+                <NavLink to="/culture#guinee-bissau" className="group relative overflow-hidden rounded-[1.8rem] flex flex-col justify-end p-6 min-h-[200px] lg:min-h-[248px] transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 md:hover:shadow-[0_14px_32px_rgba(0,154,68,0.25)]">
+                  <img src="/flags/flag-guinea-bissau.jpg" alt="" loading="lazy" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/10"></div>
                   <div className="relative z-10">
-                    <h3 className="font-display font-light text-white text-2xl leading-none mb-1">Guinée-Bissau</h3>
-                    <p className="font-body text-white/70 text-xs uppercase tracking-widest">Gumbe · Tina</p>
+                    <h3 className="font-display font-light text-white text-2xl leading-none mb-1">{t('Events', 'palopGuineeBissau')}</h3>
+                    <p className="font-body text-white/70 text-xs uppercase tracking-widest">{t('Home', 'guineaBissauGenres')}</p>
                   </div>
                 </NavLink>
 
                 {/* MOZAMBIQUE */}
-                <NavLink to="/culture" className="group relative overflow-hidden rounded-[1.8rem] flex flex-col justify-end p-6 min-h-[200px] lg:min-h-[248px]">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#0a1a0d] via-[#0a2e19] to-[#050d08]"></div>
-                  <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#009A44] via-[#FFD100] to-[#009A44]/50"></div>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-10 text-7xl font-display text-[#009A44]">M</div>
+                <NavLink to="/culture#mozambique" className="group relative overflow-hidden rounded-[1.8rem] flex flex-col justify-end p-6 min-h-[200px] lg:min-h-[248px] transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 md:hover:shadow-[0_14px_32px_rgba(0,154,68,0.25)]">
+                  <img src="/flags/flag-mozambique.jpg" alt="" loading="lazy" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/10"></div>
                   <div className="relative z-10">
-                    <h3 className="font-display font-light text-white text-3xl leading-none mb-1">Mozambique</h3>
-                    <p className="font-body text-white/70 text-xs uppercase tracking-widest">Marrabenta</p>
+                    <h3 className="font-display font-light text-white text-3xl leading-none mb-1">{t('Events', 'palopMozambique')}</h3>
+                    <p className="font-body text-white/70 text-xs uppercase tracking-widest">{t('Home', 'mozambiqueGenres')}</p>
                   </div>
                 </NavLink>
 
                 {/* SÃO TOMÉ */}
-                <NavLink to="/culture" className="group relative overflow-hidden rounded-[1.8rem] flex flex-col justify-end p-6 min-h-[200px] lg:min-h-[248px]">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#1a1000] via-[#2e1f00] to-[#0a0a0a]"></div>
-                  <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#12AD2B] via-[#FFCD00] to-[#12AD2B]/50"></div>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-10 text-6xl font-display text-[#FFCD00]">ST</div>
+                <NavLink to="/culture#sao-tome" className="group relative overflow-hidden rounded-[1.8rem] flex flex-col justify-end p-6 min-h-[200px] lg:min-h-[248px] transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 md:hover:shadow-[0_14px_32px_rgba(18,173,43,0.25)]">
+                  <img src="/flags/flag-sao-tome-principe.jpg" alt="" loading="lazy" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/10"></div>
                   <div className="relative z-10">
-                    <h3 className="font-display font-light text-white text-2xl leading-none mb-1">São Tomé & Príncipe</h3>
-                    <p className="font-body text-white/70 text-xs uppercase tracking-widest">Puíta · Ússua</p>
+                    <h3 className="font-display font-light text-white text-2xl leading-none mb-1">{t('Home', 'saoTomeName')}</h3>
+                    <p className="font-body text-white/70 text-xs uppercase tracking-widest">{t('Home', 'saoTomeGenres')}</p>
                   </div>
                 </NavLink>
 
@@ -292,27 +286,27 @@ export const Home = () => {
             <div className="flex flex-col md:flex-row items-end justify-between mb-14 gap-8">
               <div>
                 <span className="inline-flex items-center gap-3 font-body font-medium uppercase tracking-[0.3em] text-orange/80 text-sm mb-3">
-                  Agenda
+                  {t('Home', 'agendaLabel')}
                 </span>
                 <h2 className="text-white text-4xl md:text-6xl font-display leading-tight font-light">
-                  À Venir
+                  {t('Home', 'eventsTitle')}
                 </h2>
               </div>
               <NavLink to="/events" className="group flex items-center gap-3 text-white/70 hover:text-white font-body font-medium tracking-wide text-sm">
-                Voir tous les événements
+                {t('Home', 'seeAllEvents')}
                 <span className="bg-white/10 p-2.5 rounded-full group-hover:bg-orange transition-colors">
                   <ArrowRight size={16} />
                 </span>
               </NavLink>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-              {upcomingEvents.map((event, idx) => (
-                <FadeIn key={event.id} delay={idx * 0.1}>
-                  <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-[2rem] overflow-hidden group hover:bg-white/[0.06] hover:border-white/20 transition-all duration-500 hover:-translate-y-1.5 flex flex-col">
+            <FadeInGroup className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8" stagger={0.12}>
+              {upcomingEvents.map((event) => (
+                <FadeInItem key={event.id}>
+                  <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-[2rem] overflow-hidden group md:hover:bg-white/[0.06] md:hover:border-white/20 transition-[transform,background-color,border-color,box-shadow] duration-500 ease-out md:hover:-translate-y-1 flex flex-col">
                     <div className="relative h-56 overflow-hidden p-2.5 pb-0">
                       <div className="w-full h-full rounded-[1.5rem] overflow-hidden relative">
-                        <img src={event.image} alt={event.title[lang]} loading="lazy" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 brightness-90 saturate-50 group-hover:saturate-100" />
+                        <img src={event.image} alt={event.title[lang]} loading="lazy" className="w-full h-full object-cover brightness-90 saturate-50 md:group-hover:saturate-100 transition-[filter] duration-500 ease-out" />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0B1B3D]/80 via-transparent to-transparent opacity-60"></div>
                       </div>
                       <div className="absolute top-7 right-7 bg-white/20 backdrop-blur-md border border-white/30 text-white font-body font-medium px-3 py-1 rounded-full text-xs uppercase tracking-widest">
@@ -333,9 +327,9 @@ export const Home = () => {
                       </div>
                     </div>
                   </div>
-                </FadeIn>
+                </FadeInItem>
               ))}
-            </div>
+            </FadeInGroup>
           </FadeIn>
         </div>
       </section>

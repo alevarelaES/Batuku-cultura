@@ -100,29 +100,6 @@ export const Contact = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <FadeIn delay={0.2}>
-            {/* Contact Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {contactItems.map((item, idx) => (
-                <a
-                  key={idx}
-                  href={item.href}
-                  target={item.target}
-                  rel={item.target === '_blank' ? 'noreferrer' : undefined}
-                  className="group bg-white/70 backdrop-blur-md px-6 py-8 rounded-[2rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-white flex flex-col items-center text-center hover:shadow-[0_20px_40px_rgba(0,56,147,0.12)] hover:-translate-y-2 transition-all duration-500 cursor-pointer"
-                >
-                  <div
-                    className={`w-16 h-16 rounded-full ${item.bg} ${item.color} flex items-center justify-center mb-5 shadow-sm shrink-0 border border-white/50 group-hover:scale-110 transition-transform duration-500`}
-                  >
-                    {item.icon}
-                  </div>
-                  <h3 className={`${item.color} mb-3 text-xl opacity-90`}>{item.title}</h3>
-                  {item.content}
-                </a>
-              ))}
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.4}>
             <form className="bg-white/70 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col gap-8 border border-white relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[100px] pointer-events-none" />
               <img
@@ -191,6 +168,29 @@ export const Contact = () => {
                 {t('Contact', 'formSend')}
               </Button>
             </form>
+          </FadeIn>
+
+          <FadeIn delay={0.4}>
+            {/* Contact Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {contactItems.map((item, idx) => (
+                <a
+                  key={idx}
+                  href={item.href}
+                  target={item.target}
+                  rel={item.target === '_blank' ? 'noreferrer' : undefined}
+                  className="group bg-white/70 backdrop-blur-md px-6 py-8 rounded-[2rem] shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-white flex flex-col items-center text-center hover:shadow-[0_20px_40px_rgba(0,56,147,0.12)] hover:-translate-y-2 transition-all duration-500 cursor-pointer"
+                >
+                  <div
+                    className={`w-16 h-16 rounded-full ${item.bg} ${item.color} flex items-center justify-center mb-5 shadow-sm shrink-0 border border-white/50 group-hover:scale-110 transition-transform duration-500`}
+                  >
+                    {item.icon}
+                  </div>
+                  <h3 className={`${item.color} mb-3 text-xl opacity-90`}>{item.title}</h3>
+                  {item.content}
+                </a>
+              ))}
+            </div>
           </FadeIn>
         </div>
       </section>
