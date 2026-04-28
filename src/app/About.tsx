@@ -204,25 +204,25 @@ export const About = () => {
         <CarnivalMask className="absolute -bottom-10 right-0 text-white opacity-[0.03] w-96 h-96 rotate-[-15deg] pointer-events-none" />
         
         <div className="max-w-7xl mx-auto relative z-10">
-          <FadeIn>
-            <div className="text-center max-w-4xl mx-auto mb-16">
-              <span className="inline-flex items-center gap-3 font-body font-medium uppercase tracking-[0.3em] text-orange/80 text-sm mb-6">
-                <span className="w-8 h-px bg-orange/40 shrink-0"></span>
-                {t('About', 'reasonLabel')}
-              </span>
-              <h2 className="text-white text-5xl md:text-6xl font-display mb-6 leading-tight drop-shadow-md">
-                {t('About', 'transmissionTitle')}
-              </h2>
-              <div className="bg-white/5 backdrop-blur-xl border border-white/10 px-10 py-5 rounded-full inline-block shadow-2xl">
-                <p className="font-body font-normal text-white/90 text-xl md:text-2xl tracking-wide italic">
-                  "{t('About', 'transmissionTagline')}"
-                </p>
-              </div>
+          <FadeIn className="text-center max-w-4xl mx-auto mb-16">
+            <span className="inline-flex items-center gap-3 font-body font-medium uppercase tracking-[0.3em] text-orange/80 text-sm mb-6">
+              <span className="w-8 h-px bg-orange/40 shrink-0"></span>
+              {t('About', 'reasonLabel')}
+            </span>
+            <h2 className="text-white text-5xl md:text-6xl font-display mb-6 leading-tight drop-shadow-md">
+              {t('About', 'transmissionTitle')}
+            </h2>
+            <div className="bg-white/5 backdrop-blur-xl border border-white/10 px-10 py-5 rounded-full inline-block shadow-2xl">
+              <p className="font-body font-normal text-white/90 text-xl md:text-2xl tracking-wide italic">
+                "{t('About', 'transmissionTagline')}"
+              </p>
             </div>
+          </FadeIn>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-              {/* Box 1: Mission */}
-              <div className="group bg-gradient-to-b from-white/10 to-white/5 hover:from-white/15 hover:to-white/10 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 relative overflow-hidden flex flex-col">
+          <FadeInGroup className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch" stagger={0.12}>
+            {/* Box 1: Mission */}
+            <FadeInItem>
+              <div className="group bg-gradient-to-b from-white/10 to-white/5 hover:from-white/15 hover:to-white/10 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 relative overflow-hidden flex flex-col h-full">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-orange/20 rounded-full blur-3xl group-hover:bg-orange/30 transition-colors duration-500"></div>
                 <h3 className="text-2xl font-display text-white mb-4 relative z-10">{t('About', 'missionTitle')}</h3>
                 <p className="text-base md:text-lg font-body font-light text-white/80 leading-relaxed mb-4 relative z-10">
@@ -232,9 +232,11 @@ export const About = () => {
                   {t('About', 'missionText2')}
                 </p>
               </div>
-              
-              {/* Box 2: Transmission */}
-              <div className="group bg-gradient-to-b from-white/10 to-white/5 hover:from-white/15 hover:to-white/10 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 relative overflow-hidden flex flex-col">
+            </FadeInItem>
+
+            {/* Box 2: Transmission */}
+            <FadeInItem>
+              <div className="group bg-gradient-to-b from-white/10 to-white/5 hover:from-white/15 hover:to-white/10 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 relative overflow-hidden flex flex-col h-full">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/30 transition-colors duration-500"></div>
                 <h3 className="text-2xl font-display text-white mb-4 relative z-10">{t('About', 'transmissionBoxTitle')}</h3>
                 <p className="text-base md:text-lg font-body font-light text-white/80 leading-relaxed mb-6 relative z-10 flex-1">
@@ -249,9 +251,11 @@ export const About = () => {
                   ))}
                 </div>
               </div>
+            </FadeInItem>
 
-              {/* Box 3: Activités & Valeurs */}
-              <div className="group bg-gradient-to-b from-white/10 to-white/5 hover:from-white/15 hover:to-white/10 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 relative overflow-hidden flex flex-col">
+            {/* Box 3: Activités & Valeurs */}
+            <FadeInItem>
+              <div className="group bg-gradient-to-b from-white/10 to-white/5 hover:from-white/15 hover:to-white/10 backdrop-blur-xl p-8 md:p-10 rounded-[2.5rem] border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 relative overflow-hidden flex flex-col h-full">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-yellow/20 rounded-full blur-3xl group-hover:bg-yellow/30 transition-colors duration-500"></div>
                 <h3 className="text-2xl font-display text-white mb-6 relative z-10">{t('About', 'activitiesValuesBoxTitle')}</h3>
                 <div className="space-y-3 mb-6 relative z-10 flex-1">
@@ -270,8 +274,8 @@ export const About = () => {
                   ))}
                 </div>
               </div>
-            </div>
-          </FadeIn>
+            </FadeInItem>
+          </FadeInGroup>
         </div>
       </section>
 

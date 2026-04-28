@@ -32,7 +32,47 @@ const galleryItems: GalleryItem[] = [
     labelKey: 'labelDanseTrad',
   },
 
-  // ── ÉVÉNEMENTS — vide pour l'instant (pas encore de vraies photos) ──
+  // ── ÉVÉNEMENTS — Festival Batuku (Sementera) ──
+  {
+    src: '/Evenment sementera batukaderas photos/WhatsApp Image 2026-04-27 at 19.16.05 (2).jpeg',
+    category: 'events',
+    labelKey: 'Festival 2026',
+  },
+  {
+    src: '/Evenment sementera batukaderas photos/WhatsApp Image 2026-04-27 at 19.16.05 (3).jpeg',
+    category: 'events',
+    labelKey: 'Sementera Batukaderas',
+  },
+  {
+    src: '/Evenment sementera batukaderas photos/WhatsApp Image 2026-04-27 at 19.16.05 (4).jpeg',
+    category: 'events',
+    labelKey: 'La Troupe Sementera',
+  },
+  {
+    src: '/Evenment sementera batukaderas photos/WhatsApp Image 2026-04-27 at 19.16.05 (5).jpeg',
+    category: 'events',
+    labelKey: 'Tradition Cap-Verdienne',
+  },
+  {
+    src: '/Evenment sementera batukaderas photos/WhatsApp Image 2026-04-27 at 19.16.05 (6).jpeg',
+    category: 'events',
+    labelKey: 'Énergie Pure',
+  },
+  {
+    src: '/Evenment sementera batukaderas photos/WhatsApp Image 2026-04-27 at 19.16.05 (7).jpeg',
+    category: 'events',
+    labelKey: 'Célébration',
+  },
+  {
+    src: '/Evenment sementera batukaderas photos/WhatsApp Image 2026-04-27 at 19.16.06 (1).jpeg',
+    category: 'events',
+    labelKey: 'Rythme & Danse',
+  },
+  {
+    src: '/Evenment sementera batukaderas photos/WhatsApp Image 2026-04-27 at 19.16.06.jpeg',
+    category: 'events',
+    labelKey: 'Fierté 3e Place',
+  },
 
   // ── GASTRONOMIE (photos locales en attendant) ──
   {
@@ -279,7 +319,7 @@ export const Gallery = () => {
                       {/* Caption (visible on hover) */}
                       <div className="absolute bottom-5 left-5 right-5 z-20 opacity-0 md:group-hover:opacity-100 translate-y-2 md:group-hover:translate-y-0 transition-[opacity,transform] duration-500 ease-out">
                         <p className="text-white font-display text-lg leading-snug mb-2 drop-shadow-md">
-                          {t('Gallery', item.labelKey)}
+                          {item.labelKey.includes(' ') || item.labelKey.includes('é') || item.labelKey.includes('-') ? item.labelKey : t('Gallery', item.labelKey)}
                         </p>
                         <span className="inline-block bg-white text-primary font-body text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-sm">
                           {getCategoryLabel(item.category)}
@@ -299,7 +339,7 @@ export const Gallery = () => {
         <Lightbox
           items={filtered}
           index={lightboxIndex}
-          getLabel={(key) => t('Gallery', key)}
+          getLabel={(key) => key.includes(' ') || key.includes('é') || key.includes('-') ? key : t('Gallery', key)}
           getCategoryLabel={getCategoryLabel}
           onClose={closeLightbox}
           onPrev={prevPhoto}

@@ -197,6 +197,11 @@ export const translations: Record<Lang, Record<string, Record<string, string>>> 
       collectiveCaption: 'Unies par le rythme, ensemble pour la culture.',
       ourHistoryLabel: 'Notre Histoire',
       galleryLabel: 'Galerie',
+      // Sementera Batukaderas highlight
+      sementera3ePlaceLabel: 'Palmarès 2026',
+      sementera3ePlaceTitle: '3e Place au Festival International de Batuku',
+      senteraDesc1: 'L\'association Sementera Batukaderas est un groupe de batucadeiras cabo-verdianas basé à Villiers-le-Bel, en France, dédié à la préservation et à la promotion du batuque, genre musical traditionnel de l\'île de Santiago, au Cap-Vert.',
+      senteraDesc2: 'Le groupe est associé à l\'Association Sementera, qui a célébré 30 ans d\'existence en 2023. Il est composé de femmes qui exécutent le batuque traditionnel — rythmes frappés sur des ballots de tissu (tchabeta), accompagnés de chants et de la danse di tornu.',
     },
     Culture: {
       pageTitle: 'Cultura dos PALOP',
@@ -513,6 +518,11 @@ export const translations: Record<Lang, Record<string, Record<string, string>>> 
       collectiveCaption: 'Unidas pelo ritmo, juntas pela cultura.',
       ourHistoryLabel: 'A Nossa História',
       galleryLabel: 'Galeria',
+      // Sementera
+      sementera3ePlaceLabel: 'Palmarés 2026',
+      sementera3ePlaceTitle: '3º Lugar no Festival Internacional de Batuku',
+      senteraDesc1: 'A associação Sementera Batukaderas é um grupo de batucadeiras cabo-verdianas sediado em Villiers-le-Bel, na França, que se dedica à preservação e divulgação do batuque, um género musical tradicional da ilha de Santiago, em Cabo Verde.',
+      senteraDesc2: 'O grupo está associado à Association Sementera, que celebrou 30 anos de existência em 2023. É composto por mulheres que executam o batuque tradicional — toques ritmados em trouxas de pano (tchabeta), acompanhados de canto e da dança di tornu.',
     },
     Culture: {
       pageTitle: 'Cultura dos PALOP',
@@ -823,6 +833,11 @@ export const translations: Record<Lang, Record<string, Record<string, string>>> 
       collectiveCaption: 'United by rhythm, together for culture.',
       ourHistoryLabel: 'Our History',
       galleryLabel: 'Gallery',
+      // Sementera
+      sementera3ePlaceLabel: 'Honours 2026',
+      sementera3ePlaceTitle: '3rd Place at the International Batuku Festival',
+      senteraDesc1: 'The Sementera Batukaderas association is a group of Cape Verdean batucadeiras based in Villiers-le-Bel, France, dedicated to the preservation and promotion of batuque, a traditional musical genre from the island of Santiago, Cape Verde.',
+      senteraDesc2: 'The group is linked to the Association Sementera, which celebrated 30 years of existence in 2023. It is composed of women who perform traditional batuque — rhythmic beats on cloth bundles (tchabeta), accompanied by singing and the dança di tornu.',
     },
     Culture: {
       pageTitle: 'Cultura dos PALOP',

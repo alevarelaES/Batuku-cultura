@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FadeIn } from './components/FadeIn';
-import { PatternBg, Confetti, Djembe, CapeVerdeIslands } from './components/Decorations';
+import { PatternBg, Confetti, Djembe } from './components/Decorations';
 import { CapeVerdeStars } from './components/CulturalMotifs';
 import { useLanguage } from './contexts/LanguageContext';
+import { X, ZoomIn } from 'lucide-react';
 
 const PHOTOS = [
   '/groupe%20batuku/groupo%20batuku%203.jpeg',
@@ -10,8 +11,81 @@ const PHOTOS = [
   '/groupe%20batuku/groupo%20batuku%201.jpeg',
 ];
 
+const GALLERY_PHOTOS = [
+  '/Evenment sementera batukaderas photos/WhatsApp Image 2026-04-27 at 19.16.05 (1).jpeg',
+  '/Evenment sementera batukaderas photos/WhatsApp Image 2026-04-27 at 19.16.06.jpeg',
+  '/Evenment sementera batukaderas photos/WhatsApp Image 2026-04-27 at 19.23.08.jpeg',
+];
+
+const SEMENTERA_FLYER = '/Evenment sementera batukaderas photos/Evenemnt batuku.jpg';
+
+// ── Lightbox ──────────────────────────────────────────────────────────────────
+interface LightboxProps {
+  src: string;
+  onClose: () => void;
+}
+
+const Lightbox = ({ src, onClose }: LightboxProps) => {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-sm animate-[fadeIn_0.2s_ease]"
+      onClick={onClose}
+    >
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 text-white bg-white/10 hover:bg-white/20 rounded-full p-2.5 transition-colors"
+        aria-label="Fermer"
+      >
+        <X size={22} />
+      </button>
+      <img
+        src={src}
+        alt="Aperçu"
+        className="max-w-[92vw] max-h-[90vh] rounded-2xl shadow-2xl object-contain"
+        onClick={(e) => e.stopPropagation()}
+      />
+    </div>
+  );
+};
+
+// ── Clickable image wrapper ───────────────────────────────────────────────────
+interface ClickImgProps {
+  src: string;
+  alt: string;
+  className?: string;
+  wrapperClassName?: string;
+  onOpen: (src: string) => void;
+  style?: React.CSSProperties;
+}
+
+const ClickImg = ({ src, alt, className, wrapperClassName, onOpen, style }: ClickImgProps) => (
+  <div
+    className={`relative group cursor-zoom-in ${wrapperClassName ?? ''}`}
+    onClick={() => onOpen(src)}
+  >
+    <img src={src} alt={alt} className={className} style={style} />
+    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/25 rounded-inherit">
+      <ZoomIn className="text-white w-8 h-8 drop-shadow-lg" />
+    </div>
+  </div>
+);
+
+// ── Main component ────────────────────────────────────────────────────────────
 export const Batuku = () => {
   const { t } = useLanguage();
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
+  const openLightbox = useCallback((src: string) => setLightboxSrc(src), []);
+  const closeLightbox = useCallback(() => setLightboxSrc(null), []);
 
   const timeline = [
     {
@@ -43,6 +117,9 @@ export const Batuku = () => {
   return (
     <div className="w-full bg-brand-bg min-h-screen relative overflow-hidden">
       <PatternBg className="text-primary opacity-[0.03] fixed inset-0 z-0 pointer-events-none" />
+
+      {/* Lightbox */}
+      {lightboxSrc && <Lightbox src={lightboxSrc} onClose={closeLightbox} />}
 
       {/* ─── ACTE 1 : HERO VIBRANT ─── */}
       <section className="relative min-h-[72vh] md:min-h-[78vh] flex items-center justify-center overflow-hidden bg-deep">
@@ -89,14 +166,18 @@ export const Batuku = () => {
             {PHOTOS.map((src, i) => (
               <div
                 key={i}
-                className={`relative rounded-[2.5rem] overflow-hidden shadow-2xl border-[6px] border-white group bg-deep 
+                className={`relative rounded-[2.5rem] overflow-hidden shadow-2xl border-[6px] border-white group bg-deep cursor-zoom-in
                 ${i === 1 ? 'md:-mt-10 md:mb-10 shadow-[0_20px_40px_rgba(232,117,26,0.15)]' : ''}`}
+                onClick={() => openLightbox(src)}
               >
                 <div className="absolute inset-0 bg-gradient-to-tr from-orange/20 to-primary/20 mix-blend-overlay z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                <div className="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <ZoomIn className="text-white w-10 h-10 drop-shadow-lg" />
+                </div>
                 <img
                   src={src}
                   alt={`Groupe Batuku ${i + 1}`}
-                  className={`w-full ${i === 1 ? 'aspect-[3/4]' : 'aspect-[9/16]'} object-cover object-top transition-transform duration-700`}
+                  className={`w-full ${i === 1 ? 'aspect-[3/4]' : 'aspect-[9/16]'} object-cover object-top transition-transform duration-700 group-hover:scale-105`}
                 />
               </div>
             ))}
@@ -161,12 +242,43 @@ export const Batuku = () => {
         </div>
       </section>
 
-      {/* ─── ACTE 4 : L'ÉNERGIE EN MOUVEMENT (GALERIE DENSE & FLUIDE) ─── */}
+      {/* ─── DESTAQUE : SEMENTERA BATUKADERAS ─── */}
+      <section className="py-10 px-6 relative z-10">
+        <FadeIn className="max-w-6xl mx-auto bg-gradient-to-br from-white/90 to-white/60 backdrop-blur-md rounded-[2rem] p-6 md:p-10 border border-white/70 shadow-[0_12px_40px_rgba(0,0,0,0.06)] grid md:grid-cols-[1fr_auto] gap-8 items-center">
+          <div>
+            <span className="inline-block bg-orange/10 text-orange font-bold px-3 py-1 rounded-full text-[10px] uppercase tracking-widest mb-4 border border-orange/20">
+              {t('Batuku', 'sementera3ePlaceLabel')}
+            </span>
+            <h2 className="text-primary text-2xl md:text-3xl font-display leading-tight mb-3">
+              {t('Batuku', 'sementera3ePlaceTitle')}
+            </h2>
+            <p className="font-body text-brand-text/80 text-sm md:text-base leading-relaxed mb-2">
+              {t('Batuku', 'senteraDesc1')}
+            </p>
+            <p className="font-body text-brand-text/70 text-sm md:text-base leading-relaxed">
+              {t('Batuku', 'senteraDesc2')}
+            </p>
+          </div>
+          <div
+            className="shrink-0 md:w-48 lg:w-56 relative group cursor-zoom-in"
+            onClick={() => openLightbox(SEMENTERA_FLYER)}
+          >
+            <img
+              src={SEMENTERA_FLYER}
+              alt="Sementera Batukaderas"
+              className="rounded-[1.5rem] w-full shadow-xl border-4 border-white object-cover aspect-[4/3] md:aspect-square rotate-2 group-hover:rotate-0 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/20 rounded-[1.5rem]">
+              <ZoomIn className="text-white w-8 h-8 drop-shadow-lg" />
+            </div>
+          </div>
+        </FadeIn>
+      </section>
+
+      {/* ─── ACTE 4 : L'ÉNERGIE EN MOUVEMENT ─── */}
       <section className="py-16 px-6 bg-gradient-to-b from-[#0B1B3D] to-[#040A18] relative overflow-hidden">
-        {/* Soft Glows */}
         <div className="absolute top-0 right-1/4 w-[400px] h-[400px] bg-orange/15 rounded-full blur-[100px] pointer-events-none"></div>
         <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] pointer-events-none"></div>
-
         <Confetti className="absolute inset-0 text-white opacity-[0.03] z-0 pointer-events-none" />
 
         <FadeIn className="relative z-10 max-w-7xl mx-auto">
@@ -180,30 +292,36 @@ export const Batuku = () => {
             </h2>
           </div>
 
-          {/* Grille Flex pour images portrait */}
+          {/* Grille Flex clickable */}
           <div className="flex flex-col md:flex-row h-auto md:h-[580px] gap-6 items-stretch">
-            <div className="md:flex-1 h-[400px] md:h-auto rounded-[2.5rem] overflow-hidden relative shadow-2xl border border-white/10 bg-deep/50">
-              <img
-                src={PHOTOS[0]}
-                alt="Groupe Batuku"
-                className="w-full h-full object-cover object-top transition-transform duration-700"
-              />
+            <div
+              className="md:flex-1 h-[400px] md:h-auto rounded-[2.5rem] overflow-hidden relative shadow-2xl border border-white/10 bg-deep/50 group cursor-zoom-in"
+              onClick={() => openLightbox(GALLERY_PHOTOS[0])}
+            >
+              <img src={GALLERY_PHOTOS[0]} alt="Sementera au Festival" className="w-full h-full object-cover object-[center_30%] transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/25">
+                <ZoomIn className="text-white w-10 h-10 drop-shadow-lg" />
+              </div>
             </div>
 
-            <div className="md:flex-[1.4] h-[450px] md:h-auto rounded-[2.5rem] overflow-hidden relative shadow-2xl border border-white/15 bg-deep/50 md:-mt-4 md:mb-4">
-              <img
-                src={PHOTOS[1]}
-                alt="Groupe Batuku"
-                className="w-full h-full object-cover object-top transition-transform duration-700"
-              />
+            <div
+              className="md:flex-[1.4] h-[450px] md:h-auto rounded-[2.5rem] overflow-hidden relative shadow-2xl border border-white/15 bg-deep/50 md:-mt-4 md:mb-4 group cursor-zoom-in"
+              onClick={() => openLightbox(GALLERY_PHOTOS[1])}
+            >
+              <img src={GALLERY_PHOTOS[1]} alt="Action Batuku" className="w-full h-full object-cover object-[center_40%] transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/25">
+                <ZoomIn className="text-white w-10 h-10 drop-shadow-lg" />
+              </div>
             </div>
 
-            <div className="md:flex-1 h-[400px] md:h-auto rounded-[2.5rem] overflow-hidden relative shadow-2xl border border-white/10 bg-deep/50">
-              <img
-                src={PHOTOS[2]}
-                alt="Groupe Batuku"
-                className="w-full h-full object-cover object-top transition-transform duration-700"
-              />
+            <div
+              className="md:flex-1 h-[400px] md:h-auto rounded-[2.5rem] overflow-hidden relative shadow-2xl border border-white/10 bg-deep/50 group cursor-zoom-in"
+              onClick={() => openLightbox(GALLERY_PHOTOS[2])}
+            >
+              <img src={GALLERY_PHOTOS[2]} alt="Fête musicale" className="w-full h-full object-cover object-[center_20%] transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/25">
+                <ZoomIn className="text-white w-10 h-10 drop-shadow-lg" />
+              </div>
             </div>
           </div>
         </FadeIn>

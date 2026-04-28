@@ -74,10 +74,10 @@ export const events: Event[] = [
     afterParty: '00h00 – 03h00',
     priceNote: 'Comprend une variété de plats typiques des pays PALOP (boissons exclues).',
     contacts: [
-      { label: 'SÛ',     number: '079 964 03 54', href: 'tel:+41799640354' },
-      { label: 'LITA',   number: '079 617 53 87', href: 'tel:+41796175387' },
-      { label: 'HELDER', number: '076 456 94 19', href: 'tel:+41764569419' },
-      { label: 'MIMI',   number: '079 930 74 46', href: 'tel:+41799307446' },
+      { label: 'SÛ',      number: '079 965 03 54', href: 'tel:+41799650354' },
+      { label: 'LITA',    number: '079 617 53 87', href: 'tel:+41796175387' },
+      { label: 'HELDER',  number: '076 456 94 19', href: 'tel:+41764569419' },
+      { label: 'SILVANA', number: '079 120 49 26', href: 'tel:+41791204926' },
     ],
     description: {
       fr: 'La première grande édition de la Cultura PALOPs Suiça — une journée de musique live, danse traditionnelle, gastronomie et culture des 5 pays lusophones d\'Afrique.',
