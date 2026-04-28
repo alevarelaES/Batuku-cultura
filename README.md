@@ -1,11 +1,14 @@
 
-  # Batuku & cultura
+# Batuku & Cultura
 
-  This is a code bundle for Batuku & cultura. The original project is available at https://www.figma.com/design/MRYBxplTwhEIsEGbMiy5I7/Batuku---cultura.
+Site vitrine de l'association Batuku & Cultura, construit en **React + Vite + TypeScript**.
 
-  ## Running the code
+## Démarrage
 
-  Run `npm i` to install the dependencies.
+1. `npm install`
+2. `npm run dev`
 
-  Run `npm run dev` to start the development server.
+## Build production
+
+`npm run build`
   
