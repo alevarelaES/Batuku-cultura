@@ -18,7 +18,7 @@ const teamData = [
   { name: 'Emilita Mendes Stevens',         roleKey: 'roleVicePresidente',        img: '/membres/Emilita%20Mendes%20Stevens.jpeg',              accent: '#E8751A', pos: 'center 25%' },
   { name: 'Carla Sofia Lopes De Oliveira',  roleKey: 'roleTresoriereSecretaire',  img: '/membres/Carla%20lopes%20Oliveira.jpeg',                accent: '#F7D116', pos: 'center 20%' },
   { name: 'Helder Correia Garcia',          roleKey: 'roleRespOrganisation',      img: '/membres/Helder%20Correia%20Garcia.jpeg',               accent: '#003893', pos: 'center 15%' },
-  { name: 'Maria Paula Lopes Monteiro Vaz', roleKey: 'roleRespSante',             img: '/membres/Maria%20Paula%20Lopes%20Monteiro%20Vaz.jpeg',  accent: '#CE1126', pos: 'center 20%' },
+  { name: 'Maria Freitas De Carvalho Cruz', roleKey: 'roleRespCulinaire',          img: '/membres/Maria%20Freitas%20De%20Carvalho%20Cruz.jpeg',  accent: '#CE1126', pos: 'center 20%' },
   { name: 'Monica Gomes',                   roleKey: 'roleRespImageCoordination', img: '/membres/Monica%20gomes.jpeg',                          accent: '#1A6B3C', pos: 'center 20%', extern: true },
   { name: 'DJ Smile',                       roleKey: 'roleIngenieurSonDJ',        img: '/membres/DJ%20Smile.jpeg',                              accent: '#F7D116', pos: 'center 20%', extern: true },
 ];

@@ -77,7 +77,7 @@ export const events: Event[] = [
       { label: 'SÛ',      number: '079 965 03 54', href: 'tel:+41799650354' },
       { label: 'LITA',    number: '079 617 53 87', href: 'tel:+41796175387' },
       { label: 'HELDER',  number: '076 456 94 19', href: 'tel:+41764569419' },
-      { label: 'SILVANA', number: '079 120 49 26', href: 'tel:+41791204926' },
+      { label: 'MARIA FREITAS (SILVANA)', number: '079 120 49 26', href: 'tel:+41791204926' },
     ],
     description: {
       fr: 'La première grande édition de la Cultura PALOPs Suiça — une journée de musique live, danse traditionnelle, gastronomie et culture des 5 pays lusophones d\'Afrique.',

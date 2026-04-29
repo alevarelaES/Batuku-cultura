@@ -277,27 +277,28 @@ const UpcomingCard = ({
 const PastCard = ({ event, lang }: { event: (typeof events)[number]; lang: string }) => {
   const { t } = useLanguage();
   return (
-  <div className="group bg-white/50 rounded-[2rem] overflow-hidden border border-black/5 flex flex-col opacity-70 hover:opacity-90 transition-opacity duration-300">
-    <div className="relative h-44 overflow-hidden bg-brand-text/5">
+  <div className="group bg-white rounded-[2rem] overflow-hidden border border-black/8 shadow-[0_4px_20px_rgb(0,0,0,0.06)] flex flex-col transition-[transform,box-shadow] duration-300 md:hover:-translate-y-1 md:hover:shadow-[0_12px_30px_rgba(0,0,0,0.10)]">
+    <div className="relative h-44 overflow-hidden bg-brand-text/10">
       {event.image ? (
-        <img src={event.image} alt={event.title[lang as 'fr']} loading="lazy" className="w-full h-full object-cover grayscale" />
+        <img src={event.image} alt={event.title[lang as 'fr']} loading="lazy" className="w-full h-full object-cover grayscale-[60%]" />
       ) : (
-        <div className="w-full h-full flex items-center justify-center">
-          <span className="text-brand-text/20 font-display text-xl text-center px-4">{event.title[lang as 'fr']}</span>
+        <div className="w-full h-full bg-gradient-to-br from-brand-text/10 to-brand-text/20 flex items-center justify-center">
+          <span className="text-brand-text/40 font-display text-xl text-center px-4">{event.title[lang as 'fr']}</span>
         </div>
       )}
-      <span className="absolute top-4 right-4 bg-brand-text/20 text-brand-text font-body font-bold text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full">
+      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+      <span className="absolute top-4 right-4 bg-brand-text/70 text-white font-body font-bold text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full">
         {t('Events', 'pastBadge')}
       </span>
     </div>
     <div className="p-5">
-      <h3 className="font-display text-brand-text/70 text-lg leading-snug mb-3">{event.title[lang as 'fr']}</h3>
-      <div className="flex items-center gap-2 text-sm font-body text-brand-text/40">
-        <Calendar size={13} className="shrink-0" />
+      <h3 className="font-display text-brand-text text-lg leading-snug mb-3">{event.title[lang as 'fr']}</h3>
+      <div className="flex items-center gap-2 text-sm font-body text-brand-text/60">
+        <Calendar size={13} className="text-orange shrink-0" />
         {formatEventDate(event.date, lang as 'fr')}
       </div>
       {!event.image && (
-        <p className="mt-3 text-xs font-body text-brand-text/40 italic">{t('Events', 'photosComingSoon')}</p>
+        <p className="mt-3 text-xs font-body text-brand-text/50 italic">{t('Events', 'photosComingSoon')}</p>
       )}
     </div>
   </div>
