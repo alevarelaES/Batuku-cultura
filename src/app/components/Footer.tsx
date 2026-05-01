@@ -40,7 +40,7 @@ export const Footer = () => {
       {/* Cape Verde flag — subtle, bottom-right, fading in from right */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <img
-          src="/flags/flag-cape-verde.jpg"
+          src="/flags/Flag_of_Cape_Verde.svg.png"
           alt=""
           className="absolute right-0 top-0 h-full w-auto object-cover object-right"
           style={{

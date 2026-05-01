@@ -52,7 +52,7 @@ export const HeroSection = () => {
 
       {/* Drapeau Cap-Vert — parallax sur desktop */}
       <motion.img
-        src="/flags/flag-cape-verde.jpg"
+        src="/flags/Flag_of_Cape_Verde.svg.png"
         alt=""
         aria-hidden="true"
         className="absolute inset-0 w-full h-full object-cover object-right pointer-events-none"
@@ -190,23 +190,6 @@ export const HeroSection = () => {
           </motion.div>
         )}
 
-        {/* SCROLL INDICATOR */}
-        <div className="flex justify-center mt-6">
-          <div
-            className="flex justify-center items-start pt-1.5 rounded-full"
-            style={{ width: 22, height: 36, border: '1.5px solid rgba(255,255,255,0.22)' }}
-          >
-            <div
-              className="rounded-full"
-              style={{
-                width: 3,
-                height: 6,
-                background: 'rgba(255,255,255,0.45)',
-                animation: 'scroll-bounce 1.8s ease-in-out infinite',
-              }}
-            />
-          </div>
-        </div>
       </motion.div>
 
       {/* BOTTOM — bande PALOP */}

@@ -76,11 +76,11 @@ export const About = () => {
   const activities = t('About', 'activities').split(',');
 
   const palopPills = [
-    { abbr: 'CPV', nameKey: 'palopCv',  color: 'bg-primary', flag: '/flags/flag-cape-verde.jpg' },
-    { abbr: 'ANG', nameKey: 'palopAng', color: 'bg-red',     flag: '/flags/flag-angola.jpg' },
-    { abbr: 'GNB', nameKey: 'palopGnb', color: 'bg-yellow text-brand-text', flag: '/flags/flag-guinea-bissau.jpg' },
-    { abbr: 'MOZ', nameKey: 'palopMoz', color: 'bg-green',   flag: '/flags/flag-mozambique.jpg' },
-    { abbr: 'STP', nameKey: 'palopStp', color: 'bg-deep border border-white/20', flag: '/flags/flag-sao-tome-principe.jpg' },
+    { abbr: 'CPV', nameKey: 'palopCv',  color: 'bg-primary', flag: '/flags/Flag_of_Cape_Verde.svg.png' },
+    { abbr: 'ANG', nameKey: 'palopAng', color: 'bg-red',     flag: '/flags/Flag_of_Angola.svg.png' },
+    { abbr: 'GNB', nameKey: 'palopGnb', color: 'bg-yellow text-brand-text', flag: '/flags/Flag_of_Guinea-Bissau.svg.png' },
+    { abbr: 'MOZ', nameKey: 'palopMoz', color: 'bg-green',   flag: '/flags/Flag_of_Mozambique.svg.png' },
+    { abbr: 'STP', nameKey: 'palopStp', color: 'bg-deep border border-white/20', flag: '/flags/Flag_of_São_Tomé_and_Príncipe.svg.png' },
   ];
 
   const seoData = {

@@ -117,7 +117,7 @@ export const Home = () => {
         {/* Cape Verde flag — fades from left (low opacity) to fully invisible on the right */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <img
-            src="/flags/flag-cape-verde.jpg"
+            src="/flags/Flag_of_Cape_Verde.svg.png"
             alt=""
             loading="lazy"
             className="absolute inset-0 w-full h-full object-cover object-left"
@@ -208,7 +208,7 @@ export const Home = () => {
               {/* CAP-VERT — Featured tall card */}
               <NavLink to="/culture#cap-vert" className="group relative overflow-hidden rounded-[2rem] min-h-[420px] lg:min-h-[520px] flex flex-col justify-end p-8 md:p-10 transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 md:hover:shadow-[0_20px_50px_rgba(0,56,147,0.3)]">
                 {/* Real flag image */}
-                <img src="/flags/flag-cape-verde.jpg" alt="" loading="lazy" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
+                <img src="/flags/Flag_of_Cape_Verde.svg.png" alt="" loading="lazy" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
                 {/* Dark overlay for readability */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
                 {/* Yellow star cluster accent */}
@@ -240,7 +240,7 @@ export const Home = () => {
 
                 {/* ANGOLA */}
                 <NavLink to="/culture#angola" className="group relative overflow-hidden rounded-[1.8rem] flex flex-col justify-end p-6 min-h-[200px] lg:min-h-[248px] transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 md:hover:shadow-[0_14px_32px_rgba(204,9,47,0.25)]">
-                  <img src="/flags/flag-angola.jpg" alt="" loading="lazy" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
+                  <img src="/flags/Flag_of_Angola.svg.png" alt="" loading="lazy" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/10"></div>
                   <div className="relative z-10">
                     <h3 className="font-display font-light text-white text-3xl leading-none mb-1">{t('Events', 'palopAngola')}</h3>
@@ -250,7 +250,7 @@ export const Home = () => {
 
                 {/* GUINÉE-BISSAU */}
                 <NavLink to="/culture#guinee-bissau" className="group relative overflow-hidden rounded-[1.8rem] flex flex-col justify-end p-6 min-h-[200px] lg:min-h-[248px] transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 md:hover:shadow-[0_14px_32px_rgba(0,154,68,0.25)]">
-                  <img src="/flags/flag-guinea-bissau.jpg" alt="" loading="lazy" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
+                  <img src="/flags/Flag_of_Guinea-Bissau.svg.png" alt="" loading="lazy" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/10"></div>
                   <div className="relative z-10">
                     <h3 className="font-display font-light text-white text-2xl leading-none mb-1">{t('Events', 'palopGuineeBissau')}</h3>
@@ -260,7 +260,7 @@ export const Home = () => {
 
                 {/* MOZAMBIQUE */}
                 <NavLink to="/culture#mozambique" className="group relative overflow-hidden rounded-[1.8rem] flex flex-col justify-end p-6 min-h-[200px] lg:min-h-[248px] transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 md:hover:shadow-[0_14px_32px_rgba(0,154,68,0.25)]">
-                  <img src="/flags/flag-mozambique.jpg" alt="" loading="lazy" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
+                  <img src="/flags/Flag_of_Mozambique.svg.png" alt="" loading="lazy" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/10"></div>
                   <div className="relative z-10">
                     <h3 className="font-display font-light text-white text-3xl leading-none mb-1">{t('Events', 'palopMozambique')}</h3>
@@ -270,7 +270,7 @@ export const Home = () => {
 
                 {/* SÃO TOMÉ */}
                 <NavLink to="/culture#sao-tome" className="group relative overflow-hidden rounded-[1.8rem] flex flex-col justify-end p-6 min-h-[200px] lg:min-h-[248px] transition-[transform,box-shadow] duration-500 ease-out md:hover:-translate-y-1.5 md:hover:shadow-[0_14px_32px_rgba(18,173,43,0.25)]">
-                  <img src="/flags/flag-sao-tome-principe.jpg" alt="" loading="lazy" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
+                  <img src="/flags/Flag_of_São_Tomé_and_Príncipe.svg.png" alt="" loading="lazy" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-center" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/10"></div>
                   <div className="relative z-10">
                     <h3 className="font-display font-light text-white text-2xl leading-none mb-1">{t('Home', 'saoTomeName')}</h3>
