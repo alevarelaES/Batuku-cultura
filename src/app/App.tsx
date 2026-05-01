@@ -1,13 +1,16 @@
 import { RouterProvider } from 'react-router';
+import { HelmetProvider } from 'react-helmet-async';
 import { router } from './routes';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { Analytics } from '@vercel/analytics/react';
 
 export default function App() {
   return (
-    <LanguageProvider>
-      <RouterProvider router={router} />
-      <Analytics />
-    </LanguageProvider>
+    <HelmetProvider>
+      <LanguageProvider>
+        <RouterProvider router={router} />
+        <Analytics />
+      </LanguageProvider>
+    </HelmetProvider>
   );
 }

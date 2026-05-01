@@ -1,4 +1,5 @@
 import React from 'react';
+import { SEO } from './components/SEO';
 import { FadeIn } from './components/FadeIn';
 import { Button } from './components/Button';
 import { MapPin, Mail, Phone, Instagram, ExternalLink } from 'lucide-react';
@@ -18,7 +19,7 @@ const ASSOCIATION_CONTACT = {
 };
 
 export const Contact = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   const contactItems = [
     {
@@ -80,12 +81,23 @@ export const Contact = () => {
 
   return (
     <div className="w-full bg-brand-bg min-h-screen relative overflow-hidden">
+      <SEO
+        title={{ fr: 'Contact & Adhésion', pt: 'Contacto & Adesão', en: 'Contact & Join Us' }[lang as 'fr'|'pt'|'en'] ?? 'Contact'}
+        description={{ fr: "Contactez l'association Batuku & Cultura à Payerne (VD) ou rejoignez notre communauté cap-verdienne. Grand'Rue 36, 1530 Payerne — ercelinabatuku11cultura@gmail.com", pt: "Contacte a associação Batuku & Cultura em Payerne (VD) ou junte-se à nossa comunidade cabo-verdiana.", en: "Contact the Batuku & Cultura association in Payerne (VD) or join our Cape Verdean community in Switzerland." }[lang as 'fr'|'pt'|'en'] ?? ''}
+        path="contact"
+        lang={lang}
+      />
       {/* ── DYNAMIC BACKGROUND ── */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-primary/25 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/3" />
-        <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-accent/25 rounded-full blur-[150px] translate-y-1/3 -translate-x-1/4" />
-        <div className="absolute top-1/2 left-1/3 w-[600px] h-[600px] bg-cv/15 rounded-full blur-[150px] -translate-y-1/2" />
-        <PatternBg className="text-primary opacity-5 absolute inset-0 mix-blend-multiply" />
+        <img
+          src="/Sections_fonds/fond page contact.png"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          style={{ opacity: 0.9 }}
+        />
+        <PatternBg className="text-primary opacity-[0.03] absolute inset-0 mix-blend-multiply" />
       </div>
 
       <CapeVerdeStars className="absolute -top-[200px] -right-[200px] text-accent opacity-10 w-[800px] h-[800px] pointer-events-none z-0 animate-[spin_100s_linear_infinite]" />

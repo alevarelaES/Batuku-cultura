@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { SEO } from './components/SEO';
 import { NavLink } from 'react-router';
 import { FadeIn } from './components/FadeIn';
 import { FadeInGroup, FadeInItem } from './components/FadeInStagger';
@@ -20,8 +21,15 @@ export const Events = () => {
   const upcoming   = events.filter((e) => !e.featured && !e.past);
   const pastEvents = events.filter((e) => e.past);
 
+  const seoData = {
+    fr: { title: 'Événements & Agenda', description: "Retrouvez tous les événements culturels de Batuku & Cultura en Suisse Romande : festivals, concerts, ventes de charité et rassemblements cap-verdiens et PALOP." },
+    pt: { title: 'Eventos & Agenda', description: "Encontre todos os eventos culturais da Batuku & Cultura na Suíça Romanda: festivais, concertos, vendas de caridade e encontros cabo-verdianos e PALOP." },
+    en: { title: 'Events & Agenda', description: "Find all cultural events by Batuku & Cultura in French-speaking Switzerland: festivals, concerts, charity sales and Cape Verdean and PALOP gatherings." },
+  }[lang as 'fr' | 'pt' | 'en'] ?? { title: 'Événements & Agenda', description: '' };
+
   return (
     <div className="w-full bg-brand-bg min-h-screen pb-20">
+      <SEO title={seoData.title} description={seoData.description} path="events" lang={lang} />
 
       {/* ── HERO : ÉVÉNEMENT VEDETTE ─────────────────────────────────────── */}
       {featured && (
@@ -219,9 +227,7 @@ const UpcomingCard = ({
       {event.image ? (
         <img src={event.image} alt={event.title[lang as 'fr']} loading="lazy" className="w-full h-full object-cover object-top" />
       ) : (
-        <div className="w-full h-full bg-gradient-to-br from-primary/20 to-deep/80 flex items-center justify-center">
-          <span className="text-white/30 font-display text-2xl text-center px-4">{event.title[lang as 'fr']}</span>
-        </div>
+        <img src="/Sections_fonds/fond cartes sans images.png" alt="" aria-hidden="true" loading="lazy" className="w-full h-full object-cover object-center" />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
       <span className="absolute top-4 right-4 bg-orange text-white font-body font-bold text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full">
@@ -282,9 +288,7 @@ const PastCard = ({ event, lang }: { event: (typeof events)[number]; lang: strin
       {event.image ? (
         <img src={event.image} alt={event.title[lang as 'fr']} loading="lazy" className="w-full h-full object-cover grayscale-[60%]" />
       ) : (
-        <div className="w-full h-full bg-gradient-to-br from-brand-text/10 to-brand-text/20 flex items-center justify-center">
-          <span className="text-brand-text/40 font-display text-xl text-center px-4">{event.title[lang as 'fr']}</span>
-        </div>
+        <img src="/Sections_fonds/fond cartes sans images.png" alt="" aria-hidden="true" loading="lazy" className="w-full h-full object-cover object-center grayscale-[40%] opacity-60" />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
       <span className="absolute top-4 right-4 bg-brand-text/70 text-white font-body font-bold text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full">

@@ -1,4 +1,5 @@
 import React from 'react';
+import { SEO } from './components/SEO';
 import { NavLink } from 'react-router';
 import { useLanguage } from './contexts/LanguageContext';
 import { MapPin, Mail, Phone, FileText, Shield, User, ArrowLeft } from 'lucide-react';
@@ -25,6 +26,7 @@ export const MentionsLegales = () => {
 
   return (
     <div className="w-full min-h-screen bg-brand-bg pt-24 pb-20 px-6">
+      <SEO title="Mentions Légales" description="Mentions légales de l'association Batuku & Cultura Cap-Vert Suisse — Cultura dos PALOP. CHE-333.176.096, Grand'Rue 36, 1530 Payerne (VD)." path="mentions-legales" />
       <div className="max-w-3xl mx-auto">
 
         {/* Retour */}

@@ -1,11 +1,74 @@
 
   <!DOCTYPE html>
-  <html lang="en">
+  <html lang="fr">
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <!-- Favicon -->
       <link rel="icon" type="image/png" href="/logo/logo_icon.png" />
-      <title>Batuku & cultura</title>
+      <link rel="apple-touch-icon" href="/logo/logo_icon.png" />
+
+      <!-- Titre & description par défaut (remplacés par react-helmet-async sur chaque page) -->
+      <title>Batuku & Cultura — Association Cap-Verdienne · Suisse Romande</title>
+      <meta name="description" content="Association culturelle cap-verdienne en Suisse Romande. Nous célébrons la Morna, le Batuku, le Funaná et les cultures PALOP depuis Payerne, canton de Vaud." />
+      <meta name="keywords" content="Batuku, Cultura, Cap-Vert, PALOP, Suisse Romande, Payerne, association culturelle, Morna, Funaná, Angola, Mozambique, Guinée-Bissau, São Tomé" />
+      <meta name="author" content="Batuku & Cultura" />
+      <meta name="robots" content="index, follow" />
+      <link rel="canonical" href="https://www.batuku-cultura.ch" />
+
+      <!-- Open Graph -->
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Batuku & Cultura" />
+      <meta property="og:title" content="Batuku & Cultura — Association Cap-Verdienne · Suisse Romande" />
+      <meta property="og:description" content="Association culturelle cap-verdienne en Suisse Romande. Nous célébrons la Morna, le Batuku, le Funaná et les cultures PALOP depuis Payerne, canton de Vaud." />
+      <meta property="og:image" content="https://www.batuku-cultura.ch/logo/logo1.jpg" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:url" content="https://www.batuku-cultura.ch" />
+      <meta property="og:locale" content="fr_CH" />
+      <meta property="og:locale:alternate" content="pt_PT" />
+      <meta property="og:locale:alternate" content="en_GB" />
+
+      <!-- Twitter Card -->
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="Batuku & Cultura — Association Cap-Verdienne · Suisse Romande" />
+      <meta name="twitter:description" content="Association culturelle cap-verdienne en Suisse Romande. Morna, Batuku, Funaná et cultures PALOP depuis Payerne (VD)." />
+      <meta name="twitter:image" content="https://www.batuku-cultura.ch/logo/logo1.jpg" />
+
+      <!-- JSON-LD : données structurées Organisation -->
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Batuku & Cultura",
+        "alternateName": "Association Batuku & Cultura",
+        "url": "https://www.batuku-cultura.ch",
+        "logo": "https://www.batuku-cultura.ch/logo/logo_icon.png",
+        "description": "Association culturelle cap-verdienne et PALOP en Suisse Romande, fondée à Payerne (VD). Nous préservons et célébrons la culture cap-verdienne et des 5 pays africains de langue officielle portugaise.",
+        "foundingDate": "2023",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Grand'Rue 36",
+          "addressLocality": "Payerne",
+          "postalCode": "1530",
+          "addressRegion": "Vaud",
+          "addressCountry": "CH"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+41799650354",
+          "contactType": "customer support",
+          "email": "ercelinabatuku11cultura@gmail.com",
+          "availableLanguage": ["French", "Portuguese", "English"]
+        },
+        "sameAs": [
+          "https://www.instagram.com/as.batuku_et_cultura"
+        ]
+      }
+      </script>
+
+      <!-- Fonts -->
       <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,600,700&f[]=cabinet-grotesk@400,700,900&display=swap" rel="stylesheet">
     </head>
 
@@ -14,4 +77,4 @@
       <script type="module" src="/src/main.tsx"></script>
     </body>
   </html>
-  
+

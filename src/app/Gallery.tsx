@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { SEO } from './components/SEO';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
 import { FadeIn } from './components/FadeIn';
@@ -193,7 +194,7 @@ const Lightbox = ({ items, index, getLabel, getCategoryLabel, onClose, onPrev, o
 
 /* ─── Gallery Page ──────────────────────────────────────── */
 export const Gallery = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [activeFilter, setActiveFilter] = useState<Category>('all');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
@@ -228,8 +229,15 @@ export const Gallery = () => {
   const getCategoryLabel = (cat: Exclude<Category, 'all'>) =>
     filters.find((f) => f.key === cat)?.label ?? cat;
 
+  const seoData = {
+    fr: { title: 'Galerie Photos', description: "Galerie photos et vidéos de l'association Batuku & Cultura — moments forts de nos événements, performances de Batuku et rassemblements en Suisse Romande." },
+    pt: { title: 'Galeria', description: "Galeria de fotos e vídeos da associação Batuku & Cultura — momentos marcantes dos nossos eventos, performances de Batuku e encontros na Suíça." },
+    en: { title: 'Photo Gallery', description: "Photo and video gallery of the Batuku & Cultura association — highlights from our events, Batuku performances and gatherings in French-speaking Switzerland." },
+  }[lang as 'fr' | 'pt' | 'en'] ?? { title: 'Galerie Photos', description: '' };
+
   return (
     <div className="w-full min-h-screen pb-section px-4 md:px-xl relative">
+      <SEO title={seoData.title} description={seoData.description} path="gallery" lang={lang} />
 
       {/* ── BACKGROUND ── */}
       <div className="fixed inset-0 z-0 pointer-events-none">

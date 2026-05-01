@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { SEO } from './components/SEO';
 import { motion, AnimatePresence } from 'motion/react';
 import { FadeIn } from './components/FadeIn';
 import { PatternBg, CapeVerdeIslands } from './components/Decorations';
@@ -60,8 +61,15 @@ export const Culture = () => {
     }, 50);
   };
 
+  const seoData = {
+    fr: { title: 'Cultura dos PALOP', description: "5 pays, 5 histoires, une même langue. Explorez les cultures du Cap-Vert, Angola, Guinée-Bissau, Mozambique et São Tomé & Príncipe avec Batuku & Cultura." },
+    pt: { title: 'Cultura dos PALOP', description: "5 países, 5 histórias, uma mesma língua. Explore as culturas de Cabo Verde, Angola, Guiné-Bissau, Moçambique e São Tomé & Príncipe com Batuku & Cultura." },
+    en: { title: 'Cultura dos PALOP', description: "5 countries, 5 stories, one language. Explore the cultures of Cape Verde, Angola, Guinea-Bissau, Mozambique and São Tomé & Príncipe with Batuku & Cultura." },
+  }[lang as 'fr' | 'pt' | 'en'] ?? { title: 'Cultura dos PALOP', description: '' };
+
   return (
     <div className="w-full min-h-screen relative bg-brand-bg flex flex-col font-body">
+      <SEO title={seoData.title} description={seoData.description} path="culture" lang={lang} />
       <PatternBg className={`opacity-5 fixed inset-0 z-0 pointer-events-none ${country.textColor}`} />
 
       {/* ── HERO + SÉLECTEUR PAYS ─────────────────────────────── */}

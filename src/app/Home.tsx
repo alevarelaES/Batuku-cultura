@@ -1,4 +1,5 @@
 import React from 'react';
+import { SEO } from './components/SEO';
 import { FadeIn } from './components/FadeIn';
 import { FadeInGroup, FadeInItem } from './components/FadeInStagger';
 import { Button } from './components/Button';
@@ -26,8 +27,15 @@ export const Home = () => {
 
   const upcomingEvents = events.filter((e) => !e.featured && !e.past);
 
+  const seoData = {
+    fr: { title: 'Accueil', description: "Association culturelle cap-verdienne en Suisse Romande. Nous célébrons la Morna, le Batuku, le Funaná et les cultures PALOP depuis Payerne, canton de Vaud." },
+    pt: { title: 'Início', description: "Associação cultural cabo-verdiana na Suíça Romanda. Celebramos a Morna, o Batuku, o Funaná e as culturas PALOP desde Payerne, cantão de Vaud." },
+    en: { title: 'Home', description: "Cape Verdean cultural association in French-speaking Switzerland. We celebrate Morna, Batuku, Funaná and PALOP cultures from Payerne, canton of Vaud." },
+  }[lang as 'fr' | 'pt' | 'en'] ?? { title: 'Accueil', description: '' };
+
   return (
     <div className="w-full relative">
+      <SEO title={seoData.title} description={seoData.description} lang={lang} />
 
       {/* 1. HERO */}
       <HeroSection />
@@ -168,7 +176,7 @@ export const Home = () => {
 
         {/* Gemini background: African pattern circles */}
         <img
-          src="/Sections_fonds/Nos Origines.png"
+          src="/Sections_fonds/fond section cultura palops.png"
           alt=""
           loading="lazy"
           className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none z-0"
@@ -306,7 +314,11 @@ export const Home = () => {
                   <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-[2rem] overflow-hidden group md:hover:bg-white/[0.06] md:hover:border-white/20 transition-[transform,background-color,border-color,box-shadow] duration-500 ease-out md:hover:-translate-y-1 flex flex-col">
                     <div className="relative h-56 overflow-hidden p-2.5 pb-0">
                       <div className="w-full h-full rounded-[1.5rem] overflow-hidden relative">
-                        <img src={event.image} alt={event.title[lang]} loading="lazy" className="w-full h-full object-cover brightness-90 saturate-50 md:group-hover:saturate-100 transition-[filter] duration-500 ease-out" />
+                        {event.image ? (
+                          <img src={event.image} alt={event.title[lang]} loading="lazy" className="w-full h-full object-cover brightness-90 saturate-50 md:group-hover:saturate-100 transition-[filter] duration-500 ease-out" />
+                        ) : (
+                          <img src="/Sections_fonds/fond cartes sans images.png" alt="" aria-hidden="true" loading="lazy" className="w-full h-full object-cover brightness-75 transition-[filter] duration-500 ease-out" />
+                        )}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0B1B3D]/80 via-transparent to-transparent opacity-60"></div>
                       </div>
                       <div className="absolute top-7 right-7 bg-white/20 backdrop-blur-md border border-white/30 text-white font-body font-medium px-3 py-1 rounded-full text-xs uppercase tracking-widest">

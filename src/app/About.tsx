@@ -1,4 +1,5 @@
 import React from 'react';
+import { SEO } from './components/SEO';
 import { FadeInGroup, FadeInItem } from './components/FadeInStagger';
 import { FadeIn } from './components/FadeIn';
 import {
@@ -70,7 +71,7 @@ const MemberCard = ({ member, label }: MemberCardProps) => (
 );
 
 export const About = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const values = t('About', 'values').split(',');
   const activities = t('About', 'activities').split(',');
 
@@ -82,8 +83,15 @@ export const About = () => {
     { abbr: 'STP', nameKey: 'palopStp', color: 'bg-deep border border-white/20', flag: '/flags/flag-sao-tome-principe.jpg' },
   ];
 
+  const seoData = {
+    fr: { title: 'Qui sommes-nous', description: "Découvrez Batuku & Cultura, association fondée à Payerne (VD) qui préserve et transmet le patrimoine cap-verdien et les cultures des 5 pays PALOP en Suisse Romande." },
+    pt: { title: 'Quem somos', description: "Conheça a Batuku & Cultura, associação fundada em Payerne (VD) que preserva e transmite o patrimônio cabo-verdiano e as culturas dos 5 países PALOP na Suíça." },
+    en: { title: 'Who We Are', description: "Discover Batuku & Cultura, an association founded in Payerne (VD) that preserves and shares Cape Verdean heritage and the cultures of the 5 PALOP countries in Switzerland." },
+  }[lang as 'fr' | 'pt' | 'en'] ?? { title: 'Qui sommes-nous', description: '' };
+
   return (
     <div className="w-full relative bg-brand-bg">
+      <SEO title={seoData.title} description={seoData.description} path="about" lang={lang} />
       <PatternBg className="text-primary opacity-[0.03] fixed inset-0 z-0 pointer-events-none" />
 
       {/* ─── SECTION 1 : HERO IDENTITÉ OFFICIELLE ─── */}

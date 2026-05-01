@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { SEO } from './components/SEO';
 import { FadeIn } from './components/FadeIn';
 import { PatternBg, Confetti, Djembe } from './components/Decorations';
 import { CapeVerdeStars } from './components/CulturalMotifs';
@@ -82,7 +83,7 @@ const ClickImg = ({ src, alt, className, wrapperClassName, onOpen, style }: Clic
 
 // ── Main component ────────────────────────────────────────────────────────────
 export const Batuku = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
   const openLightbox = useCallback((src: string) => setLightboxSrc(src), []);
   const closeLightbox = useCallback(() => setLightboxSrc(null), []);
@@ -114,8 +115,15 @@ export const Batuku = () => {
     },
   ];
 
+  const seoData = {
+    fr: { title: 'Groupe Batuku', description: "Le Groupe Batuku perpétue l'art du Batuku, musique et danse traditionnelle cap-verdienne née sur l'île de Santiago. Découvrez notre groupe en Suisse Romande." },
+    pt: { title: 'Grupo Batuku', description: "O Grupo Batuku perpetua a arte do Batuku, música e dança tradicional cabo-verdiana nascida na ilha de Santiago. Conheça o nosso grupo na Suíça." },
+    en: { title: 'Batuku Group', description: "The Batuku Group perpetuates the art of Batuku, a traditional Cape Verdean music and dance form born on the island of Santiago. Discover our group in Switzerland." },
+  }[lang as 'fr' | 'pt' | 'en'] ?? { title: 'Groupe Batuku', description: '' };
+
   return (
     <div className="w-full bg-brand-bg min-h-screen relative overflow-hidden">
+      <SEO title={seoData.title} description={seoData.description} path="batuku" lang={lang} />
       <PatternBg className="text-primary opacity-[0.03] fixed inset-0 z-0 pointer-events-none" />
 
       {/* Lightbox */}
