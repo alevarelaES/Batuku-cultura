@@ -1,8 +1,9 @@
 import React from 'react';
+import { useForm, ValidationError } from '@formspree/react';
 import { SEO } from './components/SEO';
 import { FadeIn } from './components/FadeIn';
 import { Button } from './components/Button';
-import { MapPin, Mail, Phone, Instagram, ExternalLink } from 'lucide-react';
+import { MapPin, Mail, Phone, Instagram, ExternalLink, CheckCircle } from 'lucide-react';
 import { PatternBg, Confetti, CarnivalMask, CapeVerdeIslands } from './components/Decorations';
 import { MotifTribal, MotifDrum, CapeVerdeStars } from './components/CulturalMotifs';
 import { useLanguage } from './contexts/LanguageContext';
@@ -20,6 +21,7 @@ const ASSOCIATION_CONTACT = {
 
 export const Contact = () => {
   const { t, lang } = useLanguage();
+  const [state, handleSubmit] = useForm('mzdobqna');
 
   const contactItems = [
     {
@@ -86,6 +88,8 @@ export const Contact = () => {
         description={{ fr: "Contactez l'association Batuku & Cultura à Payerne (VD) ou rejoignez notre communauté cap-verdienne. Grand'Rue 36, 1530 Payerne — ercelinabatuku11cultura@gmail.com", pt: "Contacte a associação Batuku & Cultura em Payerne (VD) ou junte-se à nossa comunidade cabo-verdiana.", en: "Contact the Batuku & Cultura association in Payerne (VD) or join our Cape Verdean community in Switzerland." }[lang as 'fr'|'pt'|'en'] ?? ''}
         path="contact"
         lang={lang}
+        pageType="ContactPage"
+        breadcrumbs={[{ name: ({ fr: 'Contact & Adhésion', pt: 'Contacto & Adesão', en: 'Contact & Join Us' }[lang as 'fr'|'pt'|'en'] ?? 'Contact'), path: 'contact' }]}
       />
       {/* ── DYNAMIC BACKGROUND ── */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -112,7 +116,10 @@ export const Contact = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <FadeIn delay={0.2}>
-            <form className="bg-white/70 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col gap-8 border border-white relative overflow-hidden">
+            <form
+              onSubmit={handleSubmit}
+              className="bg-white/70 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex flex-col gap-8 border border-white relative overflow-hidden"
+            >
               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[100px] pointer-events-none" />
               <img
                 src="/logo/logo8.jpg"
@@ -121,64 +128,89 @@ export const Contact = () => {
                 loading="lazy"
               />
 
-              <div>
-                <h2 className="text-brand-text mb-2 text-3xl md:text-4xl font-display">{t('Contact', 'formTitle')}</h2>
-                <p className="font-body text-brand-text/60 font-medium">
-                  {t('Contact', 'formSubtitle')}
-                </p>
-              </div>
+              {/* ── Succès ── */}
+              {state.succeeded ? (
+                <div className="flex flex-col items-center justify-center gap-4 py-12 text-center">
+                  <CheckCircle size={56} className="text-green-500" />
+                  <h3 className="font-display text-2xl text-brand-text">{t('Contact', 'formSuccessTitle')}</h3>
+                  <p className="font-body text-brand-text/60">{t('Contact', 'formSuccessText')}</p>
+                </div>
+              ) : (
+                <>
+                  <div>
+                    <h2 className="text-brand-text mb-2 text-3xl md:text-4xl font-display">{t('Contact', 'formTitle')}</h2>
+                    <p className="font-body text-brand-text/60 font-medium">{t('Contact', 'formSubtitle')}</p>
+                  </div>
 
-              <div className="flex flex-col gap-3">
-                <label className="font-body font-bold text-brand-text/70 uppercase tracking-[0.15em] text-xs">
-                  {t('Contact', 'formName')}
-                </label>
-                <input
-                  type="text"
-                  placeholder={t('Contact', 'formNamePlaceholder')}
-                  className="h-14 bg-white/50 backdrop-blur-sm border border-black/5 rounded-[1rem] px-6 font-body font-medium focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/30 transition-all text-base text-brand-text placeholder:text-brand-text/30 shadow-sm"
-                />
-              </div>
+                  <div className="flex flex-col gap-3">
+                    <label htmlFor="name" className="font-body font-bold text-brand-text/70 uppercase tracking-[0.15em] text-xs">
+                      {t('Contact', 'formName')}
+                    </label>
+                    <input
+                      id="name"
+                      type="text"
+                      name="name"
+                      required
+                      placeholder={t('Contact', 'formNamePlaceholder')}
+                      className="h-14 bg-white/50 backdrop-blur-sm border border-black/5 rounded-[1rem] px-6 font-body font-medium focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/30 transition-all text-base text-brand-text placeholder:text-brand-text/30 shadow-sm"
+                    />
+                  </div>
 
-              <div className="flex flex-col gap-3">
-                <label className="font-body font-bold text-brand-text/70 uppercase tracking-[0.15em] text-xs">
-                  {t('Contact', 'formEmail')}
-                </label>
-                <input
-                  type="email"
-                  placeholder={t('Contact', 'formEmailPlaceholder')}
-                  className="h-14 bg-white/50 backdrop-blur-sm border border-black/5 rounded-[1rem] px-6 font-body font-medium focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/30 transition-all text-base text-brand-text placeholder:text-brand-text/30 shadow-sm"
-                />
-              </div>
+                  <div className="flex flex-col gap-3">
+                    <label htmlFor="email" className="font-body font-bold text-brand-text/70 uppercase tracking-[0.15em] text-xs">
+                      {t('Contact', 'formEmail')}
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      name="email"
+                      required
+                      placeholder={t('Contact', 'formEmailPlaceholder')}
+                      className="h-14 bg-white/50 backdrop-blur-sm border border-black/5 rounded-[1rem] px-6 font-body font-medium focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/30 transition-all text-base text-brand-text placeholder:text-brand-text/30 shadow-sm"
+                    />
+                    <ValidationError field="email" errors={state.errors} className="font-body text-red-500 text-sm" />
+                  </div>
 
-              <div className="flex flex-col gap-3">
-                <label className="font-body font-bold text-brand-text/70 uppercase tracking-[0.15em] text-xs">
-                  {t('Contact', 'formSubject')}
-                </label>
-                <input
-                  type="text"
-                  placeholder={t('Contact', 'formSubjectPlaceholder')}
-                  className="h-14 bg-white/50 backdrop-blur-sm border border-black/5 rounded-[1rem] px-6 font-body font-medium focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/30 transition-all text-base text-brand-text placeholder:text-brand-text/30 shadow-sm"
-                />
-              </div>
+                  <div className="flex flex-col gap-3">
+                    <label htmlFor="subject" className="font-body font-bold text-brand-text/70 uppercase tracking-[0.15em] text-xs">
+                      {t('Contact', 'formSubject')}
+                    </label>
+                    <input
+                      id="subject"
+                      type="text"
+                      name="subject"
+                      placeholder={t('Contact', 'formSubjectPlaceholder')}
+                      className="h-14 bg-white/50 backdrop-blur-sm border border-black/5 rounded-[1rem] px-6 font-body font-medium focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/30 transition-all text-base text-brand-text placeholder:text-brand-text/30 shadow-sm"
+                    />
+                  </div>
 
-              <div className="flex flex-col gap-3">
-                <label className="font-body font-bold text-brand-text/70 uppercase tracking-[0.15em] text-xs">
-                  {t('Contact', 'formMessage')}
-                </label>
-                <textarea
-                  rows={6}
-                  placeholder={t('Contact', 'formMessagePlaceholder')}
-                  className="bg-white/50 backdrop-blur-sm border border-black/5 rounded-[1rem] p-6 font-body font-medium focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/30 transition-all resize-none text-base text-brand-text placeholder:text-brand-text/30 shadow-sm"
-                />
-              </div>
+                  <div className="flex flex-col gap-3">
+                    <label htmlFor="message" className="font-body font-bold text-brand-text/70 uppercase tracking-[0.15em] text-xs">
+                      {t('Contact', 'formMessage')}
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      required
+                      rows={6}
+                      placeholder={t('Contact', 'formMessagePlaceholder')}
+                      className="bg-white/50 backdrop-blur-sm border border-black/5 rounded-[1rem] p-6 font-body font-medium focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary/30 transition-all resize-none text-base text-brand-text placeholder:text-brand-text/30 shadow-sm"
+                    />
+                    <ValidationError field="message" errors={state.errors} className="font-body text-red-500 text-sm" />
+                  </div>
 
-              <Button
-                type="submit"
-                variant="primary"
-                className="mt-4 py-5 text-lg font-bold bg-primary text-white hover:bg-deep shadow-[0_10px_20px_rgba(0,56,147,0.2)] rounded-2xl transition-transform hover:scale-[1.02]"
-              >
-                {t('Contact', 'formSend')}
-              </Button>
+                  <ValidationError errors={state.errors} className="font-body text-red-500 text-sm" />
+
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    disabled={state.submitting}
+                    className="mt-4 py-5 text-lg font-bold bg-primary text-white hover:bg-deep shadow-[0_10px_20px_rgba(0,56,147,0.2)] rounded-2xl transition-transform hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  >
+                    {state.submitting ? t('Contact', 'formSending') : t('Contact', 'formSend')}
+                  </Button>
+                </>
+              )}
             </form>
           </FadeIn>
 

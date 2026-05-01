@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { SEO } from './components/SEO';
 import { NavLink } from 'react-router';
 import { FadeIn } from './components/FadeIn';
@@ -27,9 +28,43 @@ export const Events = () => {
     en: { title: 'Events & Agenda', description: "Find all cultural events by Batuku & Cultura in French-speaking Switzerland: festivals, concerts, charity sales and Cape Verdean and PALOP gatherings." },
   }[lang as 'fr' | 'pt' | 'en'] ?? { title: 'Événements & Agenda', description: '' };
 
+  const SITE_URL = 'https://www.batuku-cultura.ch';
+  const publishableEvents = [...(featured ? [featured] : []), ...upcoming];
+  const eventJsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': publishableEvents.map((e) => ({
+      '@type': 'Event',
+      name: e.title[lang as 'fr' | 'pt' | 'en'],
+      startDate: e.time ? `${e.date}T${e.time.split('–')[0].trim().replace('h', ':')}:00` : e.date,
+      ...(e.time && { endDate: `${e.date}T${e.time.split('–')[1]?.trim().replace('h', ':') ?? '23:59'}:00` }),
+      eventStatus: 'https://schema.org/EventScheduled',
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      location: {
+        '@type': 'Place',
+        name: e.locationDetail ?? e.location,
+        address: { '@type': 'PostalAddress', addressLocality: e.location, addressCountry: 'CH' },
+      },
+      ...(e.image && { image: `${SITE_URL}${e.image}` }),
+      description: e.description?.[lang as 'fr' | 'pt' | 'en'] ?? '',
+      organizer: { '@type': 'Organization', name: 'Batuku & Cultura', url: SITE_URL },
+      ...(e.priceCHF && {
+        offers: { '@type': 'Offer', price: e.priceCHF, priceCurrency: 'CHF', availability: 'https://schema.org/InStock' },
+      }),
+      ...(e.artists && e.artists.length > 0 && {
+        performer: e.artists.map((a) => ({ '@type': 'Person', name: a })),
+      }),
+      url: `${SITE_URL}/events`,
+    })),
+  };
+
   return (
     <div className="w-full bg-brand-bg min-h-screen pb-20">
-      <SEO title={seoData.title} description={seoData.description} path="events" lang={lang} />
+      <SEO title={seoData.title} description={seoData.description} path="events" lang={lang} breadcrumbs={[{ name: seoData.title, path: 'events' }]} />
+      {publishableEvents.length > 0 && (
+        <Helmet>
+          <script type="application/ld+json">{JSON.stringify(eventJsonLd)}</script>
+        </Helmet>
+      )}
 
       {/* ── HERO : ÉVÉNEMENT VEDETTE ─────────────────────────────────────── */}
       {featured && (

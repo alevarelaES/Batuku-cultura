@@ -69,7 +69,7 @@ export const Culture = () => {
 
   return (
     <div className="w-full min-h-screen relative bg-brand-bg flex flex-col font-body">
-      <SEO title={seoData.title} description={seoData.description} path="culture" lang={lang} />
+      <SEO title={seoData.title} description={seoData.description} path="culture" lang={lang} breadcrumbs={[{ name: seoData.title, path: 'culture' }]} />
       <PatternBg className={`opacity-5 fixed inset-0 z-0 pointer-events-none ${country.textColor}`} />
 
       {/* ── HERO + SÉLECTEUR PAYS ─────────────────────────────── */}

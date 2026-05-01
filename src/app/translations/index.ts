@@ -302,6 +302,10 @@ export const translations: Record<Lang, Record<string, Record<string, string>>> 
       formEmailPlaceholder: 'votre@email.com',
       formSubjectPlaceholder: 'Sujet de votre message',
       formMessagePlaceholder: 'Votre message...',
+      formSending: 'Envoi en cours...',
+      formSuccessTitle: 'Message envoyé !',
+      formSuccessText: 'Merci, nous vous répondrons dans les plus brefs délais.',
+      formErrorGeneric: "Une erreur s'est produite. Veuillez réessayer.",
     },
     Footer: {
       capvertSuisse: 'Cap-Vert Suisse',
@@ -617,6 +621,10 @@ export const translations: Record<Lang, Record<string, Record<string, string>>> 
       formEmailPlaceholder: 'o_seu@email.com',
       formSubjectPlaceholder: 'Assunto da mensagem',
       formMessagePlaceholder: 'A sua mensagem...',
+      formSending: 'A enviar...',
+      formSuccessTitle: 'Mensagem enviada!',
+      formSuccessText: 'Obrigado, responderemos o mais brevemente possível.',
+      formErrorGeneric: 'Ocorreu um erro. Por favor, tente novamente.',
     },
     Footer: {
       capvertSuisse: 'Cabo Verde Suíça',
@@ -932,6 +940,10 @@ export const translations: Record<Lang, Record<string, Record<string, string>>> 
       formEmailPlaceholder: 'your@email.com',
       formSubjectPlaceholder: 'Message subject',
       formMessagePlaceholder: 'Your message...',
+      formSending: 'Sending...',
+      formSuccessTitle: 'Message sent!',
+      formSuccessText: 'Thank you, we will get back to you as soon as possible.',
+      formErrorGeneric: 'An error occurred. Please try again.',
     },
     Footer: {
       capvertSuisse: 'Cape Verde Switzerland',

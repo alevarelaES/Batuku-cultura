@@ -10,6 +10,7 @@ const Events  = lazy(() => import("./Events").then(m => ({ default: m.Events }))
 const Gallery = lazy(() => import("./Gallery").then(m => ({ default: m.Gallery })));
 const Contact        = lazy(() => import("./Contact").then(m => ({ default: m.Contact })));
 const MentionsLegales = lazy(() => import("./MentionsLegales").then(m => ({ default: m.MentionsLegales })));
+const NotFound       = lazy(() => import("./NotFound").then(m => ({ default: m.NotFound })));
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ export const router = createBrowserRouter([
       { path: "gallery", Component: Gallery },
       { path: "contact", Component: Contact },
       { path: "mentions-legales", Component: MentionsLegales },
+      { path: "*", Component: NotFound },
     ],
   },
 ]);

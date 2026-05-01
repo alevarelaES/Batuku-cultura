@@ -91,7 +91,7 @@ export const About = () => {
 
   return (
     <div className="w-full relative bg-brand-bg">
-      <SEO title={seoData.title} description={seoData.description} path="about" lang={lang} />
+      <SEO title={seoData.title} description={seoData.description} path="about" lang={lang} pageType="AboutPage" breadcrumbs={[{ name: seoData.title, path: 'about' }]} />
       <PatternBg className="text-primary opacity-[0.03] fixed inset-0 z-0 pointer-events-none" />
 
       {/* ─── SECTION 1 : HERO IDENTITÉ OFFICIELLE ─── */}

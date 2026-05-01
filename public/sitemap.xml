@@ -7,48 +7,85 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.batuku-cultura.ch/"/>
     <xhtml:link rel="alternate" hreflang="pt" href="https://www.batuku-cultura.ch/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.batuku-cultura.ch/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.batuku-cultura.ch/"/>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://www.batuku-cultura.ch/about</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.batuku-cultura.ch/about"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.batuku-cultura.ch/about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.batuku-cultura.ch/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.batuku-cultura.ch/about"/>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.batuku-cultura.ch/batuku</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.batuku-cultura.ch/batuku"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.batuku-cultura.ch/batuku"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.batuku-cultura.ch/batuku"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.batuku-cultura.ch/batuku"/>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.batuku-cultura.ch/culture</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.batuku-cultura.ch/culture"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.batuku-cultura.ch/culture"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.batuku-cultura.ch/culture"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.batuku-cultura.ch/culture"/>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.batuku-cultura.ch/events</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.batuku-cultura.ch/events"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.batuku-cultura.ch/events"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.batuku-cultura.ch/events"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.batuku-cultura.ch/events"/>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
     <loc>https://www.batuku-cultura.ch/gallery</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.batuku-cultura.ch/gallery"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.batuku-cultura.ch/gallery"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.batuku-cultura.ch/gallery"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.batuku-cultura.ch/gallery"/>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://www.batuku-cultura.ch/contact</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.batuku-cultura.ch/contact"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.batuku-cultura.ch/contact"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.batuku-cultura.ch/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.batuku-cultura.ch/contact"/>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://www.batuku-cultura.ch/mentions-legales</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.batuku-cultura.ch/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.batuku-cultura.ch/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.batuku-cultura.ch/mentions-legales"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.batuku-cultura.ch/mentions-legales"/>
+    <lastmod>2026-05-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>

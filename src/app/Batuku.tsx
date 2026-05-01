@@ -23,10 +23,11 @@ const SEMENTERA_FLYER = '/Evenment sementera batukaderas photos/Evenemnt batuku.
 // ── Lightbox ──────────────────────────────────────────────────────────────────
 interface LightboxProps {
   src: string;
+  alt?: string;
   onClose: () => void;
 }
 
-const Lightbox = ({ src, onClose }: LightboxProps) => {
+const Lightbox = ({ src, alt = '', onClose }: LightboxProps) => {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', onKey);
@@ -51,7 +52,7 @@ const Lightbox = ({ src, onClose }: LightboxProps) => {
       </button>
       <img
         src={src}
-        alt="Aperçu"
+        alt={alt}
         className="max-w-[92vw] max-h-[90vh] rounded-2xl shadow-2xl object-contain"
         onClick={(e) => e.stopPropagation()}
       />
@@ -84,8 +85,8 @@ const ClickImg = ({ src, alt, className, wrapperClassName, onOpen, style }: Clic
 // ── Main component ────────────────────────────────────────────────────────────
 export const Batuku = () => {
   const { t, lang } = useLanguage();
-  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
-  const openLightbox = useCallback((src: string) => setLightboxSrc(src), []);
+  const [lightboxSrc, setLightboxSrc] = useState<{ src: string; alt: string } | null>(null);
+  const openLightbox = useCallback((src: string, alt: string) => setLightboxSrc({ src, alt }), []);
   const closeLightbox = useCallback(() => setLightboxSrc(null), []);
 
   const timeline = [
@@ -123,11 +124,11 @@ export const Batuku = () => {
 
   return (
     <div className="w-full bg-brand-bg min-h-screen relative overflow-hidden">
-      <SEO title={seoData.title} description={seoData.description} path="batuku" lang={lang} />
+      <SEO title={seoData.title} description={seoData.description} path="batuku" lang={lang} breadcrumbs={[{ name: seoData.title, path: 'batuku' }]} />
       <PatternBg className="text-primary opacity-[0.03] fixed inset-0 z-0 pointer-events-none" />
 
       {/* Lightbox */}
-      {lightboxSrc && <Lightbox src={lightboxSrc} onClose={closeLightbox} />}
+      {lightboxSrc && <Lightbox src={lightboxSrc.src} alt={lightboxSrc.alt} onClose={closeLightbox} />}
 
       {/* ─── ACTE 1 : HERO VIBRANT ─── */}
       <section className="relative min-h-[72vh] md:min-h-[78vh] flex items-center justify-center overflow-hidden bg-deep">
@@ -176,7 +177,7 @@ export const Batuku = () => {
                 key={i}
                 className={`relative rounded-[2.5rem] overflow-hidden shadow-2xl border-[6px] border-white group bg-deep cursor-zoom-in
                 ${i === 1 ? 'md:-mt-10 md:mb-10 shadow-[0_20px_40px_rgba(232,117,26,0.15)]' : ''}`}
-                onClick={() => openLightbox(src)}
+                onClick={() => openLightbox(src, `${t('Batuku', 'fullGroupTitle')} ${i + 1}`)}
               >
                 <div className="absolute inset-0 bg-gradient-to-tr from-orange/20 to-primary/20 mix-blend-overlay z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 <div className="absolute inset-0 flex items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -269,7 +270,7 @@ export const Batuku = () => {
           </div>
           <div
             className="shrink-0 md:w-48 lg:w-56 relative group cursor-zoom-in"
-            onClick={() => openLightbox(SEMENTERA_FLYER)}
+            onClick={() => openLightbox(SEMENTERA_FLYER, t('Batuku', 'sementera3ePlaceTitle'))}
           >
             <img
               src={SEMENTERA_FLYER}
@@ -304,7 +305,7 @@ export const Batuku = () => {
           <div className="flex flex-col md:flex-row h-auto md:h-[580px] gap-6 items-stretch">
             <div
               className="md:flex-1 h-[400px] md:h-auto rounded-[2.5rem] overflow-hidden relative shadow-2xl border border-white/10 bg-deep/50 group cursor-zoom-in"
-              onClick={() => openLightbox(GALLERY_PHOTOS[0])}
+              onClick={() => openLightbox(GALLERY_PHOTOS[0], 'Sementera au Festival')}
             >
               <img src={GALLERY_PHOTOS[0]} alt="Sementera au Festival" className="w-full h-full object-cover object-[center_30%] transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/25">
@@ -314,7 +315,7 @@ export const Batuku = () => {
 
             <div
               className="md:flex-[1.4] h-[450px] md:h-auto rounded-[2.5rem] overflow-hidden relative shadow-2xl border border-white/15 bg-deep/50 md:-mt-4 md:mb-4 group cursor-zoom-in"
-              onClick={() => openLightbox(GALLERY_PHOTOS[1])}
+              onClick={() => openLightbox(GALLERY_PHOTOS[1], 'Action Batuku')}
             >
               <img src={GALLERY_PHOTOS[1]} alt="Action Batuku" className="w-full h-full object-cover object-[center_40%] transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/25">
@@ -324,7 +325,7 @@ export const Batuku = () => {
 
             <div
               className="md:flex-1 h-[400px] md:h-auto rounded-[2.5rem] overflow-hidden relative shadow-2xl border border-white/10 bg-deep/50 group cursor-zoom-in"
-              onClick={() => openLightbox(GALLERY_PHOTOS[2])}
+              onClick={() => openLightbox(GALLERY_PHOTOS[2], 'Fête musicale')}
             >
               <img src={GALLERY_PHOTOS[2]} alt="Fête musicale" className="w-full h-full object-cover object-[center_20%] transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/25">

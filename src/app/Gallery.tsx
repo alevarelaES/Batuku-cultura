@@ -237,7 +237,7 @@ export const Gallery = () => {
 
   return (
     <div className="w-full min-h-screen pb-section px-4 md:px-xl relative">
-      <SEO title={seoData.title} description={seoData.description} path="gallery" lang={lang} />
+      <SEO title={seoData.title} description={seoData.description} path="gallery" lang={lang} pageType="CollectionPage" breadcrumbs={[{ name: seoData.title, path: 'gallery' }]} />
 
       {/* ── BACKGROUND ── */}
       <div className="fixed inset-0 z-0 pointer-events-none">
