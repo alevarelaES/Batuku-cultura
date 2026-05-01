@@ -113,7 +113,7 @@ export const About = () => {
           <FadeIn>
             <div className="mb-6 flex justify-center">
               <img
-                src="/logo/logo4.jpg"
+                src="/logo/logo8.jpg"
                 alt="Logo Batuku & Cultura"
                 className="h-24 w-24 rounded-full object-cover ring-2 ring-white/40 shadow-[0_0_24px_rgba(247,209,22,0.35)]"
                 loading="lazy"
