@@ -4,7 +4,7 @@ import { SEO } from './components/SEO';
 import { NavLink } from 'react-router';
 import { FadeIn } from './components/FadeIn';
 import { FadeInGroup, FadeInItem } from './components/FadeInStagger';
-import { MapPin, Ticket, Calendar, Clock, Phone, Info } from 'lucide-react';
+import { MapPin, Ticket, Calendar, Clock, Phone, Info, Sparkles } from 'lucide-react';
 import { useLanguage } from './contexts/LanguageContext';
 import {
   Trumpet, Confetti, Guitar, MusicNotes, KentePattern, CapeVerdeIslands
@@ -18,9 +18,19 @@ export const Events = () => {
   const { t, lang } = useLanguage();
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
-  const featured   = events.find((e) => e.featured);
-  const upcoming   = events.filter((e) => !e.featured && !e.past);
+  // Événements passés
   const pastEvents = events.filter((e) => e.past);
+
+  // Tous les événements à venir triés par date
+  const allUpcoming = events
+    .filter((e) => !e.past)
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+  // Vedette : événement explicitement marqué featured, sinon le prochain à venir
+  const featured = allUpcoming.find((e) => e.featured) ?? allUpcoming[0] ?? null;
+
+  // Les autres à venir (hors vedette)
+  const upcoming = allUpcoming.filter((e) => e !== featured);
 
   const seoData = {
     fr: { title: 'Événements & Agenda', description: "Retrouvez tous les événements culturels de Batuku & Cultura en Suisse Romande : festivals, concerts, ventes de charité et rassemblements cap-verdiens et PALOP." },
@@ -67,7 +77,7 @@ export const Events = () => {
       )}
 
       {/* ── HERO : ÉVÉNEMENT VEDETTE ─────────────────────────────────────── */}
-      {featured && (
+      {featured ? (
         <section className="relative overflow-hidden bg-deep">
           {/* Décorations */}
           <CapeVerdeStars className="hidden md:block absolute -top-20 -left-20 text-white opacity-10 w-[600px] h-[600px] pointer-events-none z-0 animate-[spin_60s_linear_infinite]" />
@@ -96,8 +106,11 @@ export const Events = () => {
                     className="w-full h-full object-cover object-top"
                   />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-orange/30 to-primary/30 flex items-center justify-center">
-                    <span className="text-white/30 font-display text-4xl">Photo à venir</span>
+                  <div className="w-full h-full bg-gradient-to-br from-orange/30 via-primary/40 to-deep flex flex-col items-center justify-center gap-4 p-8">
+                    <Sparkles className="text-yellow/60 w-12 h-12" />
+                    <p className="text-white/40 font-body text-sm text-center leading-relaxed max-w-[180px]">
+                      {t('Events', 'photoComingSoon')}
+                    </p>
                   </div>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#0B1B3D]/70 pointer-events-none" />
@@ -120,9 +133,11 @@ export const Events = () => {
                   {featured.title[lang]}
                 </h1>
 
-                <p className="font-body text-base md:text-lg text-white/75 mb-6 leading-relaxed max-w-md">
-                  {featured.description?.[lang]}
-                </p>
+                {featured.description?.[lang] && (
+                  <p className="font-body text-base md:text-lg text-white/75 mb-6 leading-relaxed max-w-md">
+                    {featured.description[lang]}
+                  </p>
+                )}
 
                 {/* Infos */}
                 <div className="flex flex-col gap-3 mb-6 font-body font-semibold bg-white/5 p-4 md:p-5 rounded-[1.5rem] border border-white/10 w-full max-w-sm">
@@ -183,6 +198,36 @@ export const Events = () => {
             </div>
           </div>
         </section>
+      ) : (
+        /* ── PLACEHOLDER : aucun événement à venir ─────────────────────── */
+        <section className="relative overflow-hidden bg-deep">
+          <CapeVerdeStars className="hidden md:block absolute -top-20 -left-20 text-white opacity-10 w-[600px] h-[600px] pointer-events-none z-0 animate-[spin_60s_linear_infinite]" />
+          <KentePattern className="absolute inset-0 text-white opacity-[0.04] pointer-events-none z-0" />
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-orange/15 blur-[120px] pointer-events-none z-0" />
+
+          <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-16 md:py-24 flex flex-col items-center text-center gap-6">
+            <span className="bg-yellow/20 text-yellow font-body font-bold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full border border-yellow/30">
+              {t('Events', 'comingSoonBadge')}
+            </span>
+            <h1 className="text-white font-display text-4xl md:text-6xl leading-tight max-w-2xl">
+              {t('Events', 'comingSoonTitle')}
+            </h1>
+            <p className="text-white/60 font-body text-lg max-w-md leading-relaxed">
+              {t('Events', 'comingSoonText')}
+            </p>
+            <div className="flex h-1.5 w-32 rounded-full overflow-hidden mt-2">
+              {['#003893','#E8751A','#F7D116','#1A6B3C','#0B1B3D'].map((c) => (
+                <div key={c} className="flex-1" style={{ backgroundColor: c }} />
+              ))}
+            </div>
+            <NavLink
+              to="/contact"
+              className="mt-2 inline-flex items-center gap-2 bg-orange hover:bg-yellow hover:text-deep text-white font-body font-bold text-sm px-6 py-3.5 rounded-full transition-all shadow-[0_8px_24px_rgba(232,117,26,0.35)]"
+            >
+              {t('Events', 'modalContactFormBtn')}
+            </NavLink>
+          </div>
+        </section>
       )}
 
       {/* Bande PALOP séparateur */}
@@ -204,7 +249,7 @@ export const Events = () => {
 
           <FadeInGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={0.12}>
             {upcoming.map((event) => (
-              <FadeInItem key={event.id}>
+              <FadeInItem key={event.id} className="h-full">
                 <UpcomingCard event={event} lang={lang} onOpen={() => setSelectedEvent(event)} />
               </FadeInItem>
             ))}
@@ -224,8 +269,8 @@ export const Events = () => {
 
           <FadeInGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" stagger={0.1}>
             {pastEvents.map((event) => (
-              <FadeInItem key={event.id}>
-                <PastCard event={event} lang={lang} />
+              <FadeInItem key={event.id} className="h-full">
+                <PastCard event={event} lang={lang} onOpen={() => setSelectedEvent(event)} />
               </FadeInItem>
             ))}
           </FadeInGroup>
@@ -315,30 +360,47 @@ const UpcomingCard = ({
 };
 
 /* ── Carte événement passé ───────────────────────────────────────────────── */
-const PastCard = ({ event, lang }: { event: (typeof events)[number]; lang: string }) => {
+const PastCard = ({
+  event,
+  lang,
+  onOpen,
+}: {
+  event: (typeof events)[number];
+  lang: string;
+  onOpen: () => void;
+}) => {
   const { t } = useLanguage();
   return (
-  <div className="group bg-white rounded-[2rem] overflow-hidden border border-black/8 shadow-[0_4px_20px_rgb(0,0,0,0.06)] flex flex-col transition-[transform,box-shadow] duration-300 md:hover:-translate-y-1 md:hover:shadow-[0_12px_30px_rgba(0,0,0,0.10)]">
-    <div className="relative h-44 overflow-hidden bg-brand-text/10">
+  <div
+    className="group h-full bg-white rounded-[2rem] overflow-hidden border border-black/8 shadow-[0_4px_20px_rgb(0,0,0,0.06)] flex flex-col cursor-pointer transition-[transform,box-shadow] duration-300 md:hover:-translate-y-1 md:hover:shadow-[0_12px_30px_rgba(0,0,0,0.10)]"
+    onClick={onOpen}
+    role="button"
+    tabIndex={0}
+    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onOpen(); }}
+  >
+    <div className="relative h-44 shrink-0 overflow-hidden bg-brand-text/10">
       {event.image ? (
-        <img src={event.image} alt={event.title[lang as 'fr']} loading="lazy" className="w-full h-full object-cover grayscale-[60%]" />
+        <img src={event.image} alt={event.title[lang as 'fr']} loading="lazy" className="w-full h-full object-cover grayscale-[60%] group-hover:grayscale-0 transition-[filter] duration-500" />
       ) : (
         <img src="/Sections_fonds/fond cartes sans images.png" alt="" aria-hidden="true" loading="lazy" className="w-full h-full object-cover object-center grayscale-[40%] opacity-60" />
       )}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
       <span className="absolute top-4 right-4 bg-brand-text/70 text-white font-body font-bold text-[10px] uppercase tracking-widest px-3 py-1.5 rounded-full">
         {t('Events', 'pastBadge')}
       </span>
     </div>
-    <div className="p-5">
+    <div className="p-5 flex flex-col flex-1">
       <h3 className="font-display text-brand-text text-lg leading-snug mb-3">{event.title[lang as 'fr']}</h3>
       <div className="flex items-center gap-2 text-sm font-body text-brand-text/60">
         <Calendar size={13} className="text-orange shrink-0" />
         {formatEventDate(event.date, lang as 'fr')}
       </div>
-      {!event.image && (
-        <p className="mt-3 text-xs font-body text-brand-text/50 italic">{t('Events', 'photosComingSoon')}</p>
-      )}
+      <div className="mt-auto pt-4">
+        <span className="inline-flex items-center gap-1.5 text-xs font-body font-semibold text-primary/60 group-hover:text-primary transition-colors duration-200">
+          <Info size={12} />
+          {t('Events', 'seeDetailsShort')}
+        </span>
+      </div>
     </div>
   </div>
   );

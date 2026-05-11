@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { X, Calendar, Clock, MapPin, Ticket, Phone, ChevronRight } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { X, Calendar, Clock, MapPin, Ticket, Phone, ChevronRight, Images } from 'lucide-react';
 import { NavLink } from 'react-router';
 import type { Event } from '../../data/events';
 import { formatEventDate } from '../../data/events';
@@ -64,7 +64,7 @@ export const EventModal = ({ event, lang, onClose }: Props) => {
           {/* Titre */}
           <div>
             <span className="inline-block bg-orange/20 text-orange font-body font-bold text-[10px] uppercase tracking-widest px-3 py-1 rounded-full mb-3">
-              {t('Events', 'featuredBadge')}
+              {event.past ? t('Events', 'pastBadge') : t('Events', 'featuredBadge')}
             </span>
             <h2 className="text-white font-display text-2xl md:text-3xl leading-tight">
               {event.title[lang]}
@@ -95,21 +95,7 @@ export const EventModal = ({ event, lang, onClose }: Props) => {
 
           {/* Artistes */}
           {event.artists && event.artists.length > 0 && (
-            <div>
-              <p className="text-white/40 text-[10px] uppercase tracking-widest font-body mb-3">
-                {t('Events', 'modalArtistsLabel')}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {event.artists.map((a) => (
-                  <span
-                    key={a}
-                    className="bg-white/8 border border-white/15 text-white/85 font-body text-xs px-3 py-1.5 rounded-full"
-                  >
-                    {a}
-                  </span>
-                ))}
-              </div>
-            </div>
+            <ArtistsList artists={event.artists} label={t('Events', 'modalArtistsLabel')} />
           )}
 
           {/* Contacts téléphoniques */}
@@ -136,6 +122,18 @@ export const EventModal = ({ event, lang, onClose }: Props) => {
             </div>
           )}
 
+          {/* Bouton galerie photos (événements passés avec photos) */}
+          {event.galleryLink && (
+            <NavLink
+              to={event.galleryLink}
+              onClick={onClose}
+              className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-body font-bold text-sm px-6 py-3.5 rounded-full transition-all w-full"
+            >
+              <Images size={16} />
+              {t('Events', 'seePhotosBtn')}
+            </NavLink>
+          )}
+
           {/* Bouton formulaire */}
           <NavLink
             to="/contact"
@@ -146,6 +144,43 @@ export const EventModal = ({ event, lang, onClose }: Props) => {
             <ChevronRight size={16} />
           </NavLink>
         </div>
+      </div>
+    </div>
+  );
+};
+
+const ARTISTS_PREVIEW = 5;
+
+const ArtistsList = ({ artists, label }: { artists: string[]; label: string }) => {
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded ? artists : artists.slice(0, ARTISTS_PREVIEW);
+  const hidden = artists.length - ARTISTS_PREVIEW;
+
+  return (
+    <div>
+      <p className="text-white/40 text-[10px] uppercase tracking-widest font-body mb-3">{label}</p>
+      <div className="flex flex-wrap gap-2">
+        {visible.map((a) => (
+          <span key={a} className="bg-white/8 border border-white/15 text-white/85 font-body text-xs px-3 py-1.5 rounded-full">
+            {a}
+          </span>
+        ))}
+        {!expanded && hidden > 0 && (
+          <button
+            onClick={() => setExpanded(true)}
+            className="bg-green/15 hover:bg-green/25 border border-green/30 text-green font-body text-xs px-3 py-1.5 rounded-full transition-colors"
+          >
+            +{hidden} de plus
+          </button>
+        )}
+        {expanded && (
+          <button
+            onClick={() => setExpanded(false)}
+            className="bg-green/15 hover:bg-green/25 border border-green/30 text-green font-body text-xs px-3 py-1.5 rounded-full transition-colors"
+          >
+            Réduire
+          </button>
+        )}
       </div>
     </div>
   );

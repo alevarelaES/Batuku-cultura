@@ -260,6 +260,10 @@ export const translations: Record<Lang, Record<string, Record<string, string>>> 
       modalInfoReservations: 'Infos & Réservations',
       modalContactFormBtn: 'Contacter via le formulaire',
       modalCloseBtn: 'Fermer',
+      seePhotosBtn: 'Voir les photos de l\'événement',
+      comingSoonBadge: 'Bientôt',
+      comingSoonTitle: 'Un nouvel événement arrive…',
+      comingSoonText: 'Notre équipe prépare quelque chose de beau. Restez connectés pour ne rien manquer !',
     },
     Gallery: {
       pageTitle: 'Galerie',
@@ -580,6 +584,10 @@ export const translations: Record<Lang, Record<string, Record<string, string>>> 
       modalInfoReservations: 'Informações & Reservas',
       modalContactFormBtn: 'Contactar pelo formulário',
       modalCloseBtn: 'Fechar',
+      seePhotosBtn: 'Ver as fotos do evento',
+      comingSoonBadge: 'Em breve',
+      comingSoonTitle: 'Um novo evento está a chegar…',
+      comingSoonText: 'A nossa equipa está a preparar algo especial. Fique ligado para não perder nada!',
     },
     Gallery: {
       pageTitle: 'Galeria',
@@ -899,6 +907,10 @@ export const translations: Record<Lang, Record<string, Record<string, string>>> 
       modalInfoReservations: 'Info & Reservations',
       modalContactFormBtn: 'Contact via the form',
       modalCloseBtn: 'Close',
+      seePhotosBtn: 'See event photos',
+      comingSoonBadge: 'Coming soon',
+      comingSoonTitle: 'A new event is on its way…',
+      comingSoonText: 'Our team is preparing something special. Stay connected so you don\'t miss a thing!',
     },
     Gallery: {
       pageTitle: 'Gallery',

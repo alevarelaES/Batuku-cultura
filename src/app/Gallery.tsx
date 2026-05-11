@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useLocation } from 'react-router';
 import { SEO } from './components/SEO';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import { X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -16,6 +17,13 @@ interface GalleryItem {
 }
 
 const galleryItems: GalleryItem[] = [
+  // ── ÉVÉNEMENTS — Cultura PALOPs 1ère Édition (mai 2026) ──
+  ...Array.from({ length: 38 }, (_, i) => ({
+    src: `/evenements/evenement%20cultura%20palop/Photos%20evenement%20Cultura%20Palop%20Premi%C3%A8re%20%C3%A9dition/photo-evenement-cultura-palop-premiere-edition_${String(i + 1).padStart(2, '0')}.jpeg`,
+    category: 'events' as const,
+    labelKey: 'Cultura PALOPs — 1ère Édition',
+  })),
+
   // ── GROUPE BATUKU ──
   {
     src: '/groupe%20batuku/groupo%20batuku%201.jpeg',
@@ -195,7 +203,11 @@ const Lightbox = ({ items, index, getLabel, getCategoryLabel, onClose, onPrev, o
 /* ─── Gallery Page ──────────────────────────────────────── */
 export const Gallery = () => {
   const { t, lang } = useLanguage();
-  const [activeFilter, setActiveFilter] = useState<Category>('all');
+  const { search } = useLocation();
+  const initialCat = (new URLSearchParams(search).get('cat') ?? 'all') as Category;
+  const [activeFilter, setActiveFilter] = useState<Category>(
+    ['all', 'batuku', 'events', 'gastronomy'].includes(initialCat) ? initialCat : 'all'
+  );
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const allFilters: { key: Category; label: string }[] = [

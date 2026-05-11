@@ -18,15 +18,24 @@ export type Event = {
   featured?: boolean;
   past?: boolean;
   image?: string;
-  gallery?: string[];   // images pour le modal de détail
+  gallery?: string[];   // affiches/visuels pour le modal
+  galleryLink?: string; // lien vers la galerie photo de l'événement
   description?: Record<Lang, string>;
   artists?: string[];
   contacts?: EventContact[];
   countries?: Array<'angola' | 'capvert' | 'bissau' | 'mozambique' | 'santome'>;
 };
 
+// ── Chemins de base pour l'édition Cultura PALOPs 1ère édition ──────────────
+const AFFICHES = '/evenements/evenement%20cultura%20palop/Affiches%20evenement%20Cultura%20Palop%20Premi%C3%A8re%20%C3%A9dition';
+const PHOTOS   = '/evenements/evenement%20cultura%20palop/Photos%20evenement%20Cultura%20Palop%20Premi%C3%A8re%20%C3%A9dition';
+
+const eventPhotos = Array.from({ length: 38 }, (_, i) =>
+  `${PHOTOS}/photo-evenement-cultura-palop-premiere-edition_${String(i + 1).padStart(2, '0')}.jpeg`
+);
+
 export const events: Event[] = [
-  // ── ÉVÉNEMENT PASSÉ ──────────────────────────────────────────────────────
+  // ── ÉVÉNEMENT PASSÉ — Vente de Charité ───────────────────────────────────
   {
     id: 'vente-charite-avril-2026',
     title: {
@@ -38,7 +47,6 @@ export const events: Event[] = [
     location: 'Payerne, VD',
     tag: 'charite',
     past: true,
-    // image: '/evenements/vente-charite.jpg', // ← à ajouter quand photos reçues
     description: {
       fr: 'Première vente de charité organisée par l\'Association Batuku & Cultura pour soutenir nos projets culturels.',
       pt: 'Primeira venda de caridade organizada pela Associação Batuku & Cultura para apoiar os nossos projetos culturais.',
@@ -47,7 +55,7 @@ export const events: Event[] = [
     countries: ['capvert', 'angola', 'bissau', 'mozambique', 'santome'],
   },
 
-  // ── ÉVÉNEMENT VEDETTE — 2 MAI ─────────────────────────────────────────────
+  // ── ÉVÉNEMENT PASSÉ — Cultura PALOPs 1ère Édition ────────────────────────
   {
     id: 'cultura-palops-mai-2026',
     title: {
@@ -61,16 +69,17 @@ export const events: Event[] = [
     locationDetail: 'Route de Romond 9, 1554 Sédeilles',
     priceCHF: 49,
     tag: 'festival',
-    featured: true,
-    image: '/evenements/evenement%20cultura%20palop/evenement%20cultura%20palops.jpeg',
+    past: true,
+    image: `${AFFICHES}/evenement%20cultura%20palops.jpeg`,
     gallery: [
-      '/evenements/evenement%20cultura%20palop/evenement%20cultura%20palops.jpeg',
-      '/evenements/evenement%20cultura%20palop/evenement%20cultura%20palops%202.jpeg',
-      '/evenements/evenement%20cultura%20palop/evenements_resume1.webp',
-      '/evenements/evenement%20cultura%20palop/evenements_resume2.webp',
-      '/evenements/evenement%20cultura%20palop/evenements_resume3.webp',
-      '/evenements/evenement%20cultura%20palop/evenements_resume4.webp',
+      `${AFFICHES}/evenement%20cultura%20palops.jpeg`,
+      `${AFFICHES}/evenement%20cultura%20palops%202.jpeg`,
+      `${AFFICHES}/evenements_resume1.webp`,
+      `${AFFICHES}/evenements_resume2.webp`,
+      `${AFFICHES}/evenements_resume3.webp`,
+      `${AFFICHES}/evenements_resume4.webp`,
     ],
+    galleryLink: '/gallery?cat=events',
     afterParty: '00h00 – 03h00',
     priceNote: 'Comprend une variété de plats typiques des pays PALOP (boissons exclues).',
     contacts: [
