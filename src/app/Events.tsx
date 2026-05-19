@@ -4,7 +4,7 @@ import { SEO } from './components/SEO';
 import { NavLink } from 'react-router';
 import { FadeIn } from './components/FadeIn';
 import { FadeInGroup, FadeInItem } from './components/FadeInStagger';
-import { MapPin, Ticket, Calendar, Clock, Phone, Info, Sparkles } from 'lucide-react';
+import { MapPin, Ticket, Calendar, Clock, Phone, Info } from 'lucide-react';
 import { useLanguage } from './contexts/LanguageContext';
 import {
   Trumpet, Confetti, Guitar, MusicNotes, KentePattern, CapeVerdeIslands
@@ -18,12 +18,19 @@ export const Events = () => {
   const { t, lang } = useLanguage();
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
-  // Événements passés
-  const pastEvents = events.filter((e) => e.past);
+  // Aujourd'hui à minuit — référence pour classer les événements automatiquement
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const isPast = (e: Event) => e.past || new Date(e.date) < today;
+
+  // Événements passés : flag explicite OU date dépassée
+  const pastEvents = events
+    .filter(isPast)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); // plus récent en premier
 
   // Tous les événements à venir triés par date
   const allUpcoming = events
-    .filter((e) => !e.past)
+    .filter((e) => !isPast(e))
     .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
   // Vedette : événement explicitement marqué featured, sinon le prochain à venir
@@ -106,11 +113,68 @@ export const Events = () => {
                     className="w-full h-full object-cover object-top"
                   />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-orange/30 via-primary/40 to-deep flex flex-col items-center justify-center gap-4 p-8">
-                    <Sparkles className="text-yellow/60 w-12 h-12" />
-                    <p className="text-white/40 font-body text-sm text-center leading-relaxed max-w-[180px]">
-                      {t('Events', 'photoComingSoon')}
-                    </p>
+                  /* ── Panneau "pas encore d'affiche" ── */
+                  <div className="w-full h-full relative flex flex-col items-center justify-center overflow-hidden bg-[#081526]">
+
+                    {/* Fond : motif kente très subtil */}
+                    <KentePattern className="absolute inset-0 text-yellow opacity-[0.06] pointer-events-none" />
+
+                    {/* Halos de lumière */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-40 bg-orange/10 blur-[80px] rounded-full" />
+                    <div className="absolute bottom-0 right-0 w-48 h-48 bg-yellow/8 blur-[60px] rounded-full" />
+
+                    {/* Barre PALOP top */}
+                    <div className="absolute top-0 inset-x-0 flex h-[3px]">
+                      {['#1A5CB5','#E8620A','#F5B800','#2D7A5E','#4A7FD4'].map((c) => (
+                        <div key={c} className="flex-1" style={{ backgroundColor: c }} />
+                      ))}
+                    </div>
+
+                    {/* Instruments en coins — silhouettes */}
+                    <Trumpet    className="absolute -top-2 -left-2 w-28 h-28 text-orange/[0.12] rotate-[-25deg] pointer-events-none" />
+                    <Guitar     className="absolute -bottom-4 -right-4 w-36 h-36 text-yellow/[0.10] rotate-[20deg] pointer-events-none" />
+                    <MusicNotes className="absolute top-6 right-4 w-14 h-14 text-white/[0.08] pointer-events-none" />
+                    <Trumpet    className="absolute bottom-8 left-2 w-16 h-16 text-yellow/[0.09] rotate-[30deg] pointer-events-none" />
+
+                    {/* Contenu central */}
+                    <div className="relative z-10 flex flex-col items-center gap-4 px-8 text-center">
+                      {/* Cercle décoratif avec icône */}
+                      <div className="relative w-20 h-20 flex items-center justify-center">
+                        {/* Cercle extérieur animé */}
+                        <div className="absolute inset-0 rounded-full border border-yellow/20 animate-[ping_3s_ease-in-out_infinite]" />
+                        <div className="absolute inset-1 rounded-full border border-orange/25" />
+                        <div className="w-14 h-14 rounded-full bg-white/[0.05] border border-white/10 flex items-center justify-center backdrop-blur-sm">
+                          <span className="text-yellow/70 text-2xl leading-none select-none">♫</span>
+                        </div>
+                      </div>
+
+                      {/* Texte */}
+                      <div className="flex flex-col gap-1.5">
+                        <p className="text-white font-display text-2xl leading-snug">
+                          Affiche en cours
+                        </p>
+                        <p className="text-orange/80 font-display text-2xl leading-snug">
+                          de création
+                        </p>
+                        <p className="text-white/35 font-body text-[11px] uppercase tracking-[0.2em] mt-1">
+                          Bientôt disponible
+                        </p>
+                      </div>
+
+                      {/* Mini barre PALOP */}
+                      <div className="flex gap-1 mt-1">
+                        {['#1A5CB5','#E8620A','#F5B800','#2D7A5E','#4A7FD4'].map((c) => (
+                          <div key={c} className="w-4 h-[2px] rounded-full" style={{ backgroundColor: c, opacity: 0.6 }} />
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Barre PALOP bottom */}
+                    <div className="absolute bottom-0 inset-x-0 flex h-[3px]">
+                      {['#1A5CB5','#E8620A','#F5B800','#2D7A5E','#4A7FD4'].map((c) => (
+                        <div key={c} className="flex-1" style={{ backgroundColor: c }} />
+                      ))}
+                    </div>
                   </div>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#0B1B3D]/70 pointer-events-none" />
@@ -200,29 +264,69 @@ export const Events = () => {
         </section>
       ) : (
         /* ── PLACEHOLDER : aucun événement à venir ─────────────────────── */
-        <section className="relative overflow-hidden bg-deep">
-          <CapeVerdeStars className="hidden md:block absolute -top-20 -left-20 text-white opacity-10 w-[600px] h-[600px] pointer-events-none z-0 animate-[spin_60s_linear_infinite]" />
-          <KentePattern className="absolute inset-0 text-white opacity-[0.04] pointer-events-none z-0" />
-          <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-orange/15 blur-[120px] pointer-events-none z-0" />
+        <section className="relative overflow-hidden bg-[#081526] min-h-[600px] flex items-center">
 
-          <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-16 md:py-24 flex flex-col items-center text-center gap-6">
-            <span className="bg-yellow/20 text-yellow font-body font-bold text-xs uppercase tracking-widest px-4 py-1.5 rounded-full border border-yellow/30">
-              {t('Events', 'comingSoonBadge')}
-            </span>
-            <h1 className="text-white font-display text-4xl md:text-6xl leading-tight max-w-2xl">
-              {t('Events', 'comingSoonTitle')}
-            </h1>
-            <p className="text-white/60 font-body text-lg max-w-md leading-relaxed">
-              {t('Events', 'comingSoonText')}
-            </p>
-            <div className="flex h-1.5 w-32 rounded-full overflow-hidden mt-2">
-              {['#003893','#E8751A','#F7D116','#1A6B3C','#0B1B3D'].map((c) => (
-                <div key={c} className="flex-1" style={{ backgroundColor: c }} />
+          {/* Fond texturé */}
+          <KentePattern className="absolute inset-0 text-white opacity-[0.03] pointer-events-none z-0" />
+
+          {/* Halos */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-orange/10 blur-[120px] rounded-full pointer-events-none z-0" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[300px] bg-yellow/8 blur-[100px] rounded-full pointer-events-none z-0" />
+          <div className="absolute bottom-0 right-0 w-[350px] h-[250px] bg-primary/20 blur-[100px] rounded-full pointer-events-none z-0" />
+
+          {/* Étoiles Cap-Vert en rotation lente */}
+          <CapeVerdeStars className="hidden md:block absolute -top-40 -left-40 text-white opacity-[0.04] w-[700px] h-[700px] pointer-events-none z-0 animate-[spin_90s_linear_infinite]" />
+
+          {/* Instruments aux coins — grands et transparents */}
+          <Trumpet    className="hidden lg:block absolute -top-6 -left-6 w-52 h-52 text-orange/[0.08] -rotate-12 pointer-events-none z-0" />
+          <Guitar     className="hidden lg:block absolute -bottom-8 -left-8 w-56 h-56 text-yellow/[0.07] rotate-6 pointer-events-none z-0" />
+          <MusicNotes className="hidden lg:block absolute top-10 -right-4 w-44 h-44 text-white/[0.05] pointer-events-none z-0" />
+          <Trumpet    className="hidden lg:block absolute -bottom-4 -right-4 w-48 h-48 text-orange/[0.07] rotate-[20deg] pointer-events-none z-0" />
+
+          {/* Contenu */}
+          <div className="relative z-10 w-full max-w-3xl mx-auto px-6 py-20 flex flex-col items-center text-center gap-7">
+
+            {/* 5 dots PALOP */}
+            <div className="flex items-center gap-3">
+              {['#1A5CB5','#E8620A','#F5B800','#2D7A5E','#4A7FD4'].map((c) => (
+                <div key={c} className="w-3 h-3 rounded-full shadow-[0_0_8px_currentColor]" style={{ backgroundColor: c }} />
               ))}
             </div>
+
+            {/* Badge */}
+            <span className="inline-flex items-center gap-2 bg-yellow/15 text-yellow border border-yellow/25 font-body font-bold text-[11px] uppercase tracking-[0.15em] px-5 py-2 rounded-full">
+              <span className="w-1.5 h-1.5 rounded-full bg-yellow animate-pulse" />
+              {t('Events', 'comingSoonBadge')}
+            </span>
+
+            {/* Titre avec accent couleur */}
+            <div className="flex flex-col gap-1">
+              <h1 className="text-white font-display text-5xl md:text-7xl leading-none tracking-tight drop-shadow-lg">
+                {t('Events', 'comingSoonTitle').split('…')[0]}
+              </h1>
+              <span className="text-orange font-display text-5xl md:text-7xl leading-none tracking-tight">…</span>
+            </div>
+
+            {/* Ligne décorative */}
+            <div className="flex items-center gap-3 w-full max-w-xs">
+              <div className="flex-1 h-px bg-white/10" />
+              <div className="flex gap-1">
+                {['#1A5CB5','#E8620A','#F5B800','#2D7A5E','#4A7FD4'].map((c) => (
+                  <div key={c} className="w-5 h-[2px] rounded-full" style={{ backgroundColor: c }} />
+                ))}
+              </div>
+              <div className="flex-1 h-px bg-white/10" />
+            </div>
+
+            {/* Texte */}
+            <p className="text-white/55 font-body text-base md:text-lg max-w-sm leading-relaxed">
+              {t('Events', 'comingSoonText')}
+            </p>
+
+            {/* Bouton */}
             <NavLink
               to="/contact"
-              className="mt-2 inline-flex items-center gap-2 bg-orange hover:bg-yellow hover:text-deep text-white font-body font-bold text-sm px-6 py-3.5 rounded-full transition-all shadow-[0_8px_24px_rgba(232,117,26,0.35)]"
+              className="group inline-flex items-center gap-3 bg-orange hover:bg-yellow text-white hover:text-deep font-body font-bold text-sm px-8 py-4 rounded-full transition-all duration-300 shadow-[0_8px_32px_rgba(232,117,26,0.4)] hover:shadow-[0_12px_40px_rgba(247,209,22,0.35)]"
             >
               {t('Events', 'modalContactFormBtn')}
             </NavLink>
